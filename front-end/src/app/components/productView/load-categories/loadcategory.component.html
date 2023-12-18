@@ -1,0 +1,65 @@
+<div class="container ">
+    <div class="row bg-danger border border-black ">
+        <div class="col">
+            <div class="text-white"><strong>BỘ LỌC</strong></div>
+            <div class="text-white">Tìm kiếm kiếm nhanh sản phẩm</div>
+        </div>
+    </div>
+
+    <div class="row border border-black ">
+        <div class="col">
+            <div><strong>LOẠI SẢN PHẨM</strong></div>
+            <input type="search" class="form-control" placeholder="search loại sản phẩm" [(ngModel)]="categoriesSearch">
+            
+            <p class="mt-2">
+                <button class="btn btn-outline-info" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseCategories" aria-expanded="false" aria-controls="collapseExample">
+                    Các loại sản phẩm
+                </button>
+            </p>
+
+            <div class="collapse" id="collapseCategories">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let category of categories | CategoriesFilter:categoriesSearch" (click)="SelectCategory(category)">
+                        {{category.tenLoaiSanPham}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row border border-black">
+        <div class="col">
+            <div><strong>THƯƠNG HIỆU</strong></div>
+            <input type="search" class="form-control" placeholder="search thương hiệu" [(ngModel)]="brandsSearch" >
+            <p class="mt-2">
+                <button class="btn btn-outline-info" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseBrands" aria-expanded="false" aria-controls="collapseExample">
+                    Các thương hiệu
+                </button>
+            </p>
+
+            <div class="collapse" id="collapseBrands">
+                <ul class="list-group">
+                    <li  class="list-group-item" *ngFor="let brand of brands | filterBrands:brandsSearch" (click)="SelectBrand(brand)"> 
+                        {{brand.tenBrand}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row border border-black">
+        <div class="col-lg">
+            <div><strong>GIÁ SẢN PHẨM</strong></div>
+            <ul class="list-group">
+                <li class="list-group-item" (click)="SelectPrice(0)">Tất cả giá</li>
+                <li class="list-group-item" (click)="SelectPrice(1)">Giá dưới 5.000.000đ</li>
+                <li class="list-group-item" (click)="SelectPrice(2)">5.000.000đ-7.000.000đ</li>
+                <li class="list-group-item" (click)="SelectPrice(3)">7.000.000đ-10.000.000đ</li>
+                <li class="list-group-item" (click)="SelectPrice(4)">Trên 10.000.000đ</li>
+            </ul>
+        </div>
+
+    </div>
+</div>

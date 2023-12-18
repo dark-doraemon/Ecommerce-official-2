@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <img class="navbar-brand" src="" alt="logo here">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" routerLink="/" routerLinkActive="active">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" routerLink="productView" routerLinkActive="active">Sản phẩm</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" routerLink="contact" routerLinkActive="active">Liên hệ</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" routerLink="admin" routerLinkActive="active">Admin</a>
+                </li>
+
+            </ul>
+            <div class="d-flex">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" (input)="OnHandleSearch($event)" >
+                    <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                </form>
+                <div class="ms-5">
+                    <div class="btn btn-warning">
+                        <a class="fa-solid fa-cart-shopping"></a>
+                    </div>
+                </div>
+
+                <!-- nếu current user == null thì hiện đăng nhập -->
+                <div class="ms-5" *ngIf="!(currentUser$ | async)">
+                    <button type="button" class="btn btn-outline-info"  data-bs-toggle="modal" data-bs-target="#dangnhap">
+                        Đăng nhập
+                    </button>
+                    <app-signin></app-signin>
+                </div>
+
+                <!-- nếu current user ==  null thì hiện đăng kí -->
+                <div class="" *ngIf="!(currentUser$ | async)">
+                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#dangki">
+                        Đăng kí
+                    </button>
+                    <app-signup></app-signup>                    
+                </div>
+                
+                <!-- nếu currentUser$ != null  -->
+                <div class="ms-5" *ngIf="currentUser$ | async">
+                    <a class="text-white btn me-5 text-decoration-underline btn" routerLink="../userdetails/{{(currentUser$ | async)?.username}}" >
+                        <strong> {{ (currentUser$ | async)?.username }}</strong>
+                    </a>
+                    <button type="button" class="btn btn-outline-info"  (click)="Logout()">
+                        Đăng xuất
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

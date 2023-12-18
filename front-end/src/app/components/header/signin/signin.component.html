@@ -1,0 +1,39 @@
+<div class="modal" id="dangnhap">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Đăng nhập</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form #logfinForm="ngForm"  class="form-group" (ngSubmit)="Login()" autocomplete="off">
+                    <label class="form-label">Tài khoản</label>
+                    <input placeholder="username/gmail" class="form-control" name="username" [(ngModel)]="model.username">
+
+                    <label class="form-label">Mât khẩu</label>
+                    <input placeholder="password" class="form-control" type="password" name="password" [(ngModel)]="model.password">
+                    <!-- Modal footer -->
+                    <div class="row mt-3 p-2">
+                        <button type="submit" class="btn btn-danger " data-bs-dismiss="modal" >Đăng nhập</button>
+                    </div>
+
+                </form>
+                <div class="text-center">
+                    <a href="#">Quên mật khẩu</a>
+                </div>
+
+                <div>
+                    <div>Chưa có tài khoản</div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dangki">
+                        Đăng kí
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

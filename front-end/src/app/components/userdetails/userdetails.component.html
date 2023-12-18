@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">An active item</li>
+                <li class="list-group-item" (click)="select()">Tải khoản của tôi</li>
+                <li class="list-group-item" (click)="select()">Đơn mua</li>
+
+              </ul>
+        </div>
+        <div class="col-sm-5 offset-sm-2" *ngIf="hoso">
+            <h1>Hồ sơ của tôi</h1>
+            <form class="form-group" (ngSubmit)="SuaThongTin()" autocomplete="off">
+                <label class="form-label">Họ và tên</label>
+                <input class="form-control" name="hoten" value="{{account.hoten}}" [(ngModel)]="account.hoten">
+
+                <label class="form-label">Tuổi</label>
+                <input class="form-control " name="tuoi" value="{{account.tuoi}}" [(ngModel)]="account.tuoi">
+
+                <label class="form-label">Giới tính</label>
+                <select class="form-select" name="gioitinh" [(ngModel)]="account.gioitinh">
+                    <option value="0" >Nam</option>
+                    <option value="1" >Nữ</option>
+                </select>
+
+                <label class="form-label">SĐT</label>
+                <input class="form-control" name="sdt" value="{{account.sdt}}" [(ngModel)]="account.sdt">
+
+                <label class="form-label">Địa chỉ</label>
+                <input class="form-control " name="diachi" value="{{account.diachi}}" [(ngModel)]="account.diachi">
+
+                <label class="form-label">Email</label>
+                <input class="form-control " name="email" value="{{account.email}}" [(ngModel)]="account.email">
+
+                <button type="submit" class="btn btn-primary mt-3">
+                    Sửa thông tin
+                </button>
+            </form>
+        </div>
+
+        <div class="col-sm-9" *ngIf="!hoso">
+        </div>
+    </div>
+</div>
