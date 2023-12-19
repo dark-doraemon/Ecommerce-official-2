@@ -480,5 +480,7 @@ namespace back_end.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+       
     }
 }

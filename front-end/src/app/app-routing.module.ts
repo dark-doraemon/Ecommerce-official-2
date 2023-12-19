@@ -13,6 +13,7 @@ import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.compo
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { authGuard } from './guards/auth.guard';
 import { ErrorsComponent } from './components/errors/errors.component';
+import { ServerErrorComponent } from './components/server-error/server-error.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
     { path: 'contact', component: ContactComponent },
 
     { path : 'not-found', component : NotFoundComponent},
+    { path : 'server-error',component : ServerErrorComponent},
     { path: '**', component: NotFoundComponent }
 ];
 

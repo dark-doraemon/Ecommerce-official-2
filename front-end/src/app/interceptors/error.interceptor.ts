@@ -52,7 +52,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                                     error : error.error
                                 }
                             }
-                            this.router.navigateByUrl('/home',navigationExtras);
+                            this.router.navigateByUrl('/server-error',navigationExtras);
                             break;
                         default : 
                             this.toastrService.error('Somthing unexpected went wrong');

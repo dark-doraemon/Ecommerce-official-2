@@ -70,3 +70,5 @@ C:\Users\tuan\Desktop\E-commerce-offical\back-end\obj\Debug\net6.0\back-end.genr
 C:\Users\tuan\Desktop\E-commerce-offical\back-end\obj\Debug\net6.0\ref\back-end.dll
 C:\Users\tuan\Desktop\E-commerce-offical\back-end\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\tuan\Desktop\E-commerce-offical\back-end\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\tuan\Desktop\E-commerce-offical\back-end\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\tuan\Desktop\E-commerce-offical\back-end\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

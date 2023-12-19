@@ -33,6 +33,7 @@ import { UserdetailsComponent } from './components/userdetails/userdetails.compo
 import { SharedModule } from './modules/shared/shared.module';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { ServerErrorComponent } from './components/server-error/server-error.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -61,7 +62,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
         QldonhangComponent,
         SearchComponent,
         UserdetailsComponent,
-        ErrorsComponent
+        ErrorsComponent,
+        ServerErrorComponent
 
     ],
     imports: [

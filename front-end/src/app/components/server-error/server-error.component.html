@@ -1,0 +1,16 @@
+<h4>Interal server error </h4>
+<ng-container *ngIf="error">
+    <h5 class="text-danger">Error : {{error.message}}</h5>
+    <p class="font-weight-bold"></p>
+    <p>What to do next ?</p>
+    <ol>
+        <li>Mở dev tools! Sao đó check lỗi trong tab network</li>
+        <li>Kiểm tra API endpoint</li>
+        <li>Kiểm tra lỗi trong postman - nếu postman cũng lỗi => không phải do angular</li>
+    </ol>
+
+    <p style="font-weight: bold;">Stack tree</p>
+    <code class="mt-5 bg-light" >
+        {{error.details}}
+    </code>
+</ng-container>
