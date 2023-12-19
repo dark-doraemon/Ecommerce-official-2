@@ -1,22 +1,26 @@
-<div class="col-lg-3 ">
-    <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_640.jpg" class="card-img-top" alt="...">
-
-</div>
-
-<div class="col-lg-5">
-    <h5 class="row align-middle">
-        {{product.tensanpham}}
-    </h5>
-</div>
-
-<div class="col-lg-2">
-    <h4 class="row">
-        {{product.giasanpham | currency:'VND'}}
-    </h4>
-</div>
-
-<div class="col-lg-2">
-    <div class="row">
-        <a routerLink="product-details" class="btn btn-primary">Xem chi tiết</a>
+<div class="row">
+    <div class="col-lg-3 card p-0">
+        <div class="card-img-wrapper">
+            <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_640.jpg" class="card-img-top"
+                alt="...">
+        </div>
+    </div>
+    
+    <div class="col-lg-5">
+        <h5 class="row align-middle">
+            {{product.tensanpham}}
+        </h5>
+    </div>
+    
+    <div class="col-lg-2">
+        <h4 class="row">
+            {{product.giasanpham | currency:'VND'}}
+        </h4>
+    </div>
+    
+    <div class="col-lg-2">
+        <div class="row">
+            <a routerLink="product-details" class="btn btn-primary">Xem chi tiết</a>
+        </div>
     </div>
 </div>

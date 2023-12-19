@@ -7,10 +7,10 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
     selector: 'app-userdetails',
-    templateUrl: './userdetails.component.html',
-    styleUrls: ['./userdetails.component.scss']
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.scss']
 })
-export class UserdetailsComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
     hoso: boolean = true;
 
     user: any = {};

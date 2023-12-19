@@ -12,25 +12,29 @@ export class UserService {
 
     GetUserById(id : string)
     {
-        return this.http.get<Person>(environment.baseApiUrl + 'users/' + id,this.GetHttpOptions());
+        return this.http.get<Person>(environment.baseApiUrl + 'users/' + id);
+        // this.GetHttpOptions()
     }
 
-    GetHttpOptions()
-    {
-        const userString = localStorage.getItem('user');
 
-        // if(!userString) return ;
+    //xác thực người dùng bằng jwt trược khí làm gì đó(sử dụng interceptor để thay thế )
+    // GetHttpOptions()
+    // {
+    //     const userString = localStorage.getItem('user');
 
-        const user = JSON.parse(userString);
-        return {
-            headers : new HttpHeaders({
-                Authorization: 'Bearer ' + user.token
-            })
-        }
-    }
+    //     // if(!userString) return ;
+
+    //     const user = JSON.parse(userString);
+    //     return {
+    //         headers : new HttpHeaders({
+    //             Authorization: 'Bearer ' + user.token
+    //         })
+    //     }
+    // }
 
     UpdateUser(user : Person,id : string)
     {
-        return this.http.put(environment.baseApiUrl + 'users/update/' + id,user,this.GetHttpOptions());
+        return this.http.put(environment.baseApiUrl + 'users/update/' + id,user);
+        // ,this.GetHttpOptions()
     }
 }

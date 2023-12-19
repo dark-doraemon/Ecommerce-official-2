@@ -29,11 +29,12 @@ import { QlkhachhangComponent } from './components/admin/qlkhachhang/qlkhachhang
 import { QlnhanvienComponent } from './components/admin/qlnhanvien/qlnhanvien.component';
 import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.component';
 import { SearchComponent } from './components/admin/search/search.component';
-import { UserdetailsComponent } from './components/userdetails/userdetails.component';
+import { UserProfileComponent } from './components/user-profile/userdetails.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
@@ -61,7 +62,7 @@ import { ServerErrorComponent } from './components/server-error/server-error.com
         QlnhanvienComponent,
         QldonhangComponent,
         SearchComponent,
-        UserdetailsComponent,
+        UserProfileComponent,
         ErrorsComponent,
         ServerErrorComponent
 
@@ -75,7 +76,8 @@ import { ServerErrorComponent } from './components/server-error/server-error.com
         SharedModule
     ],
     providers: [
-       { provide : HTTP_INTERCEPTORS,useClass : ErrorInterceptor,multi:true}
+       { provide : HTTP_INTERCEPTORS,useClass : ErrorInterceptor,multi:true},
+       { provide : HTTP_INTERCEPTORS,useClass : JwtInterceptor,multi : true}
     ],
     bootstrap: [AppComponent]
 })
