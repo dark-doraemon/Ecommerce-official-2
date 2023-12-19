@@ -12,7 +12,7 @@ namespace back_end.Models
         }
 
         public string MaBrand { get; set; } = null!;
-        public string? TenBrand { get; set; }
+        public string TenBrand { get; set; }
 
         public virtual ICollection<SanPham> SanPhams { get; set; }
 

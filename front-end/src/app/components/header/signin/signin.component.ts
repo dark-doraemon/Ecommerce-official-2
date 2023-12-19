@@ -20,7 +20,6 @@ export class SigninComponent {
             next: (respone) => {
                 this.toastr.success("Đăng nhập thành công");
                 this.accountService.accountModel.emit(this.model.username);
-
                 const closeButton = document.querySelector('.btn-close') as HTMLElement;
                 if (closeButton) {
                     closeButton.click();
@@ -30,7 +29,7 @@ export class SigninComponent {
             //nếu đăng nhập thất bại
             error: (errors) => {
                 this.errors = errors;
-                console.log(errors);
+                // console.log(errors);
                 // this.toastr.error(errors)
             }
         });

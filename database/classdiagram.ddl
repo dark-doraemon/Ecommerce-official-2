@@ -1,6 +1,6 @@
 CREATE TABLE LoaiTaiKhoan (MaLoaiTaiKhoan varchar(255) NOT NULL, TenLoaiTaiKhoan varchar(255) NULL, PRIMARY KEY (MaLoaiTaiKhoan));
 CREATE TABLE TaiKhoan (MaTaiKhoan varchar(255) NOT NULL, Username varchar(255) NULL, Password varchar(255) NULL, PersonID varchar(255) NOT NULL, MaLoaiTaiKhoan varchar(255) NOT NULL, PRIMARY KEY (MaTaiKhoan));
-CREATE TABLE Person (PersonID varchar(255) NOT NULL, Tuoi int NOT NULL, HoTen varchar(255) NULL, GioiTinh int NOT NULL, CCCD varchar(255) NULL, SĐT varchar(255) NULL, DiaChi varchar(255) NULL, Email varchar(255) NULL, MaCart varchar(255) NOT NULL, PRIMARY KEY (PersonID));
+CREATE TABLE Person (PersonID varchar(255) NOT NULL, Tuoi int NOT NULL, HoTen varchar(255) NULL, GioiTinh int NOT NULL, CCCD varchar(255) NULL, SDT varchar(255) NULL, DiaChi varchar(255) NULL, Email varchar(255) NULL, MaCart varchar(255) NOT NULL, PRIMARY KEY (PersonID));
 CREATE TABLE NhanVien (MaNhanVien varchar(255) NOT NULL, ChucVu varchar(255) NULL, NgayDuocTuyen datetime NULL, MaVaiTro varchar(255) NOT NULL, PRIMARY KEY (MaNhanVien));
 CREATE TABLE KhachHang (MaKhachHang varchar(255) NOT NULL, PRIMARY KEY (MaKhachHang));
 CREATE TABLE VaiTroNhanVien (MaVaiTro varchar(255) NOT NULL, TenVaiTro varchar(255) NULL, PRIMARY KEY (MaVaiTro));

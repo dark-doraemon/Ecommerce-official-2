@@ -2,15 +2,14 @@
     <img src="../../../../../assets/images/4196762.png" class="card-img-top" alt="...">
     <div class="card-body">
         <div class="card-title text-truncate">
-            {{product.tenSanPham}}
+            {{product.tensanpham}}
         </div>
         <h4 class="card-title text-truncate">
-            {{product.giaSanPham | currency : "VND"}}
+            {{product.giasanpham | currency : "VND"}}
         </h4>
         <p class="card-text"></p>
 
         
-        <!-- relative path sẽ nối routerlink vào đường dẫn đang đứng trước đó -->
-        <a routerLink="product-details/{{product.maSanPham}}" class="btn btn-primary">Xem chi tiết</a>
+        <a routerLink="product-details/{{product.masanpham}}" class="btn btn-primary">Xem chi tiết</a>
     </div>
 </div>

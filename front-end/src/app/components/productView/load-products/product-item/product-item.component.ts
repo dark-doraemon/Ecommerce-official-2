@@ -7,7 +7,13 @@ import { Product } from 'src/app/models/Product.model';
     styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent {
-    @Input() product: Product;
+    @Input() product : Product;
 
+    /**
+     *
+     */
+    constructor() {
+        
+    }
     
 }

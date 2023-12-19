@@ -9,6 +9,10 @@ namespace back_end.Helpers
         public AutoMapperProfiles() 
         { 
             CreateMap<SanPham,ProductDTO>();
+            CreateMap<Comment,CommentDTO>();
+            CreateMap<LoaiSanPham, LoaiSanPhamDTO>();
+            CreateMap<Brand,BrandDTO>();
+            CreateMap<TinhTrangSanPham, TinhTrangSanPhamDTO>();
         }
     }
 }

@@ -317,9 +317,9 @@ namespace back_end.Models
 
                 entity.Property(e => e.HoTen).HasMaxLength(255);
 
-                entity.Property(e => e.Sđt)
+                entity.Property(e => e.Sdt)
                     .HasMaxLength(255)
-                    .HasColumnName("SĐT");
+                    .HasColumnName("SDT");
             });
 
             modelBuilder.Entity<SanPham>(entity =>

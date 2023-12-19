@@ -5,7 +5,7 @@ export interface Person {
     tuoi: number;
     gioiTinh: number;
     cccd: string | null;
-    sđt: string | null;
+    sdt: string | null;
     diaChi: string | null;
     email: string | null;
     

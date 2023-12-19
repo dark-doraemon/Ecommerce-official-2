@@ -9,5 +9,7 @@ namespace back_end.DTOs
 
         [Required(ErrorMessage = "Bạn cần phải nhập mật khẩu")]
         public string password { get; set; }
+
+       
     }
 }

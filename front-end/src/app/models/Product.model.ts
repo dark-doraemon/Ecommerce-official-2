@@ -1,14 +1,18 @@
-import { TinhTrangNavigation } from "./TinhTrangSanPham.model";
+import { Brand } from "./Brand.model";
+import { Category } from "./Category.model";
+import { CommentDTO } from "./Comment.model";
+import { TinhTrangSanPham } from "./TinhTrangSanPham.model";
 
 export interface Product {
-    maSanPham: string;
-    tenSanPham: string | null;
-    giaSanPham: number ;
-    moTaSanPham: string | null;
-    soLuong: number;
-    hinhAnhSanPham: string | null;
+    masanpham: string;
+    tensanpham: string ;
+    giasanpham: number ;
+    motasanpham: string;
+    soluong: number;
+    hinhanhsanpham: string ;
     maTinhTrang: string;
-    maBrand: string;
-    maLoaiSanPham: string;
-    maTinhTrangNavigation : TinhTrangNavigation;
+    maBrandNavigation: Brand;
+    maLoaiSanPhamNavigation: Category;
+    maTinhTrangNavigation : TinhTrangSanPham;
+    comments : CommentDTO;
 }

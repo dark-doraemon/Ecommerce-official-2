@@ -35,7 +35,6 @@ export class LoadcategoryComponent implements OnInit{
         this.productService.GetProducts().subscribe({
             next: (products) => {
                 this.products = products;
-                console.log(products);
                 this.productService.products.emit(products);
             },
             error: (error) => console.log(error)
@@ -51,6 +50,7 @@ export class LoadcategoryComponent implements OnInit{
             error : error => console.log(error)
         })
     }
+
     GetBrands()
     {
         this.brandServices.getBrands().subscribe({
@@ -71,16 +71,16 @@ export class LoadcategoryComponent implements OnInit{
             filteredProducts = this.products;
         }
         else if (price === 1) {
-            filteredProducts = this.products.filter(product => product.giaSanPham < 5000000);
+            filteredProducts = this.products.filter(product => product.giasanpham < 5000000);
         } 
         else if (price === 2) {
-            filteredProducts = this.products.filter(product => product.giaSanPham >= 5000000 && product.giaSanPham <= 7000000);
+            filteredProducts = this.products.filter(product => product.giasanpham >= 5000000 && product.giasanpham <= 7000000);
         } 
         else if (price === 3) {
-            filteredProducts = this.products.filter(product => product.giaSanPham >= 7000000 && product.giaSanPham <= 10000000);
+            filteredProducts = this.products.filter(product => product.giasanpham >= 7000000 && product.giasanpham <= 10000000);
         } 
         else if (price === 4) {
-            filteredProducts = this.products.filter(product => product.giaSanPham > 10000000);
+            filteredProducts = this.products.filter(product => product.giasanpham > 10000000);
         } 
 
         this.filterService.filterByPrice.emit(filteredProducts);
@@ -88,22 +88,22 @@ export class LoadcategoryComponent implements OnInit{
 
     SelectCategory(category : Category)
     {
+        //gán chữ trên thanh search category 
         this.categoriesSearch = category.tenLoaiSanPham;
-
 
         //emit sản phẩm đã lọc theo category
         let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maLoaiSanPham === category.maLoaiSanPham);
+        filterProducts = this.products.filter(product => product.maLoaiSanPhamNavigation.maLoaiSanPham === category.maLoaiSanPham);
         this.filterService.filterByCategory.emit(filterProducts);
     }
 
     SelectBrand(brand : Brand)
     {
         this.brandsSearch = brand.tenBrand;
-
+        console.log(brand.maBrand);
         //emit sản phẩm đã lọc theo brand
         let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maBrand === brand.maBrand);
+        filterProducts = this.products.filter(product => product.maBrandNavigation.maBrand === brand.maBrand);
         this.filterService.filterByCategory.emit(filterProducts);
 
     }

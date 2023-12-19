@@ -1,4 +1,5 @@
 ﻿using back_end.DataAccess;
+using back_end.DTOs;
 using back_end.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace back_end.Controllers
         }
 
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         public IEnumerable<Person> GetUsers()
         {
@@ -28,6 +29,18 @@ namespace back_end.Controllers
         public async Task<ActionResult<Person>> GetUserById(string id)
         {
             return await repo.getUserByIdAsync(id);
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult<Person>> UpdateThongTin(PersonDTO personDTO,string id)
+        {
+            Person newPerson = await repo.UpdatePersonAsync(personDTO, id);
+            if (newPerson == null)
+            {
+                return BadRequest("Sai mã person");
+            }
+
+            return Ok(newPerson);
         }
     }
 }

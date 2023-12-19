@@ -57,7 +57,7 @@
                 
                 <!-- nếu currentUser$ != null  -->
                 <div class="ms-5" *ngIf="currentUser$ | async">
-                    <a class="text-white btn me-5 text-decoration-underline btn" routerLink="../userdetails/{{(currentUser$ | async)?.username}}" >
+                    <a class="text-white btn me-5 text-decoration-underline btn" routerLink="../userdetails/{{(currentUser$ | async)?.maPerson}}" >
                         <strong> {{ (currentUser$ | async)?.username }}</strong>
                     </a>
                     <button type="button" class="btn btn-outline-info"  (click)="Logout()">

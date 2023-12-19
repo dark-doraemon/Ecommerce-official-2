@@ -1,4 +1,5 @@
-﻿using back_end.DataAccess;
+﻿using AutoMapper;
+using back_end.DataAccess;
 using back_end.DTOs;
 using back_end.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +11,22 @@ namespace back_end.Controllers
     public class ProductController : ControllerBase
     {
         private IRepository repo;
-        public ProductController(IRepository repo)
+        private IMapper mapper;
+
+        public ProductController(IRepository repo,IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<SanPham> GetProducts()
+        public async Task<ActionResult<IEnumerable<SanPham>>> GetProducts()
         {
-            return repo.GetProducts;
+            var products = await repo.GetProductsAsync();
+
+            var productsToReturn = this.mapper.Map<IEnumerable<ProductDTO>>(products);
+
+            return Ok(productsToReturn);
         }
 
         [HttpGet("{id}")]
@@ -29,8 +37,8 @@ namespace back_end.Controllers
             {
                 return NotFound("Không tìm thấy sản phẩm");
             }
-
-            return Ok(product);
+            var productToReturn = this.mapper.Map<ProductDTO>(product);
+            return Ok(productToReturn);
         }
 
         [HttpPut("updateproduct/{masanpham}")] // api/products/updateproduct/{}
@@ -43,7 +51,7 @@ namespace back_end.Controllers
                 GiaSanPham = productDTO.giasanpham,
                 MoTaSanPham = productDTO.motasanpham,
                 SoLuong = productDTO.soluong,
-                HinhAnhSanPham = productDTO.hinhandsanpham,
+                HinhAnhSanPham = productDTO.hinhanhsanpham,
                 MaTinhTrang = productDTO.matinhtrang,
                 MaBrand = productDTO.mabrand,
                 MaLoaiSanPham = productDTO.maloaisanpham
@@ -68,7 +76,7 @@ namespace back_end.Controllers
                 GiaSanPham = productDTO.giasanpham,
                 MoTaSanPham = productDTO.motasanpham,
                 SoLuong = productDTO.soluong,
-                HinhAnhSanPham = productDTO.hinhandsanpham,
+                HinhAnhSanPham = productDTO.hinhanhsanpham,
                 MaTinhTrang = productDTO.matinhtrang,
                 MaBrand = productDTO.mabrand,
                 MaLoaiSanPham = productDTO.maloaisanpham,

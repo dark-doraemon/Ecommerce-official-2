@@ -3,14 +3,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="../../../home">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a routerLink="../../../productDetailsView">Sản phẩm</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{productDetails.tenSanPham}}</li>
+                <li class="breadcrumb-item"><a routerLink="../../../productView">Sản phẩm</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{productDetails.tensanpham}}</li>
             </ol>
         </nav>
     </div>
     <div class="row p-4">
         <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12 col-12">
-            <img src="{{ productDetails.hinhAnhSanPham }}" alt="" class="img-fluid">
+            <img src="{{ productDetails.hinhanhsanpham }}" alt="" class="img-fluid">
             <div class="d-flex justify-content-around mt-xxl-5 mt-xl-5 mt-md-3 mt-sm-2 mt-1">
                 <button class="btn btn-primary rounded-5"><i class="fa-solid fa-thumbs-up"></i></button>
                 <button class="btn btn-danger rounded-5"><i class="fa-solid fa-heart"></i></button>
@@ -18,30 +18,51 @@
             </div>
         </div>
         <div class="col-xxl-8 col-xl-8 col-md-8 col-sm-12 col-12">
-            <h3 class="mb-5">{{productDetails.tenSanPham}}</h3>
-            <h4>Giá bán: {{productDetails.giaSanPham| currency: 'VND'}}</h4>
+            <h3 class="mb-5">{{productDetails.tensanpham}}</h3>
+            <h4>Giá bán: {{productDetails.giasanpham| currency: 'VND'}}</h4>
             <p>Phí giao hàng: 0đ</p>
-            <hr/>
+            <hr />
             <p><strong>Thông tin khuyến mãi và bảo hành</strong></p>
             <p>Bảo hành 24 tháng</p>
             <p>Tình trạng: <span class="text-success">
-                {{productDetails.maTinhTrangNavigation.tenTinhTrang}}
-            </span></p>
-            <hr/>
-            <p>Số lượng sản phẩm: {{productDetails.soLuong}}</p>
-           
+                    {{productDetails.maTinhTrangNavigation.tenTinhTrang}}
+                </span></p>
+            <hr />
+            <p>Số lượng sản phẩm: {{productDetails.soluong}}</p>
+
             <button class="btn btn-success w-100"><i class="fa-solid fa-cart-plus me-2"></i>Thêm vào giỏ hàng</button>
-            <hr/>
+            <hr />
             <p><strong>Mô tả tóm tắt đặc tính</strong></p>
             <p>
-                {{productDetails.moTaSanPham}}
+                {{productDetails.motasanpham}}
             </p>
         </div>
     </div>
 
 
     <div class="row">
-        <h4>Bình luận</h4>
-        
+        <h4>Các bình luận</h4>
+
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let comment of comments"> 
+                <div class="row">
+                    <div class="col-sm-9">
+                        {{comment.noiDungComment}}
+                    </div>
+    
+                    <div class="col-sm-3">
+                        {{comment.star}} ☆
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        Ngày bình luận {{comment.ngayComment |  date:'yyyy-MM-dd' }}
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
     </div>
 </div>

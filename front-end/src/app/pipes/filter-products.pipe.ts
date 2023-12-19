@@ -13,7 +13,7 @@ export class FilterProductsPipe implements PipeTransform {
 
         const products = [];
         for (const product of value) {
-            if (product['tenSanPham'].toLowerCase().includes(filterString.toLowerCase())) {
+            if (product['tensanpham'].toLowerCase().includes(filterString.toLowerCase())) {
                 products.push(product);
             }
         }

@@ -10,7 +10,8 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ItemDetailsComponent {
     productDetails : Product;
-    id : string
+    id : string;
+    comments : any = {};
     constructor(private route : ActivatedRoute,private productService : ProductService) {
     }
 
@@ -20,7 +21,7 @@ export class ItemDetailsComponent {
         this.productService.GetProductById(this.id).subscribe({
             next : (productDetails : Product) =>{
                 this.productDetails = productDetails;
-                console.log(productDetails);
+                this.comments = productDetails.comments;
             }
         });
     }

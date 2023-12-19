@@ -27,8 +27,8 @@ namespace back_end.Controllers
         {
             Brand newBrand = new Brand
             { 
-                MaBrand = brandDTO.mabrand,
-                TenBrand = brandDTO.tenbrand,
+                MaBrand = brandDTO.maBrand,
+                TenBrand = brandDTO.tenBrand,
             };
             var check = await repo.PostBrandAsync(newBrand);
             if (check == null)
@@ -57,7 +57,7 @@ namespace back_end.Controllers
             Brand newBrand = new Brand
             {
                 MaBrand = brandId,
-                TenBrand = updateBrandDTO.tenbrand
+                TenBrand = updateBrandDTO.tenBrand
             };
             var check = await repo.UpdateBrandAync(newBrand);
 

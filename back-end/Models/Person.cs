@@ -18,7 +18,7 @@ namespace back_end.Models
         public int Tuoi { get; set; }
         public int GioiTinh { get; set; }
         public string? Cccd { get; set; }
-        public string? Sđt { get; set; }
+        public string? Sdt { get; set; }
         public string? DiaChi { get; set; }
         public string? Email { get; set; }
 

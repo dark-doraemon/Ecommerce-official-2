@@ -19,19 +19,21 @@ export class LoadProductsComponent implements OnInit {
     productSearching : string = ''; //lấy product search từ thanh search ở header
     constructor(private productService: ProductService,private filterService : FilterService,private searchService : SearchProductsService) { 
        
-
+        //filter theo giá
         this.filterService.filterByPrice.subscribe({
             next : (products : Product[]) =>{
                 this.products = products;
             }
         })
 
+        //filter theo brand
         this.filterService.filterByBrand.subscribe({
             next : brand => {
                 this.products = brand;
             }
         })
 
+        //filter theo category
         this.filterService.filterByCategory.subscribe({
             next : category => {
                 console.log(category);
@@ -39,6 +41,7 @@ export class LoadProductsComponent implements OnInit {
             }
         })
 
+        
         this.searchService.searchProductText.subscribe({
             next : (search :string) =>{
                 this.productSearching = search;
@@ -51,7 +54,10 @@ export class LoadProductsComponent implements OnInit {
         // this.GetProducts();// lấy các sản phẩm
         // dữ liệu được emit từ category component nên không cần getProducts ở đây nữa
         this.productService.products.subscribe({
-            next : products => this.products = products
+            next : products => {
+                this.products = products
+                console.log(this.products);
+            }
         })
     }
 
@@ -104,19 +110,19 @@ export class LoadProductsComponent implements OnInit {
 
     IncreasingSort() {
         this.products.sort((a, b) => {
-            return a.giaSanPham - b.giaSanPham;
+            return a.giasanpham - b.giasanpham;
         });
     }
 
     DescreasingSort() {
         this.products.sort((a, b) => {
-            return b.giaSanPham - a.giaSanPham;
+            return b.giasanpham - a.giasanpham;
         })
     }
 
     AlphabetSort() {
         this.products.sort((a, b) => {
-            return a.tenSanPham.localeCompare(b.tenSanPham)
+            return a.tensanpham.localeCompare(b.tensanpham)
         })
     }
     

@@ -2,7 +2,7 @@
 {
     public class BrandDTO
     {
-        public string mabrand { get; set; } 
-        public string tenbrand { get; set; }    
+        public string maBrand { get; set; } 
+        public string tenBrand { get; set; }    
     }
 }

@@ -12,25 +12,25 @@
             <h1>Hồ sơ của tôi</h1>
             <form class="form-group" (ngSubmit)="SuaThongTin()" autocomplete="off">
                 <label class="form-label">Họ và tên</label>
-                <input class="form-control" name="hoten" value="{{account.hoten}}" [(ngModel)]="account.hoten">
+                <input class="form-control" name="hoten" value="{{user.hoten}}" [(ngModel)]="user.hoten">
 
                 <label class="form-label">Tuổi</label>
-                <input class="form-control " name="tuoi" value="{{account.tuoi}}" [(ngModel)]="account.tuoi">
+                <input class="form-control " type="number" name="tuoi" value="{{user.tuoi}}" [(ngModel)]="user.tuoi">
 
                 <label class="form-label">Giới tính</label>
-                <select class="form-select" name="gioitinh" [(ngModel)]="account.gioitinh">
+                <select class="form-select" name="gioitinh" [(ngModel)]="user.gioitinh" >
                     <option value="0" >Nam</option>
                     <option value="1" >Nữ</option>
                 </select>
 
                 <label class="form-label">SĐT</label>
-                <input class="form-control" name="sdt" value="{{account.sdt}}" [(ngModel)]="account.sdt">
+                <input class="form-control" name="sdt" value="{{user.sdt}}" [(ngModel)]="user.sdt">
 
                 <label class="form-label">Địa chỉ</label>
-                <input class="form-control " name="diachi" value="{{account.diachi}}" [(ngModel)]="account.diachi">
+                <input class="form-control " name="diachi" value="{{user.diachi}}" [(ngModel)]="user.diachi">
 
                 <label class="form-label">Email</label>
-                <input class="form-control " name="email" value="{{account.email}}" [(ngModel)]="account.email">
+                <input class="form-control " name="email" value="{{user.email}}" [(ngModel)]="user.email">
 
                 <button type="submit" class="btn btn-primary mt-3">
                     Sửa thông tin

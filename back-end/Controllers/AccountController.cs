@@ -2,12 +2,14 @@
 using back_end.DTOs;
 using back_end.Interfaces;
 using back_end.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace back_end.Controllers
 {
+
     public class AccountController : BaseApiController
     {
         private string loaitaikhoankhach = "ltkkhachhang";
@@ -53,7 +55,7 @@ namespace back_end.Controllers
                 Tuoi = registerDTO.tuoi,
                 GioiTinh = registerDTO.gioitinh,
                 Cccd = registerDTO.cccd,
-                Sđt = registerDTO.sdt,
+                Sdt = registerDTO.sdt,
                 DiaChi = registerDTO.diachi,    
                 Email = registerDTO.email,
                 KhachHang = new KhachHang { MaKhachHang = makhachhang }
@@ -96,7 +98,7 @@ namespace back_end.Controllers
 
             //khi đăng nhập thành công trả về username và 1 JWT token
             //JWT token này dùng để trả về thông tin người dùng
-            return new UserDTO { username = loginDTO.username , token = tokenService.CreateToken(taikhoan)};
+            return new UserDTO { username = loginDTO.username , token = tokenService.CreateToken(taikhoan) , maPerson = taikhoan.Person.PersonId};
         }
 
 

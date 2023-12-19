@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Account } from 'src/app/models/account.model';
+import { ActivatedRoute, Route } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Person } from 'src/app/models/Person.model';
 import { AccountService } from 'src/app/services/account.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
     selector: 'app-userdetails',
@@ -9,35 +11,42 @@ import { AccountService } from 'src/app/services/account.service';
     styleUrls: ['./userdetails.component.scss']
 })
 export class UserdetailsComponent implements OnInit {
-    hoso : boolean = true;
+    hoso: boolean = true;
 
-    account : any= {};
+    user: any = {};
 
-    constructor(private accountService : AccountService,private route :ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private userService: UserService,private toastr : ToastrService) {
 
     }
     ngOnInit(): void {
         const username = this.route.snapshot.params['username'];
-        this.accountService.GetAccountByUsername(username).subscribe({
-            next : (account) =>{
-                this.account.hoten = account.hoten,
-                this.account.tuoi = account.tuoi,
-                this.account.gioitinh = account.gioitinh,
-                this.account.sdt = account.sdt,
-                this.account.diachi = account.diachi,
-                this.account.email = account.email
-
+        this.userService.GetUserById(username).subscribe({
+            next: (user) => {
+                this.user.hoten = user.hoTen,
+                this.user.tuoi = user.tuoi,
+                this.user.gioitinh = user.gioiTinh,
+                this.user.sdt = user.sdt,
+                this.user.diachi = user.diaChi,
+                this.user.email = user.email
             }
         })
     }
 
-    select()
-    {
+    select() {
         this.hoso = !this.hoso
     }
 
-    SuaThongTin()
-    {
-        console.log(this.account);
+    SuaThongTin() {
+        console.log(this.user);
+        const username = this.route.snapshot.params['username'];
+        
+        this.userService.UpdateUser(this.user,username).subscribe({
+            next : (response) =>{
+                // console.log(response);
+                this.toastr.success("Update thành công");
+            },
+            error : error => console.log(error)
+            
+        })
     }
 }

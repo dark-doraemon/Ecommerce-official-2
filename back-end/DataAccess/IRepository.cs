@@ -20,7 +20,7 @@ namespace back_end.DataAccess
 
         string CreateMaSanPham();
 
-        IEnumerable<SanPham> GetProducts { get; } // get san pham
+        Task<IEnumerable<SanPham>> GetProductsAsync(); // get san pham
 
         Task<SanPham> GetProductByIdAsync(string productId); // get san pham by id
 
@@ -65,6 +65,7 @@ namespace back_end.DataAccess
         //Person    
         IEnumerable<Person> GetUsers { get; }
         Task<Person> getUserByIdAsync(string id);
+        Task<Person> UpdatePersonAsync(PersonDTO personDTO,string id);
 
         //TaiKhoan
         string CreateMaTaiKhoan();

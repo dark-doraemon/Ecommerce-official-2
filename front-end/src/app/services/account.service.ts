@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
@@ -21,9 +21,10 @@ export class AccountService {
     {
         return this.http.post<User>(environment.baseApiUrl + 'account/login',model).pipe(
             map((respone ) =>{
-                const user =respone;
+                const user = respone;
                 if(user)
                 {
+                    console.log(user);
                     this.currentUserSource.next(user);
                     localStorage.setItem("user",JSON.stringify(user));
                 }
@@ -61,8 +62,14 @@ export class AccountService {
         )
     }
 
+
+    //khi get account thì cũng sẽ lấy luôn person
     GetAccountByUsername(username : string)
     {
         return this.http.get<Account>(environment.baseApiUrl + 'account/' + username);
     }
+
+    
+
+   
 }
