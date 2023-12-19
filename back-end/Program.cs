@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions;
 using back_end.Extensions;
+using back_end.Middlewares;
 
 namespace back_end
 {
@@ -37,6 +38,8 @@ namespace back_end
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

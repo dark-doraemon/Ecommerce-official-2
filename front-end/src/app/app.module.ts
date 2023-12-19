@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/header/home/home.component';
@@ -17,7 +17,7 @@ import { SignupComponent } from './components/header/signup/signup.component';
 import { ProductItemComponent } from './components/productView/load-products/product-item/product-item.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ProductItemRowComponent } from './components/productView/load-products/product-item-row/product-item-row.component'
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './pipes/filter-categories.pipe';
@@ -31,6 +31,8 @@ import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.compo
 import { SearchComponent } from './components/admin/search/search.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { SharedModule } from './modules/shared/shared.module';
+import { ErrorsComponent } from './components/errors/errors.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
@@ -58,17 +60,21 @@ import { SharedModule } from './modules/shared/shared.module';
         QlnhanvienComponent,
         QldonhangComponent,
         SearchComponent,
-        UserdetailsComponent
+        UserdetailsComponent,
+        ErrorsComponent
 
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
         SharedModule
     ],
-    providers: [],
+    providers: [
+       { provide : HTTP_INTERCEPTORS,useClass : ErrorInterceptor,multi:true}
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

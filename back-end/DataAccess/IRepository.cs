@@ -5,7 +5,6 @@ namespace back_end.DataAccess
 {
     public interface IRepository
     {
-
         //Brand
         IEnumerable<Brand> GetBrands { get; }
         Task<Brand> PostBrandAsync(Brand newBrand);

@@ -5,8 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
+
     const accountService = inject(AccountService);
     const toast = inject(ToastrService);
+    //kiểm tra có currenUser$ không 
     return accountService.currenUser$.pipe(
         map(user => {
             if(user)

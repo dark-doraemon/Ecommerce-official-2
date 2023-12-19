@@ -10,6 +10,7 @@ import { AccountService } from 'src/app/services/account.service';
 export class SignupComponent {
 
     formRegister : any = {};
+    errors : string[] = [];
     constructor(private accountService : AccountService,private toastr : ToastrService){}
     
     Register(){
@@ -17,11 +18,15 @@ export class SignupComponent {
             next : response => {
                 // console.log(response);
                 this.toastr.success("Đăng kí thành công");
+                const closeButton = document.querySelector('.btn-close') as HTMLElement;
+                if (closeButton) {
+                    closeButton.click();
+                }
             },
             error : errors => {
-
-                this.toastr.error(errors.error);
-                // console.log(errors)
+                this.errors = errors;
+                // this.toastr.error(errors.error);
+                console.log(errors)
             }
         })
     }

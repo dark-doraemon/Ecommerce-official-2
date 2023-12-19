@@ -12,6 +12,7 @@ import { QlnhanvienComponent } from './components/admin/qlnhanvien/qlnhanvien.co
 import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { authGuard } from './guards/auth.guard';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -30,12 +31,15 @@ const routes: Routes = [
         {path : 'qlkhachhang',component : QlkhachhangComponent},
         {path : 'qldonhang',component : QldonhangComponent}
     ],canActivate : [authGuard]},
+
+    {path : 'errors', component : ErrorsComponent},
+
     
     { path: 'productView/product-details/:id', component: ItemDetailsComponent },
 
     { path: 'contact', component: ContactComponent },
 
-
+    { path : 'not-found', component : NotFoundComponent},
     { path: '**', component: NotFoundComponent }
 ];
 

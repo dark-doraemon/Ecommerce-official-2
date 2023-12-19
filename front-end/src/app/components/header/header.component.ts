@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/models/User';
 
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
     searchProductText: string;
 
     constructor(private searchService: SearchProductsService,
-                private accountService : AccountService) {
+                private accountService : AccountService,private toastr : ToastrService) {
 
         this.accountService.accountModel.subscribe({
             next :(username : string) =>{
@@ -58,6 +59,7 @@ export class HeaderComponent implements OnInit {
     {
         //sẽ logout trong serivce
         this.accountService.Logout();
+        this.toastr.success("Đăng xuất thành công");
 
         //set trang thái để thay đổi template
         // this.loggedIn = false;

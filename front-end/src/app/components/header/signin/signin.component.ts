@@ -9,24 +9,29 @@ import { LoggingService as LoginService } from 'src/app/services/logging.service
     styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent {
-    model : any = {};
+    model: any = {};
+    errors : string[] = [];
+    constructor(private accountService: AccountService, private toastr: ToastrService) { }
 
-    constructor(private accountService : AccountService,private toastr : ToastrService) {}
 
-    
-    Login()
-    {
+    Login() {
         this.accountService.login(this.model).subscribe({
             //nếu đăng nhập thành công
-            next :(respone) =>{
+            next: (respone) => {
                 this.toastr.success("Đăng nhập thành công");
                 this.accountService.accountModel.emit(this.model.username);
+
+                const closeButton = document.querySelector('.btn-close') as HTMLElement;
+                if (closeButton) {
+                    closeButton.click();
+                }
             },
 
             //nếu đăng nhập thất bại
-            error : (errors) => {
-                console.log(errors.error);
-                this.toastr.error(errors.error)
+            error: (errors) => {
+                this.errors = errors;
+                console.log(errors);
+                // this.toastr.error(errors)
             }
         });
     }
