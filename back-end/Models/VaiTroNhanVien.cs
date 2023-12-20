@@ -10,8 +10,8 @@ namespace back_end.Models
             NhanViens = new HashSet<NhanVien>();
         }
 
-        public string MaVaiTro { get; set; } = null!;
-        public string? TenVaiTro { get; set; }
+        public string MaVaiTro { get; set; }
+        public string TenVaiTro { get; set; }
 
         public virtual ICollection<NhanVien> NhanViens { get; set; }
     }

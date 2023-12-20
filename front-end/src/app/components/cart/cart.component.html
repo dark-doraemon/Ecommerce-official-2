@@ -1,1 +1,62 @@
-<p>cart works!</p>
+<div class="container">
+    <div class="row">
+        <table class="table ">
+            <thead >
+                <tr class="table-primary">
+                    <td>STT</td>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td>Sẩn phẩm</td>
+                    <td>Đơn giá</td>
+                    <td>Số lượng</td>
+                    <td>Số tiền</td>
+                    <td>Xóa</td>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                <tr *ngFor="let product of productsCart;let i = index" class="align-middle">
+                    <td> {{i + 1}}</td>
+                    <td>
+                        <input type="checkbox" class="form-check-input">
+                    </td>
+
+                    <td>
+                        <img width="100" height="100">
+                        {{product.maSanPhamNavigation.tensanpham}}
+                    </td>
+
+                    <td>
+                        {{product.maSanPhamNavigation.giasanpham | currency : 'VND'}}
+
+                    </td>
+
+                    <td>
+                        <button (click)="Increase()">+</button>
+                        <input type="number" id="number" value="0"  [value]="product.soLuongSp"/>
+                        <button (click)="Derease()">-</button>
+
+                    </td>
+
+                    <td>
+                        {{product.maSanPhamNavigation.giasanpham * product.soLuongSp | currency : 'VND'}}
+                    </td>
+
+                    <td>
+                        <button class="btn btn-danger" (click)="Delete(product.maSanPhamNavigation.masanpham,i)">Xóa</button>
+                    </td>
+                </tr>
+
+                <tr class="bg-light">
+
+                    <td colspan="6" class="text-center">Tổng tiền : </td>
+                    <td >
+                        <button class="btn btn-primary">Thanh toán</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 namespace back_end.Models
 {
-    public partial class DatHangSanPham
+    public partial class CartSanPham
     {
-        public string MaDatHang { get; set; }
+        public string MaCart { get; set; }
         public string MaSanPham { get; set; }
-        public int? SoLuong { get; set; }
+        public int? SoLuongSp { get; set; }
         public decimal? GiaTien { get; set; }
-        public decimal? TongTien { get; set; }
 
-        public virtual DatHang MaDatHangNavigation { get; set; }
+        public virtual Cart MaCartNavigation { get; set; }
         public virtual SanPham MaSanPhamNavigation { get; set; }
     }
 }

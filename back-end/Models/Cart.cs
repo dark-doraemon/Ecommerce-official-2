@@ -7,16 +7,13 @@ namespace back_end.Models
     {
         public Cart()
         {
-            MaSanPhams = new HashSet<SanPham>();
+            CartSanPhams = new HashSet<CartSanPham>();
         }
 
-        public string MaCart { get; set; } = null!;
-        public int SoLuongSp { get; set; }
-        public decimal? TongTienCart { get; set; }
-        public string PersonId { get; set; } = null!;
+        public string MaCart { get; set; }
+        public string PersonId { get; set; }
 
-        public virtual Person Person { get; set; } = null!;
-
-        public virtual ICollection<SanPham> MaSanPhams { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual ICollection<CartSanPham> CartSanPhams { get; set; }
     }
 }

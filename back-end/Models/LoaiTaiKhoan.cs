@@ -10,8 +10,8 @@ namespace back_end.Models
             TaiKhoans = new HashSet<TaiKhoan>();
         }
 
-        public string MaLoaiTaiKhoan { get; set; } = null!;
-        public string? TenLoaiTaiKhoan { get; set; }
+        public string MaLoaiTaiKhoan { get; set; }
+        public string TenLoaiTaiKhoan { get; set; }
 
         public virtual ICollection<TaiKhoan> TaiKhoans { get; set; }
     }

@@ -1,13 +1,13 @@
-﻿using back_end.DataAccess;
-using back_end.Interfaces;
-using back_end.Models;
-using back_end.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions;
 using back_end.Extensions;
+using back_end.Models;
+using back_end.Services;
+using back_end.DataAccess;
+using back_end.Interfaces;
 using back_end.Middlewares;
 
 namespace back_end
@@ -18,10 +18,9 @@ namespace back_end
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddScoped<EcommerceContext>();
-            builder.Services.AddScoped<IRepository,Repository>();
-            builder.Services.AddScoped<ITokenService,TokenService>();
+            builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddIdentityServices(builder.Configuration);
 
             builder.Services.AddDbContext<EcommerceContext>(op =>

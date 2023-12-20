@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace back_end.Migrations
 {
-    public partial class sdt : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -157,8 +157,6 @@ namespace back_end.Migrations
                 columns: table => new
                 {
                     MaCart = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    SoLuongSP = table.Column<int>(type: "int", nullable: false),
-                    TongTienCart = table.Column<decimal>(type: "numeric(19,3)", nullable: true),
                     PersonID = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>

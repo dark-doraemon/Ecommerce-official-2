@@ -11,8 +11,8 @@ namespace back_end.Models
             MaBrands = new HashSet<Brand>();
         }
 
-        public string MaLoaiSanPham { get; set; } = null!;
-        public string? TenLoaiSanPham { get; set; }
+        public string MaLoaiSanPham { get; set; }
+        public string TenLoaiSanPham { get; set; }
 
         public virtual ICollection<SanPham> SanPhams { get; set; }
 

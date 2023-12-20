@@ -14,6 +14,7 @@ import { UserProfileComponent } from './components/user-profile/userdetails.comp
 import { authGuard } from './guards/auth.guard';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
         path: 'productView', component: ProductViewComponent
     },
 
+    { path : 'cart' ,component : CartComponent},
     {path : 'user-profile/:username', component : UserProfileComponent,canActivate : [authGuard]},
 
     { path : 'admin', component : AdminComponent ,children :[

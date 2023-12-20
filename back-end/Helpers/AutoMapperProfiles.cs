@@ -8,6 +8,8 @@ namespace back_end.Helpers
     {
         public AutoMapperProfiles() 
         { 
+            CreateMap<CartSanPham,CartSanPhamDTO>();
+            CreateMap<Cart,CartDTO>();
             CreateMap<SanPham,ProductDTO>();
             CreateMap<Comment,CommentDTO>();
             CreateMap<LoaiSanPham, LoaiSanPhamDTO>();

@@ -10,8 +10,8 @@ namespace back_end.Models
             MaSanPhams = new HashSet<SanPham>();
         }
 
-        public string MaMauSac { get; set; } = null!;
-        public string? TenMauSac { get; set; }
+        public string MaMauSac { get; set; }
+        public string TenMauSac { get; set; }
 
         public virtual ICollection<SanPham> MaSanPhams { get; set; }
     }

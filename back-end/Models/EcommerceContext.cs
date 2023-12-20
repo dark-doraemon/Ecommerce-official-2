@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Options;
 
 namespace back_end.Models
 {
@@ -15,33 +14,33 @@ namespace back_end.Models
         public EcommerceContext(DbContextOptions<EcommerceContext> options)
             : base(options)
         {
-            
         }
 
-        public virtual DbSet<Brand> Brands { get; set; } = null!;
-        public virtual DbSet<Cart> Carts { get; set; } = null!;
-        public virtual DbSet<Comment> Comments { get; set; } = null!;
-        public virtual DbSet<DatHang> DatHangs { get; set; } = null!;
-        public virtual DbSet<DatHangSanPham> DatHangSanPhams { get; set; } = null!;
-        public virtual DbSet<HoaDon> HoaDons { get; set; } = null!;
-        public virtual DbSet<KhachHang> KhachHangs { get; set; } = null!;
-        public virtual DbSet<LoaiSanPham> LoaiSanPhams { get; set; } = null!;
-        public virtual DbSet<LoaiTaiKhoan> LoaiTaiKhoans { get; set; } = null!;
-        public virtual DbSet<MauSacSanPham> MauSacSanPhams { get; set; } = null!;
-        public virtual DbSet<NhanVien> NhanViens { get; set; } = null!;
-        public virtual DbSet<Person> People { get; set; } = null!;
-        public virtual DbSet<SanPham> SanPhams { get; set; } = null!;
-        public virtual DbSet<TaiKhoan> TaiKhoans { get; set; } = null!;
-        public virtual DbSet<ThacMacKhieuNai> ThacMacKhieuNais { get; set; } = null!;
-        public virtual DbSet<TinhTrangSanPham> TinhTrangSanPhams { get; set; } = null!;
-        public virtual DbSet<VaiTroNhanVien> VaiTroNhanViens { get; set; } = null!;
-        public virtual DbSet<Voucher> Vouchers { get; set; } = null!;
+        public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartSanPham> CartSanPhams { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<DatHang> DatHangs { get; set; }
+        public virtual DbSet<DatHangSanPham> DatHangSanPhams { get; set; }
+        public virtual DbSet<HoaDon> HoaDons { get; set; }
+        public virtual DbSet<KhachHang> KhachHangs { get; set; }
+        public virtual DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
+        public virtual DbSet<LoaiTaiKhoan> LoaiTaiKhoans { get; set; }
+        public virtual DbSet<MauSacSanPham> MauSacSanPhams { get; set; }
+        public virtual DbSet<NhanVien> NhanViens { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
+        public virtual DbSet<ThacMacKhieuNai> ThacMacKhieuNais { get; set; }
+        public virtual DbSet<TinhTrangSanPham> TinhTrangSanPhams { get; set; }
+        public virtual DbSet<VaiTroNhanVien> VaiTroNhanViens { get; set; }
+        public virtual DbSet<Voucher> Vouchers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Ecommerce;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=.;Database=Ecommerce;Trusted_Connection=True;");
             }
         }
 
@@ -50,7 +49,7 @@ namespace back_end.Models
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.HasKey(e => e.MaBrand)
-                    .HasName("PK__Brand__2F06A754F233D03D");
+                    .HasName("PK__Brand__2F06A75435B917E1");
 
                 entity.ToTable("Brand");
 
@@ -62,60 +61,71 @@ namespace back_end.Models
             modelBuilder.Entity<Cart>(entity =>
             {
                 entity.HasKey(e => e.MaCart)
-                    .HasName("PK__Cart__20E715D51900B431");
+                    .HasName("PK__Cart__20E715D55FC0ECFA");
 
                 entity.ToTable("Cart");
 
                 entity.Property(e => e.MaCart).HasMaxLength(255);
 
                 entity.Property(e => e.PersonId)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("PersonID");
-
-                entity.Property(e => e.SoLuongSp).HasColumnName("SoLuongSP");
-
-                entity.Property(e => e.TongTienCart).HasColumnType("numeric(19, 3)");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKCart142245");
+            });
 
-                entity.HasMany(d => d.MaSanPhams)
-                    .WithMany(p => p.MaCarts)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "CartSanPham",
-                        l => l.HasOne<SanPham>().WithMany().HasForeignKey("MaSanPham").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FKCart_SanPh844321"),
-                        r => r.HasOne<Cart>().WithMany().HasForeignKey("MaCart").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FKCart_SanPh922696"),
-                        j =>
-                        {
-                            j.HasKey("MaCart", "MaSanPham").HasName("PK__Cart_San__EF4B619769C137C3");
+            modelBuilder.Entity<CartSanPham>(entity =>
+            {
+                entity.HasKey(e => new { e.MaCart, e.MaSanPham })
+                    .HasName("PK__Cart_San__EF4B6197AB5222C9");
 
-                            j.ToTable("Cart_SanPham");
+                entity.ToTable("Cart_SanPham");
 
-                            j.IndexerProperty<string>("MaCart").HasMaxLength(255);
+                entity.Property(e => e.MaCart).HasMaxLength(255);
 
-                            j.IndexerProperty<string>("MaSanPham").HasMaxLength(255);
-                        });
+                entity.Property(e => e.MaSanPham).HasMaxLength(255);
+
+                entity.Property(e => e.GiaTien).HasColumnType("numeric(19, 3)");
+
+                entity.Property(e => e.SoLuongSp).HasColumnName("SoLuongSP");
+
+                entity.HasOne(d => d.MaCartNavigation)
+                    .WithMany(p => p.CartSanPhams)
+                    .HasForeignKey(d => d.MaCart)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKCart_SanPh922696");
+
+                entity.HasOne(d => d.MaSanPhamNavigation)
+                    .WithMany(p => p.CartSanPhams)
+                    .HasForeignKey(d => d.MaSanPham)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKCart_SanPh844321");
             });
 
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.HasKey(e => e.MaComment)
-                    .HasName("PK__Comment__36A7276A2F0AF3C3");
+                    .HasName("PK__Comment__36A7276A3C1D7DAB");
 
                 entity.ToTable("Comment");
 
                 entity.Property(e => e.MaComment).HasMaxLength(255);
 
-                entity.Property(e => e.MaSanPham).HasMaxLength(255);
+                entity.Property(e => e.MaSanPham)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.NgayComment).HasColumnType("datetime");
 
                 entity.Property(e => e.NoiDungComment).HasMaxLength(255);
 
                 entity.Property(e => e.PersonId)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("PersonID");
 
@@ -135,7 +145,7 @@ namespace back_end.Models
             modelBuilder.Entity<DatHang>(entity =>
             {
                 entity.HasKey(e => e.MaDatHang)
-                    .HasName("PK__DatHang__1E77C2F0800A7D62");
+                    .HasName("PK__DatHang__1E77C2F0F8DB87C1");
 
                 entity.ToTable("DatHang");
 
@@ -144,6 +154,7 @@ namespace back_end.Models
                 entity.Property(e => e.NgayDatHang).HasColumnType("datetime");
 
                 entity.Property(e => e.PersonId)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("PersonID");
 
@@ -157,7 +168,7 @@ namespace back_end.Models
             modelBuilder.Entity<DatHangSanPham>(entity =>
             {
                 entity.HasKey(e => new { e.MaDatHang, e.MaSanPham })
-                    .HasName("PK__DatHang___D1DBB6B2AE2207C5");
+                    .HasName("PK__DatHang___D1DBB6B28DDE0F4F");
 
                 entity.ToTable("DatHang_SanPham");
 
@@ -185,13 +196,15 @@ namespace back_end.Models
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.MaHoaDon)
-                    .HasName("PK__HoaDon__835ED13BBD83EF84");
+                    .HasName("PK__HoaDon__835ED13B5652DE52");
 
                 entity.ToTable("HoaDon");
 
                 entity.Property(e => e.MaHoaDon).HasMaxLength(255);
 
-                entity.Property(e => e.MaDatHang).HasMaxLength(255);
+                entity.Property(e => e.MaDatHang)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.NgayIn).HasColumnType("datetime");
 
@@ -207,7 +220,7 @@ namespace back_end.Models
             modelBuilder.Entity<KhachHang>(entity =>
             {
                 entity.HasKey(e => e.MaKhachHang)
-                    .HasName("PK__KhachHan__88D2F0E5E71F3913");
+                    .HasName("PK__KhachHan__88D2F0E51B44EF16");
 
                 entity.ToTable("KhachHang");
 
@@ -223,7 +236,7 @@ namespace back_end.Models
             modelBuilder.Entity<LoaiSanPham>(entity =>
             {
                 entity.HasKey(e => e.MaLoaiSanPham)
-                    .HasName("PK__LoaiSanP__ECCF699F592C9358");
+                    .HasName("PK__LoaiSanP__ECCF699FE2539396");
 
                 entity.ToTable("LoaiSanPham");
 
@@ -239,7 +252,7 @@ namespace back_end.Models
                         r => r.HasOne<LoaiSanPham>().WithMany().HasForeignKey("MaLoaiSanPham").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FKLoaiSanPha320643"),
                         j =>
                         {
-                            j.HasKey("MaLoaiSanPham", "MaBrand").HasName("PK__LoaiSanP__BE3F03EA5C2E17F5");
+                            j.HasKey("MaLoaiSanPham", "MaBrand").HasName("PK__LoaiSanP__BE3F03EADF0CD2D8");
 
                             j.ToTable("LoaiSanPham_Brand");
 
@@ -252,7 +265,7 @@ namespace back_end.Models
             modelBuilder.Entity<LoaiTaiKhoan>(entity =>
             {
                 entity.HasKey(e => e.MaLoaiTaiKhoan)
-                    .HasName("PK__LoaiTaiK__5F6E141C5EAD620F");
+                    .HasName("PK__LoaiTaiK__5F6E141C98096B06");
 
                 entity.ToTable("LoaiTaiKhoan");
 
@@ -264,7 +277,7 @@ namespace back_end.Models
             modelBuilder.Entity<MauSacSanPham>(entity =>
             {
                 entity.HasKey(e => e.MaMauSac)
-                    .HasName("PK__MauSacSa__B9A91162925E99C3");
+                    .HasName("PK__MauSacSa__B9A9116263E4B334");
 
                 entity.ToTable("MauSacSanPham");
 
@@ -276,13 +289,15 @@ namespace back_end.Models
             modelBuilder.Entity<NhanVien>(entity =>
             {
                 entity.HasKey(e => e.MaNhanVien)
-                    .HasName("PK__NhanVien__77B2CA47F146AF7D");
+                    .HasName("PK__NhanVien__77B2CA47921843C5");
 
                 entity.ToTable("NhanVien");
 
                 entity.Property(e => e.MaNhanVien).HasMaxLength(255);
 
-                entity.Property(e => e.MaVaiTro).HasMaxLength(255);
+                entity.Property(e => e.MaVaiTro)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.NgayDuocTuyen).HasColumnType("datetime");
 
@@ -325,7 +340,7 @@ namespace back_end.Models
             modelBuilder.Entity<SanPham>(entity =>
             {
                 entity.HasKey(e => e.MaSanPham)
-                    .HasName("PK__SanPham__FAC7442DE5565939");
+                    .HasName("PK__SanPham__FAC7442D78A26469");
 
                 entity.ToTable("SanPham");
 
@@ -335,11 +350,17 @@ namespace back_end.Models
 
                 entity.Property(e => e.HinhAnhSanPham).HasMaxLength(255);
 
-                entity.Property(e => e.MaBrand).HasMaxLength(255);
+                entity.Property(e => e.MaBrand)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
-                entity.Property(e => e.MaLoaiSanPham).HasMaxLength(255);
+                entity.Property(e => e.MaLoaiSanPham)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
-                entity.Property(e => e.MaTinhTrang).HasMaxLength(255);
+                entity.Property(e => e.MaTinhTrang)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.MoTaSanPham).HasMaxLength(255);
 
@@ -371,7 +392,7 @@ namespace back_end.Models
                         r => r.HasOne<SanPham>().WithMany().HasForeignKey("MaSanPham").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FKSanPham_Ma48895"),
                         j =>
                         {
-                            j.HasKey("MaSanPham", "MaMauSac").HasName("PK__SanPham___C15DD53BA3AB5F7F");
+                            j.HasKey("MaSanPham", "MaMauSac").HasName("PK__SanPham___C15DD53B3502945A");
 
                             j.ToTable("SanPham_MauSacSanPham");
 
@@ -384,17 +405,20 @@ namespace back_end.Models
             modelBuilder.Entity<TaiKhoan>(entity =>
             {
                 entity.HasKey(e => e.MaTaiKhoan)
-                    .HasName("PK__TaiKhoan__AD7C6529DBA89C4B");
+                    .HasName("PK__TaiKhoan__AD7C652980FCBE10");
 
                 entity.ToTable("TaiKhoan");
 
                 entity.Property(e => e.MaTaiKhoan).HasMaxLength(255);
 
-                entity.Property(e => e.MaLoaiTaiKhoan).HasMaxLength(255);
+                entity.Property(e => e.MaLoaiTaiKhoan)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 
                 entity.Property(e => e.PersonId)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("PersonID");
 
@@ -416,7 +440,7 @@ namespace back_end.Models
             modelBuilder.Entity<ThacMacKhieuNai>(entity =>
             {
                 entity.HasKey(e => e.MaKhieuNai)
-                    .HasName("PK__ThacMacK__1D72BE527AA1A8DE");
+                    .HasName("PK__ThacMacK__1D72BE52211E3ADA");
 
                 entity.ToTable("ThacMacKhieuNai");
 
@@ -440,7 +464,7 @@ namespace back_end.Models
             modelBuilder.Entity<TinhTrangSanPham>(entity =>
             {
                 entity.HasKey(e => e.MaTinhTrang)
-                    .HasName("PK__TinhTran__89F8F669096159AA");
+                    .HasName("PK__TinhTran__89F8F669170488E7");
 
                 entity.ToTable("TinhTrangSanPham");
 
@@ -452,7 +476,7 @@ namespace back_end.Models
             modelBuilder.Entity<VaiTroNhanVien>(entity =>
             {
                 entity.HasKey(e => e.MaVaiTro)
-                    .HasName("PK__VaiTroNh__C24C41CF2731FBBB");
+                    .HasName("PK__VaiTroNh__C24C41CFBDAD81FA");
 
                 entity.ToTable("VaiTroNhanVien");
 
@@ -480,7 +504,5 @@ namespace back_end.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-       
     }
 }

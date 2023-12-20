@@ -5,8 +5,8 @@ namespace back_end.Models
 {
     public partial class Voucher
     {
-        public string VoucherId { get; set; } = null!;
-        public string? MaVoucher { get; set; }
+        public string VoucherId { get; set; }
+        public string MaVoucher { get; set; }
         public DateTime? NgayPhatHanh { get; set; }
         public DateTime? NgayHetHang { get; set; }
     }

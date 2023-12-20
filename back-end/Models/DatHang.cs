@@ -11,11 +11,11 @@ namespace back_end.Models
             HoaDons = new HashSet<HoaDon>();
         }
 
-        public string MaDatHang { get; set; } = null!;
+        public string MaDatHang { get; set; }
         public DateTime? NgayDatHang { get; set; }
-        public string PersonId { get; set; } = null!;
+        public string PersonId { get; set; }
 
-        public virtual Person Person { get; set; } = null!;
+        public virtual Person Person { get; set; }
         public virtual ICollection<DatHangSanPham> DatHangSanPhams { get; set; }
         public virtual ICollection<HoaDon> HoaDons { get; set; }
     }

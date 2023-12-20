@@ -1,6 +1,8 @@
 ﻿using back_end.DTOs;
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Validations;
+using Microsoft.VisualBasic;
 
 namespace back_end.DataAccess
 {
@@ -139,6 +141,55 @@ namespace back_end.DataAccess
         }
 
         //Cart
+        public string CreateMaCart()
+        {
+            List<string> makhachhangs = context.KhachHangs.Select(kh => kh.MaKhachHang).ToList();
+            string lastID = "Cart" + base.funcGetLastIndex(makhachhangs, 4);
+            return lastID;
+        }
+        public async Task<Cart> CreateCartAsync(Cart newCart)
+        {
+            Cart check = context.Carts.FirstOrDefault();
+            if(check == null)
+            {
+                return null;
+            }
+
+            context.Carts.Add(newCart); 
+            await context.SaveChangesAsync();   
+            return newCart;
+        }
+        public async Task<Cart> GetProductsInCart(string personId)
+        {
+            var productsInCart = await context.Carts
+                .Where(c => c.PersonId == personId)
+                .Include(c => c.CartSanPhams)
+                .ThenInclude(c => c.MaSanPhamNavigation)
+                .FirstOrDefaultAsync();
+            return productsInCart;
+        }
+
+       
+        public async Task<Cart> DeleteProductInCartAsync(string cartId, string maSanPham)
+        {
+            var deleteCartSanPham = context.CartSanPhams
+                .Where(csp => csp.MaCart.ToLower() == cartId.ToLower() 
+                                             && csp.MaSanPham.ToLower() == maSanPham.ToLower())
+                .Include(c => c.MaSanPhamNavigation).ToList();
+            if(deleteCartSanPham.Count <= 0) {
+                return null;
+            }
+            context.CartSanPhams.RemoveRange(deleteCartSanPham);
+
+            await context.SaveChangesAsync();
+            var cartToReturn = await context.Carts
+                .Where(c => c.MaCart == cartId)
+                .Include(c => c.CartSanPhams)
+                .ThenInclude(c => c.MaSanPhamNavigation)
+                .FirstOrDefaultAsync();
+
+            return cartToReturn; 
+        }
 
 
 

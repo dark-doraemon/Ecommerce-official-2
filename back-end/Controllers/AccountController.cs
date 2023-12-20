@@ -76,6 +76,14 @@ namespace back_end.Controllers
                 return BadRequest("Tài khoản đã tồn tại");
             }
 
+            //thì tạo person xong thì tạo cart cho person đó luôn
+            var createCart = await repo.CreateCartAsync(new Cart { MaCart = repo.CreateMaCart(), PersonId = makhachhang });
+            if (createCart == null)
+            {
+                return BadRequest("Cart đã tồn tại");
+            }
+
+
             return new UserDTO {
                 username = registerDTO.username,
                 token = tokenService.CreateToken(newTaiKhoan)

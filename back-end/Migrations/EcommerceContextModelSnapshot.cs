@@ -49,13 +49,6 @@ namespace back_end.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("PersonID");
 
-                    b.Property<int>("SoLuongSp")
-                        .HasColumnType("int")
-                        .HasColumnName("SoLuongSP");
-
-                    b.Property<decimal?>("TongTienCart")
-                        .HasColumnType("numeric(19,3)");
-
                     b.HasKey("MaCart")
                         .HasName("PK__Cart__20E715D51900B431");
 
