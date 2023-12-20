@@ -50,5 +50,33 @@ namespace back_end.Controllers
             return Ok(cartToReturn);
 
         }
+
+        [HttpPut("[action]/{cartId}/{maSanPham}/{quantity}")] //api/cart/ChangeQuanlityOfProdut/
+        public async Task<ActionResult> ChangeQuanlityOfProdut(string cartId, string maSanPham,int quantity)
+        {
+            var cart = await repo.ChangeQuantityOfProductInCartAsync(cartId, maSanPham, quantity);
+
+            if (cart == null)
+            {
+                return BadRequest("Some thing went wrong (có thể do cartId hoặc maSanPham)");
+            }
+            var cartToReturn = this.mapper.Map<CartDTO>(cart);
+            return Ok(cartToReturn);
+        }
+
+
+        [HttpPost("[action]")] //api/cart/AddProductIntoCart/DTO
+        public async Task<ActionResult> AddProductIntoCart(CartSanPhamDTO cartSanPhamDTO)
+        {
+            var cart = await repo.AddProductIntoCartAsync(cartSanPhamDTO);
+            if (cart == null)
+            {
+                return BadRequest("Some thing went wrong (có thể do cartId hoặc maSanPham)");
+            }
+            var cartToReturn = this.mapper.Map<CartDTO>(cart);
+            return Ok(cartToReturn);
+
+        }
+
     }
 }

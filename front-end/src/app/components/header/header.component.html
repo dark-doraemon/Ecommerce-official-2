@@ -12,7 +12,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" routerLink="productView" routerLinkActive="active">Sản phẩm</a>
+                    <a class="nav-link " aria-current="page" routerLink="productView" routerLinkActive="active">Sản
+                        phẩm</a>
                 </li>
 
                 <li class="nav-item">
@@ -30,18 +31,19 @@
             </ul>
             <div class="d-flex">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" (input)="OnHandleSearch($event)" >
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        (input)="OnHandleSearch($event)">
                     <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
                 </form>
-                <div class="ms-5">
-                    <div class="btn btn-warning">
-                        <a class="fa-solid fa-cart-shopping" routerLink="cart"></a>
-                    </div>
+
+                <div class="ms-5 mt-1">
+                    <a class="fa-solid fa-cart-shopping btn btn-warning" routerLink="cart"></a>
                 </div>
 
                 <!-- nếu current user == null thì hiện đăng nhập -->
                 <div class="ms-5" *ngIf="!(currentUser$ | async)">
-                    <button type="button" class="btn btn-outline-info"  data-bs-toggle="modal" data-bs-target="#dangnhap">
+                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+                        data-bs-target="#dangnhap">
                         Đăng nhập
                     </button>
                     <app-signin></app-signin>
@@ -52,15 +54,15 @@
                     <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#dangki">
                         Đăng kí
                     </button>
-                    <app-signup></app-signup>                    
+                    <app-signup></app-signup>
                 </div>
-                
+
                 <!-- nếu currentUser$ != null  -->
                 <div class="ms-5" *ngIf="currentUser$ | async">
-                    <a class="text-white btn me-5 text-decoration-underline btn" routerLink="../user-profile/{{(currentUser$ | async)?.maPerson}}" >
+                    <a class="text-white btn me-5 text-decoration-underline btn" routerLink="../user-profile/">
                         <strong> {{ (currentUser$ | async)?.username }}</strong>
                     </a>
-                    <button type="button" class="btn btn-outline-info"  (click)="Logout()">
+                    <button type="button" class="btn btn-outline-info" (click)="Logout()">
                         Đăng xuất
                     </button>
                 </div>

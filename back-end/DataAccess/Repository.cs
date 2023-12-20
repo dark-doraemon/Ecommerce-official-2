@@ -1,6 +1,7 @@
 ﻿using back_end.DTOs;
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.OpenApi.Validations;
 using Microsoft.VisualBasic;
 
@@ -141,9 +142,20 @@ namespace back_end.DataAccess
         }
 
         //Cart
+        public async Task<Cart> GetCartByPersonIdAsync(string personId)
+        {
+            var cart = await context.Carts.FirstOrDefaultAsync(c => c.PersonId == personId);
+            if(cart == null)
+            {
+                return null;
+            }
+
+            return cart;
+        }
+
         public string CreateMaCart()
         {
-            List<string> makhachhangs = context.KhachHangs.Select(kh => kh.MaKhachHang).ToList();
+            List<string> makhachhangs = context.Carts.Select(c => c.MaCart).ToList();
             string lastID = "Cart" + base.funcGetLastIndex(makhachhangs, 4);
             return lastID;
         }
@@ -190,6 +202,65 @@ namespace back_end.DataAccess
 
             return cartToReturn; 
         }
+
+        public async Task<Cart> ChangeQuantityOfProductInCartAsync(string cartId, string maSanPham, int quatity)
+        {
+            var changeQualityCartSanPham = await context.CartSanPhams
+                .Where(csp => csp.MaCart.ToLower() == cartId.ToLower()
+                                             && csp.MaSanPham.ToLower() == maSanPham.ToLower())
+                .Include(c => c.MaSanPhamNavigation).FirstOrDefaultAsync();
+            if (changeQualityCartSanPham == null)
+            {
+                return null;
+            }
+            changeQualityCartSanPham.SoLuongSp = quatity;
+            context.CartSanPhams.Update(changeQualityCartSanPham);
+            await context.SaveChangesAsync();
+            var cartToReturn = await context.Carts
+                .Where(c => c.MaCart == cartId)
+                .Include(c => c.CartSanPhams)
+                .ThenInclude(c => c.MaSanPhamNavigation)
+                .FirstOrDefaultAsync();
+            return cartToReturn;
+        }
+
+        public async Task<Cart> AddProductIntoCartAsync(CartSanPhamDTO cartSanPhamDTO)
+        {
+            var cart = await context.Carts
+                .FirstOrDefaultAsync(c => c.MaCart.ToLower() == cartSanPhamDTO.cartId.ToLower());
+            if(cart == null)
+            {
+                return null;
+            }
+
+            var checkSpCoTrongGiohang = await context.CartSanPhams
+                .FirstOrDefaultAsync(csp => csp.MaCart.ToLower() == cartSanPhamDTO.cartId.ToLower()
+                                                        && csp.MaSanPham.ToLower() == cartSanPhamDTO.maSanPham.ToLower());
+
+            if(checkSpCoTrongGiohang != null)
+            {
+                checkSpCoTrongGiohang.SoLuongSp += 1;
+                context.CartSanPhams.Update(checkSpCoTrongGiohang);
+            }
+            else
+            {
+                context.CartSanPhams.Add(new CartSanPham {
+                    MaCart = cartSanPhamDTO.cartId,
+                    GiaTien = cartSanPhamDTO.giaTien,
+                    MaSanPham = cartSanPhamDTO.maSanPham,
+                    SoLuongSp = cartSanPhamDTO.soLuongSp,
+                });
+            }
+
+            await context.SaveChangesAsync();
+
+            var cartToReturn = await context.Carts.Where(c => c.MaCart == cartSanPhamDTO.cartId)
+                .Include(c => c.CartSanPhams)
+                .ThenInclude(c => c.MaSanPhamNavigation)
+                .FirstOrDefaultAsync();
+            return cartToReturn;
+        }
+
 
 
 
@@ -320,7 +391,7 @@ namespace back_end.DataAccess
 
         public TaiKhoan CheckTaiKhoanVaMatKhauExist(LoginDTO login)
         {
-            var taikhoan = context.TaiKhoans.Where(tk => tk.Username == login.username
+            TaiKhoan taikhoan = context.TaiKhoans.Where(tk => tk.Username == login.username
             && tk.Password == login.password).Include(tk => tk.Person).FirstOrDefault();
 
             if (taikhoan == null)

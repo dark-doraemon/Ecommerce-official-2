@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.VisualBasic;
 
 namespace back_end.Controllers
 {
@@ -77,7 +78,8 @@ namespace back_end.Controllers
             }
 
             //thì tạo person xong thì tạo cart cho person đó luôn
-            var createCart = await repo.CreateCartAsync(new Cart { MaCart = repo.CreateMaCart(), PersonId = makhachhang });
+            var createCart = await repo.CreateCartAsync(
+                new Cart { MaCart = repo.CreateMaCart(), PersonId = makhachhang });
             if (createCart == null)
             {
                 return BadRequest("Cart đã tồn tại");
@@ -86,7 +88,9 @@ namespace back_end.Controllers
 
             return new UserDTO {
                 username = registerDTO.username,
-                token = tokenService.CreateToken(newTaiKhoan)
+                token = tokenService.CreateToken(newTaiKhoan),
+                maPerson = person.PersonId,
+                maCart = createCart.MaCart
             };
         }
 
@@ -104,9 +108,13 @@ namespace back_end.Controllers
                 return Unauthorized("Mật khẩu sai");
             }
 
+            Cart cart = await repo.GetCartByPersonIdAsync(taikhoan.Person.PersonId);
             //khi đăng nhập thành công trả về username và 1 JWT token
             //JWT token này dùng để trả về thông tin người dùng
-            return new UserDTO { username = loginDTO.username , token = tokenService.CreateToken(taikhoan) , maPerson = taikhoan.Person.PersonId};
+            return new UserDTO { username = loginDTO.username , 
+                                 token = tokenService.CreateToken(taikhoan) , 
+                                 maPerson = taikhoan.Person.PersonId,
+                                 maCart = cart.MaCart};
         }
 
 

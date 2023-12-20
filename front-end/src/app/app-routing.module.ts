@@ -10,7 +10,7 @@ import { QlsanphamComponent } from './components/admin/qlsanpham/qlsanpham.compo
 import { QlkhachhangComponent } from './components/admin/qlkhachhang/qlkhachhang.component';
 import { QlnhanvienComponent } from './components/admin/qlnhanvien/qlnhanvien.component';
 import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.component';
-import { UserProfileComponent } from './components/user-profile/userdetails.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { authGuard } from './guards/auth.guard';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
@@ -25,8 +25,8 @@ const routes: Routes = [
         path: 'productView', component: ProductViewComponent
     },
 
-    { path : 'cart' ,component : CartComponent},
-    {path : 'user-profile/:username', component : UserProfileComponent,canActivate : [authGuard]},
+    { path : 'cart' ,component : CartComponent,canActivate : [authGuard]},
+    {path : 'user-profile', component : UserProfileComponent,canActivate : [authGuard]},
 
     { path : 'admin', component : AdminComponent ,children :[
         {path : 'qlsanpham', component : QlsanphamComponent},

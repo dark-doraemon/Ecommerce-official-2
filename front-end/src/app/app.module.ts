@@ -29,7 +29,7 @@ import { QlkhachhangComponent } from './components/admin/qlkhachhang/qlkhachhang
 import { QlnhanvienComponent } from './components/admin/qlnhanvien/qlnhanvien.component';
 import { QldonhangComponent } from './components/admin/qldonhang/qldonhang.component';
 import { SearchComponent } from './components/admin/search/search.component';
-import { UserProfileComponent } from './components/user-profile/userdetails.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';

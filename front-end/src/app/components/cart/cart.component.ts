@@ -36,14 +36,25 @@ export class CartComponent implements OnInit {
         })
     }
 
-    Increase()
+    Increase(maSanPham : string ,soLuong : number,index : number)
     {
-
+        soLuong +=1;
+        this.cartService.ChangeQualityOfProductInCart(this.cartId,maSanPham,soLuong).subscribe({
+            next : (respone) =>{
+                this.productsCart[index].soLuongSp = soLuong
+            }
+        })
     }
 
-    Derease()
+    Derease(maSanPham : string ,soLuong : number,index : number)
     {
-
+        if(soLuong <= 1) soLuong = 1;
+        else soLuong -= 1;
+        this.cartService.ChangeQualityOfProductInCart(this.cartId,maSanPham,soLuong).subscribe({
+            next : (respone) =>{
+                this.productsCart[index].soLuongSp = soLuong
+            }
+        })
     }
 
     Delete(maSanPham : string,index : number)

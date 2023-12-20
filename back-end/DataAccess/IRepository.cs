@@ -33,10 +33,13 @@ namespace back_end.DataAccess
 
 
         //Cart
+        Task<Cart> GetCartByPersonIdAsync(string personId);
         string CreateMaCart();
         Task<Cart> CreateCartAsync(Cart newCart);
         Task<Cart> GetProductsInCart(string personId);
         Task<Cart> DeleteProductInCartAsync(string cartId, string maSanPham);
+        Task<Cart> ChangeQuantityOfProductInCartAsync(string cartId, string maSanPham,int quatity);
+        Task<Cart> AddProductIntoCartAsync(CartSanPhamDTO cartSanPhamDTO);
         //Comment
 
 

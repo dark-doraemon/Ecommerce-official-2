@@ -17,7 +17,7 @@ export class UserService {
     }
 
 
-    //xác thực người dùng bằng jwt trược khí làm gì đó(sử dụng interceptor để thay thế )
+    //xác thực người dùng bằng jwt trược khi làm gì đó(sử dụng interceptor để thay thế )
     // GetHttpOptions()
     // {
     //     const userString = localStorage.getItem('user');

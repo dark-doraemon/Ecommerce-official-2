@@ -7,5 +7,7 @@
         public string token { get; set; }
 
         public string maPerson { get; set; }
+
+        public string maCart { get; set; }
     }
 }

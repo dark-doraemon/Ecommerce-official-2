@@ -24,7 +24,7 @@ export class AccountService {
                 const user = respone;
                 if(user)
                 {
-                    console.log(user);
+                    // console.log(user);
                     this.currentUserSource.next(user);
                     localStorage.setItem("user",JSON.stringify(user));
                 }
@@ -51,8 +51,8 @@ export class AccountService {
                 if(user)
                 {
                     //khi người dùng đăng kí thì lưu trong local storage luôn, tức là đăng nhập sao khi đăng kí luôn
-                    localStorage.setItem('user',JSON.stringify(user));
                     this.currentUserSource.next(user);
+                    localStorage.setItem("user",JSON.stringify(user));
                 }
 
                 

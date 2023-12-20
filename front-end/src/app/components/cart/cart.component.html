@@ -34,9 +34,9 @@
                     </td>
 
                     <td>
-                        <button (click)="Increase()">+</button>
-                        <input type="number" id="number" value="0"  [value]="product.soLuongSp"/>
-                        <button (click)="Derease()">-</button>
+                        <button (click)="Increase(product.maSanPhamNavigation.masanpham,product.soLuongSp,i)">+</button>
+                        <input type="number"  id="number" value="0"  [value]="product.soLuongSp"/>
+                        <button (click)="Derease(product.maSanPhamNavigation.masanpham,product.soLuongSp,i)">-</button>
 
                     </td>
 

@@ -18,7 +18,8 @@ export class SignupComponent {
             next : response => {
                 // console.log(response);
                 this.toastr.success("Đăng kí thành công");
-                const closeButton = document.querySelector('.btn-close') as HTMLElement;
+
+                const closeButton = document.getElementById('close') as HTMLElement;
                 if (closeButton) {
                     closeButton.click();
                 }
