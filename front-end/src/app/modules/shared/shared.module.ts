@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import {  NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -11,13 +12,16 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
         ToastrModule.forRoot({
             positionClass :'toast-bottom-right'
         }),
-        PaginationModule.forRoot()
-
+        PaginationModule.forRoot(),
+        NgxSpinnerModule.forRoot({
+            type : 'pacman'
+        })
         
     ],
     exports :[
         ToastrModule,
-        PaginationModule
+        PaginationModule,
+        NgxSpinnerModule
         
     ]
 })

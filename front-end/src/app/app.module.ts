@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/header/home/home.component';
@@ -17,7 +17,7 @@ import { SignupComponent } from './components/header/signup/signup.component';
 import { ProductItemComponent } from './components/productView/load-products/product-item/product-item.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
-import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductItemRowComponent } from './components/productView/load-products/product-item-row/product-item-row.component'
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './pipes/filter-categories.pipe';
@@ -35,6 +35,7 @@ import { ErrorsComponent } from './components/errors/errors.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
@@ -76,8 +77,9 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
         SharedModule, //tạo 1 share module cho gọn
     ],
     providers: [
-       { provide : HTTP_INTERCEPTORS,useClass : ErrorInterceptor,multi:true},
-       { provide : HTTP_INTERCEPTORS,useClass : JwtInterceptor,multi : true}
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })

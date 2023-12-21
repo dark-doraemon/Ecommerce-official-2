@@ -10,18 +10,8 @@ export class FilterService {
 
     constructor() { }
 
-    //dùng dể emit các sản phẩm đã lọc theo giá cho product
-    filterByPrice : EventEmitter<Product[]> = new EventEmitter<Product[]>();
-
-    //dùng để emit các sản phẩm đã lọc theo Bradn cho product
-    filterByBrand : EventEmitter<Product[]> = new EventEmitter<Product[]>();
-
-    //dùng để emit các sản phẩm đã lọc theo category cho product
-    filterByCategory : EventEmitter<Product[]> = new EventEmitter<Product[]>();
-
-
-    brandId : EventEmitter<string> = new EventEmitter<string>();
-    priceId : EventEmitter<number> = new EventEmitter<number>();
-    categoryId : EventEmitter<string> = new EventEmitter<string>();
+    brandId : EventEmitter<string> = new EventEmitter<string>();// dùng đê emit brandId
+    priceId : EventEmitter<number> = new EventEmitter<number>();// emit price
+    categoryId : EventEmitter<string> = new EventEmitter<string>(); //emit categoryId
 
 }
