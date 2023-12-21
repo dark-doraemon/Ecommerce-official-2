@@ -1,4 +1,5 @@
 ﻿using back_end.DTOs;
+using back_end.Helpers;
 using back_end.Models;
 
 namespace back_end.DataAccess
@@ -20,7 +21,7 @@ namespace back_end.DataAccess
 
         string CreateMaSanPham();
 
-        Task<IEnumerable<SanPham>> GetProductsAsync(); // get san pham
+        Task<PagedList<ProductDTO>> GetProductsAsync(UserParams userParams); // get san pham
 
         Task<SanPham> GetProductByIdAsync(string productId); // get san pham by id
 

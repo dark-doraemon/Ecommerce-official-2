@@ -1,4 +1,7 @@
-﻿using back_end.DTOs;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using back_end.DTOs;
+using back_end.Helpers;
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -10,9 +13,12 @@ namespace back_end.DataAccess
     public class Repository : RepositotyBaseFunction, IRepository
     {
         private EcommerceContext context;
-        public Repository(EcommerceContext context)
+        private readonly IMapper mapper;
+
+        public Repository(EcommerceContext context,IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         //Brand
@@ -72,15 +78,21 @@ namespace back_end.DataAccess
             return lastID;
         }
 
-        public async Task<IEnumerable<SanPham>> GetProductsAsync()
+        public async Task<PagedList<ProductDTO>> GetProductsAsync(UserParams userParams)
         {
-            return await context.SanPhams
-                .Include(sp => sp.Comments)
-                .Include(sp => sp.MaBrandNavigation)
-                .Include(sp => sp.MaTinhTrangNavigation)
-                .Include(sp => sp.MaTinhTrangNavigation)
-                .Include(sp => sp.MaLoaiSanPhamNavigation)
-                .ToListAsync();
+            var query = context.SanPhams
+                //.Include(sp => sp.Comments)
+                //.Include(sp => sp.MaBrandNavigation)
+                //.Include(sp => sp.MaTinhTrangNavigation)
+                //.Include(sp => sp.MaTinhTrangNavigation)
+                //.Include(sp => sp.MaLoaiSanPhamNavigation)
+                .ProjectTo<ProductDTO>(this.mapper.ConfigurationProvider)
+                .AsNoTracking();
+            //do đã ProjectTo nên không cần include vì nó đã tự làm cho mình
+
+            //kết quả trả về là 1 pagedList cho biết các sản phẩm trên trang hiện tại
+            return await PagedList<ProductDTO>
+                .CreateAsync(query, userParams.PageNumber,userParams.PageSize);
         }
 
         public async Task<SanPham> GetProductByIdAsync(string id)

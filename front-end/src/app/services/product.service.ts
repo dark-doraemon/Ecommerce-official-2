@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
 
     products = new EventEmitter<Product[]>();
+
+    pagninatedResult
     constructor(private http : HttpClient) { }
 
     GetProducts()

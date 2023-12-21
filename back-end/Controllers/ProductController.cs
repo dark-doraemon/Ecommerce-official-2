@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using back_end.DataAccess;
 using back_end.DTOs;
+using back_end.Extensions;
+using back_end.Helpers;
 using back_end.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,27 +15,36 @@ namespace back_end.Controllers
         private IRepository repo;
         private IMapper mapper;
 
-        public ProductController(IRepository repo,IMapper mapper)
+        public ProductController(IRepository repo, IMapper mapper)
         {
             this.repo = repo;
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SanPham>>> GetProducts()
+
+
+        [HttpGet]                                          //params này sẽ được lấy từ trên query của url
+        public async Task<ActionResult<PagedList<ProductDTO>>> GetProducts([FromQuery] UserParams userParams)
         {
-            var products = await repo.GetProductsAsync();
+            PagedList<ProductDTO> products = await repo.GetProductsAsync(userParams);
 
-            var productsToReturn = this.mapper.Map<IEnumerable<ProductDTO>>(products);
 
-            return Ok(productsToReturn);
+            //khi lấy các thông tin cần thiết xong chúng ta gán các thông tin nào vào trong respone header
+            base.Response.AddPaginationHeader(
+                new PaginationHeader(products.CurrentPage,
+                                            products.PageSize,
+                                            products.TotalCount,
+                                            products.TotalPages));
+
+
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<SanPham>> GetProductById(string id)
         {
             var product = await repo.GetProductByIdAsync(id);
-            if(product == null)
+            if (product == null)
             {
                 return NotFound("Không tìm thấy sản phẩm");
             }
@@ -42,7 +53,7 @@ namespace back_end.Controllers
         }
 
         [HttpPut("updateproduct/{masanpham}")] // api/products/updateproduct/{}
-        public async Task<ActionResult<SanPham>> UpdateProduct(ProductDTO productDTO,string masanpham)
+        public async Task<ActionResult<SanPham>> UpdateProduct(ProductDTO productDTO, string masanpham)
         {
             SanPham sanPham = new SanPham
             {
@@ -58,7 +69,7 @@ namespace back_end.Controllers
             };
 
             var check = await repo.UpdateProductAsync(sanPham);
-            if(check == null)
+            if (check == null)
             {
                 return BadRequest("Ops somthing went wrong !!!");
             }
@@ -83,7 +94,7 @@ namespace back_end.Controllers
             };
 
             var check = await repo.PostProductAsync(newProduct);
-            if(!check)
+            if (!check)
             {
                 return BadRequest("Ops something went wrong (maybe productID)");
             }
@@ -94,7 +105,7 @@ namespace back_end.Controllers
         public async Task<ActionResult> DeleteProduct(string productId)
         {
             var check = await repo.DeleteProductAsync(productId);
-            if(check)
+            if (check)
             {
                 return Ok("Đã xóa thành công");
             }
