@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.OpenApi.Validations;
 using Microsoft.VisualBasic;
+using System.Runtime.Serialization;
 
 namespace back_end.DataAccess
 {
@@ -15,7 +16,7 @@ namespace back_end.DataAccess
         private EcommerceContext context;
         private readonly IMapper mapper;
 
-        public Repository(EcommerceContext context,IMapper mapper)
+        public Repository(EcommerceContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -43,7 +44,8 @@ namespace back_end.DataAccess
         public async Task<bool> DeleteBrandAsync(string brandId)
         {
             var checkBrand = context.Brands.FirstOrDefault(b => b.MaBrand == brandId);
-            if (checkBrand == null) {
+            if (checkBrand == null)
+            {
                 return false;
             }
 
@@ -86,7 +88,7 @@ namespace back_end.DataAccess
                 .AsNoTracking();
             //do đã ProjectTo nên không cần include vì nó đã tự làm cho mình
 
-            if(!String.IsNullOrEmpty(userParams.Category) && userParams.Category != "undefined")
+            if (!String.IsNullOrEmpty(userParams.Category) && userParams.Category != "undefined")
             {
                 query = query.Where(p => p.maloaisanpham == userParams.Category);
             }
@@ -98,7 +100,7 @@ namespace back_end.DataAccess
 
             //kết quả trả về là 1 pagedList cho biết các sản phẩm trên trang hiện tại
             return await PagedList<ProductDTO>
-                .CreateAsync(query, userParams.PageNumber,userParams.PageSize);
+                .CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<SanPham> GetProductByIdAsync(string id)
@@ -159,13 +161,13 @@ namespace back_end.DataAccess
             return true;
         }
 
-        
+
 
         //Cart
         public async Task<Cart> GetCartByPersonIdAsync(string personId)
         {
             var cart = await context.Carts.FirstOrDefaultAsync(c => c.PersonId == personId);
-            if(cart == null)
+            if (cart == null)
             {
                 return null;
             }
@@ -182,13 +184,13 @@ namespace back_end.DataAccess
         public async Task<Cart> CreateCartAsync(Cart newCart)
         {
             Cart check = context.Carts.FirstOrDefault();
-            if(check == null)
+            if (check == null)
             {
                 return null;
             }
 
-            context.Carts.Add(newCart); 
-            await context.SaveChangesAsync();   
+            context.Carts.Add(newCart);
+            await context.SaveChangesAsync();
             return newCart;
         }
         public async Task<Cart> GetProductsInCart(string personId)
@@ -201,14 +203,15 @@ namespace back_end.DataAccess
             return productsInCart;
         }
 
-       
+
         public async Task<Cart> DeleteProductInCartAsync(string cartId, string maSanPham)
         {
             var deleteCartSanPham = context.CartSanPhams
-                .Where(csp => csp.MaCart.ToLower() == cartId.ToLower() 
+                .Where(csp => csp.MaCart.ToLower() == cartId.ToLower()
                                              && csp.MaSanPham.ToLower() == maSanPham.ToLower())
                 .Include(c => c.MaSanPhamNavigation).ToList();
-            if(deleteCartSanPham.Count <= 0) {
+            if (deleteCartSanPham.Count <= 0)
+            {
                 return null;
             }
             context.CartSanPhams.RemoveRange(deleteCartSanPham);
@@ -220,7 +223,7 @@ namespace back_end.DataAccess
                 .ThenInclude(c => c.MaSanPhamNavigation)
                 .FirstOrDefaultAsync();
 
-            return cartToReturn; 
+            return cartToReturn;
         }
 
         public async Task<Cart> ChangeQuantityOfProductInCartAsync(string cartId, string maSanPham, int quatity)
@@ -248,7 +251,7 @@ namespace back_end.DataAccess
         {
             var cart = await context.Carts
                 .FirstOrDefaultAsync(c => c.MaCart.ToLower() == cartSanPhamDTO.cartId.ToLower());
-            if(cart == null)
+            if (cart == null)
             {
                 return null;
             }
@@ -257,14 +260,15 @@ namespace back_end.DataAccess
                 .FirstOrDefaultAsync(csp => csp.MaCart.ToLower() == cartSanPhamDTO.cartId.ToLower()
                                                         && csp.MaSanPham.ToLower() == cartSanPhamDTO.maSanPham.ToLower());
 
-            if(checkSpCoTrongGiohang != null)
+            if (checkSpCoTrongGiohang != null)
             {
                 checkSpCoTrongGiohang.SoLuongSp += 1;
                 context.CartSanPhams.Update(checkSpCoTrongGiohang);
             }
             else
             {
-                context.CartSanPhams.Add(new CartSanPham {
+                context.CartSanPhams.Add(new CartSanPham
+                {
                     MaCart = cartSanPhamDTO.cartId,
                     GiaTien = cartSanPhamDTO.giaTien,
                     MaSanPham = cartSanPhamDTO.maSanPham,
@@ -288,6 +292,86 @@ namespace back_end.DataAccess
 
 
         //DatHang
+        public string CreateMaDatHang()
+        {
+            List<string> madathangs = context.DatHangs.Select(dh => dh.MaDatHang).ToList();
+            string lastID = "MaDatHang" + base.funcGetLastIndex(madathangs, 9);
+            return lastID;
+        }
+
+        public async Task<DatHangDTO> AddDatHangAsync(string personId)
+        {
+
+            //từ personId lấy cart
+            Cart cart = await context.Carts
+                .FirstOrDefaultAsync(c => c.PersonId.ToLower() == personId.ToLower());
+
+            if (cart == null)
+            {
+                return null;
+            }
+
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    //tạo mã đặt hàng
+                    string maDatHang = CreateMaDatHang();
+
+
+                    // từ cart lấy các sản phẩm
+                    var cartProducts = await context.CartSanPhams
+                        .Where(csp => csp.MaCart == cart.MaCart)
+                        .Include(csp => csp.MaSanPhamNavigation).ToListAsync();
+
+                    if(cartProducts.Count <= 0)
+                    {
+                        return null;
+                    }
+
+                    var cartProductsToDatHangSanPham = cartProducts.Select(csp => new DatHangSanPham
+                    {
+                        MaDatHang = maDatHang,
+                        MaSanPham = csp.MaSanPham,
+                        SoLuong = csp.SoLuongSp,
+                        GiaTien = csp.MaSanPhamNavigation.GiaSanPham,
+                        TongTien = csp.SoLuongSp * csp.MaSanPhamNavigation.GiaSanPham
+                    }).ToList();
+
+                    // tạo đơn đặt hàng
+                    DatHang newDatHang = new DatHang
+                    {
+                        MaDatHang = maDatHang,
+                        NgayDatHang = DateTime.Now,
+                        PersonId = personId,
+                        DatHangSanPhams = cartProductsToDatHangSanPham
+                    };
+                    context.DatHangs.Add(newDatHang);
+
+                    //sao khi đặt hàng xong thì xóa các sản phẩm có trong giỏ hàng
+                    context.CartSanPhams.RemoveRange(cartProducts);
+                    
+                    await context.SaveChangesAsync();
+
+                    transaction.Commit();
+                    return this.mapper.Map<DatHangDTO>(newDatHang);
+
+
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+
+                
+            }
+
+
+            
+            
+        }
+
 
 
         //DatHangSanPham
@@ -351,10 +435,10 @@ namespace back_end.DataAccess
         {
             return await context.People.FindAsync(id);
         }
-        public async Task<Person> UpdatePersonAsync(PersonDTO personDTO,string id)
+        public async Task<Person> UpdatePersonAsync(PersonDTO personDTO, string id)
         {
             var personNeedTobeUpdated = await context.People.FirstOrDefaultAsync(p => p.PersonId == id);
-            if (personNeedTobeUpdated == null) 
+            if (personNeedTobeUpdated == null)
             {
                 return null;
             }
@@ -362,7 +446,7 @@ namespace back_end.DataAccess
             personNeedTobeUpdated.HoTen = personDTO.hoten;
             personNeedTobeUpdated.Tuoi = personDTO.tuoi;
             personNeedTobeUpdated.GioiTinh = personDTO.gioitinh;
-            personNeedTobeUpdated.Sdt= personDTO.sdt;
+            personNeedTobeUpdated.Sdt = personDTO.sdt;
             personNeedTobeUpdated.DiaChi = personDTO.diachi;
             personNeedTobeUpdated.Email = personDTO.email;
 

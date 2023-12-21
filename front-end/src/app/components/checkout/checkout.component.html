@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2 class="text-center">Thông tin giao hàng</h2>
+            <form class="form-group" (ngSubmit)="SuaThongTin()" autocomplete="off">
+                <label class="form-label">Họ và tên</label>
+
+                <input class="form-control" name="hoten" value="{{user.hoten}}" [(ngModel)]="user.hoten">
+
+                <label class="form-label">Tuổi</label>
+                <input class="form-control " type="number" name="tuoi" value="{{user.tuoi}}" [(ngModel)]="user.tuoi">
+
+                <label class="form-label">Giới tính</label>
+                <select class="form-select" name="gioitinh" [(ngModel)]="user.gioitinh">
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
+                </select>
+
+                <label class="form-label">SĐT</label>
+                <input class="form-control" name="sdt" value="{{user.sdt}}" [(ngModel)]="user.sdt">
+
+                <label class="form-label">Địa chỉ</label>
+                <input class="form-control " name="diachi" value="{{user.diachi}}" [(ngModel)]="user.diachi">
+
+                <label class="form-label">Email</label>
+                <input class="form-control " name="email" value="{{user.email}}" [(ngModel)]="user.email">
+
+                <button type="submit" class="btn btn-primary mt-3">
+                    Sửa thông tin
+                </button>
+            </form>
+        </div>
+
+
+        <div class="col-sm-8">
+            <h2>Các sản phẩm</h2>
+
+            <table class="table ">
+                <thead>
+                    <tr class="table-primary">
+                        <td>STT</td>
+                        <td>Sản phẩm</td>
+                        <td>Đơn giá</td>
+                        <td>Số lượng</td>
+                        <td>Số tiền</td>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    <tr *ngFor="let product of productsCart;let i = index" class="align-middle">
+                        <td> {{i + 1}}</td>
+
+                        <td>
+                            <img width="100" height="100">
+                            <a  class="text-decoration-none"
+                            routerLink="../productView/product-details/{{product.maSanPhamNavigation.masanpham}}">
+                            {{product.maSanPhamNavigation.tensanpham}}</a>
+                        </td>
+
+                        <td>
+                            {{product.maSanPhamNavigation.giasanpham | currency : 'VND'}}
+
+                        </td>
+
+                        <td>
+                            <input class="w-25" type="number" disabled id="number" value="0" [value]="product.soLuongSp" />
+                        </td>
+
+                        <td>
+                            {{product.maSanPhamNavigation.giasanpham * product.soLuongSp | currency : 'VND'}}
+                        </td>
+
+
+
+                    </tr>
+
+                    <tr class="bg-light">
+
+                        <td>Tổng tiền:</td>
+                        <td colspan="3" class="text-center"> {{ CaculateTotal() | currency : 'VND' }} </td>
+                        <td>
+                            <button (click)="XacNhan()"  routerLink="../checkout" class="btn btn-primary">Xác nhận</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

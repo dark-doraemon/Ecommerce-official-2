@@ -36,6 +36,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SuccessComponent } from './components/success/success.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -65,7 +67,9 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
         SearchComponent,
         UserProfileComponent,
         ErrorsComponent,
-        ServerErrorComponent
+        ServerErrorComponent,
+        CheckoutComponent,
+        SuccessComponent
 
     ],
     imports: [

@@ -15,6 +15,8 @@ namespace back_end.Helpers
             CreateMap<LoaiSanPham, LoaiSanPhamDTO>();
             CreateMap<Brand,BrandDTO>();
             CreateMap<TinhTrangSanPham, TinhTrangSanPhamDTO>();
+            CreateMap<DatHang,DatHangDTO>();
+            CreateMap<DatHangSanPham, DatHangSanPhamDTO>();
         }
     }
 }

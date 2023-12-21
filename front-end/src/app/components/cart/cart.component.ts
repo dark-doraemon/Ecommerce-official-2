@@ -71,4 +71,12 @@ export class CartComponent implements OnInit {
 
         })
     }
+
+    totalPrice : string = '';
+    CaculateTotal()
+    {
+       this.totalPrice =  this.productsCart.reduce((acc ,currentValue)=> 
+       acc + currentValue.maSanPhamNavigation.giasanpham * currentValue.soLuongSp,0).toString();
+       return this.totalPrice;
+    }
 }
