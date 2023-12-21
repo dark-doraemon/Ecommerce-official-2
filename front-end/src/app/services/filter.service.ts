@@ -18,4 +18,10 @@ export class FilterService {
 
     //dùng để emit các sản phẩm đã lọc theo category cho product
     filterByCategory : EventEmitter<Product[]> = new EventEmitter<Product[]>();
+
+
+    brandId : EventEmitter<string> = new EventEmitter<string>();
+    priceId : EventEmitter<number> = new EventEmitter<number>();
+    categoryId : EventEmitter<string> = new EventEmitter<string>();
+
 }

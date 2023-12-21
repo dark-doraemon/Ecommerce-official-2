@@ -73,7 +73,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
-        SharedModule
+        SharedModule, //tạo 1 share module cho gọn
     ],
     providers: [
        { provide : HTTP_INTERCEPTORS,useClass : ErrorInterceptor,multi:true},

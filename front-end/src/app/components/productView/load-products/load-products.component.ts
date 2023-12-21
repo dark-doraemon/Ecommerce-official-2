@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { take } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
+import { Pagination } from 'src/app/models/pagination.model';
 import { FilterService } from 'src/app/services/filter.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SearchProductsService } from 'src/app/services/search-products.service';
@@ -15,33 +17,38 @@ export class LoadProductsComponent implements OnInit {
     priceLevel : number = 0 ;
     chosenBrand : string ;//lấy brand từ laod category
     chosenCategory : string =''; // lấy category từ load category
+
+    pagination : Pagination | undefined;
+    pageNumber = 1;
+    pageSize = 8;
     
     productSearching : string = ''; //lấy product search từ thanh search ở header
     constructor(private productService: ProductService,private filterService : FilterService,private searchService : SearchProductsService) { 
        
-        //filter theo giá
-        this.filterService.filterByPrice.subscribe({
-            next : (products : Product[]) =>{
-                this.products = products;
+      
+        this.filterService.priceId.subscribe({
+            next : (priceLevel ) =>{
+                this.SelectPrice(priceLevel);
             }
         })
 
         //filter theo brand
-        this.filterService.filterByBrand.subscribe({
+        this.filterService.brandId.subscribe({
             next : brand => {
-                this.products = brand;
+                console.log(brand)
+                this.SelectBrand(brand);
             }
         })
 
         //filter theo category
-        this.filterService.filterByCategory.subscribe({
-            next : category => {
-                console.log(category);
-                this.products = category;
+        this.filterService.categoryId.subscribe({
+            next : (categoryId )=>{
+                this.SelectCategory(categoryId);
+                console.log(categoryId);
             }
         })
 
-        
+        //filter theo search 
         this.searchService.searchProductText.subscribe({
             next : (search :string) =>{
                 this.productSearching = search;
@@ -49,32 +56,67 @@ export class LoadProductsComponent implements OnInit {
         })
     }
 
+    SelectPrice(price : number)
+    {
+        let filteredProducts : Product[] = [];
+        if(price === 0)
+        {
+            this.GetProducts();
+            filteredProducts = this.products;
+        }
+        else if (price === 1) {
+            filteredProducts = this.products.filter(product => product.giasanpham < 5000000);
+        } 
+        else if (price === 2) {
+            filteredProducts = this.products.filter(product => product.giasanpham >= 5000000 && product.giasanpham <= 7000000);
+        } 
+        else if (price === 3) {
+            filteredProducts = this.products.filter(product => product.giasanpham >= 7000000 && product.giasanpham <= 10000000);
+        } 
+        else if (price === 4) {
+            filteredProducts = this.products.filter(product => product.giasanpham > 10000000);
+        } 
+        this.products = filteredProducts;
+    }
+
+    SelectCategory(categoryId : string)
+    {
+        //emit sản phẩm đã lọc theo category
+        let filterProducts : Product[] = [];
+        filterProducts = this.products.filter(product => product.maLoaiSanPhamNavigation.maLoaiSanPham === categoryId);
+        this.products = filterProducts
+    }
+
+    SelectBrand(brandId : string)
+    {
+        let filterProducts : Product[] = [];
+        filterProducts = this.products.filter(product => product.maBrandNavigation.maBrand === brandId);
+        this.products = filterProducts
+    }
+
 
     ngOnInit(): void {
-        // this.GetProducts();// lấy các sản phẩm
-        // dữ liệu được emit từ category component nên không cần getProducts ở đây nữa
-        this.productService.products.subscribe({
-            next : products => {
-                this.products = products
-                console.log(this.products);
-            }
-        })
+       
+        this.GetProducts();
     }
 
     GetProducts() {
-        this.productService.GetProducts().subscribe({
-            next: (products) => {
-                this.products = products;
+        this.productService.GetProducts(this.pageNumber,this.pageSize).subscribe({
+            next: (response) => {
+
+                if(response.results && response.pagination)
+                {
+                    this.products = response.results;
+                    this.pagination = response.pagination;
+                }
             },
-            error: (error) => console.log(error)
-            
         })
     }
-
 
     ShowProductByGrid() {
         this.gridShow = true;
     }
+
 
     ShowProductByRow() {
         this.gridShow = false;
@@ -126,30 +168,14 @@ export class LoadProductsComponent implements OnInit {
         })
     }
     
-    // FilterByPrice(priceLevel) {
-    //     let filteredProducts : Product[] = [];
-    //     // Lọc dữ liệu từ mảng products và gán vào filteredProducts
-
-    //     if(priceLevel === 0 )
-    //     {
-    //         this.GetProducts();
-    //         return;
-    //     }
-    //     if (priceLevel === 1) {
-    //         filteredProducts = this.products.filter(product => product.giaSanPham < 5000000);
-    //     } else if (priceLevel === 2) {
-    //         filteredProducts = this.products.filter(product => product.giaSanPham >= 5000000 && product.giaSanPham <= 7000000);
-    //     } else if (priceLevel === 3) {
-    //         filteredProducts = this.products.filter(product => product.giaSanPham >= 7000000 && product.giaSanPham <= 10000000);
-    //     } else if (priceLevel === 4) {
-    //         filteredProducts = this.products.filter(product => product.giaSanPham > 10000000);
-    //     } else {
-    //         // Nếu không có mức giá nào được chọn, hiển thị tất cả sản phẩm
-    //         filteredProducts = [...this.products];
-    //     }
-    //     this.products = filteredProducts
-    //     console.log(this.products);
-    // }
+    pageChanged(event)
+    {
+        if(this.pageNumber !== event.page)
+        {
+            this.pageNumber = event.page;
+            this.GetProducts();
+        }
+    }
 
     
 

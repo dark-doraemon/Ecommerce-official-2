@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Brand } from 'src/app/models/Brand.model';
 import { Category } from 'src/app/models/Category.model';
 import { Product } from 'src/app/models/Product.model';
+import { Pagination } from 'src/app/models/pagination.model';
 import { BrandService } from 'src/app/services/brand.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { FilterService } from 'src/app/services/filter.service';
@@ -14,11 +15,13 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class LoadcategoryComponent implements OnInit{
 
-    categories : Category[];
-    brands : Brand[];
-    products : Product[];
+    categories : Category[] =[];
+    brands : Brand[] = [];
+    products : Product[] =[];
+
     categoriesSearch : string = '';
     brandsSearch : string ='';
+
 
     constructor(private categoryService : CategoryService, private brandServices : BrandService,
                 private filterService : FilterService,
@@ -28,19 +31,10 @@ export class LoadcategoryComponent implements OnInit{
     ngOnInit(): void {
         this.GetCategories();
         this.GetBrands();
-        this.GetProducts();
     }
 
-    GetProducts() {
-        this.productService.GetProducts().subscribe({
-            next: (products) => {
-                this.products = products;
-                this.productService.products.emit(products);
-            },
-            error: (error) => console.log(error)
-            
-        })
-    }
+   
+
     GetCategories()
     {
         this.categoryService.getCategories().subscribe({
@@ -65,25 +59,7 @@ export class LoadcategoryComponent implements OnInit{
 
     SelectPrice(price : number)
     {
-        let filteredProducts : Product[] = [];
-        if(price === 0)
-        {
-            filteredProducts = this.products;
-        }
-        else if (price === 1) {
-            filteredProducts = this.products.filter(product => product.giasanpham < 5000000);
-        } 
-        else if (price === 2) {
-            filteredProducts = this.products.filter(product => product.giasanpham >= 5000000 && product.giasanpham <= 7000000);
-        } 
-        else if (price === 3) {
-            filteredProducts = this.products.filter(product => product.giasanpham >= 7000000 && product.giasanpham <= 10000000);
-        } 
-        else if (price === 4) {
-            filteredProducts = this.products.filter(product => product.giasanpham > 10000000);
-        } 
-
-        this.filterService.filterByPrice.emit(filteredProducts);
+        this.filterService.priceId.emit(price);
     }
 
     SelectCategory(category : Category)
@@ -91,20 +67,16 @@ export class LoadcategoryComponent implements OnInit{
         //gán chữ trên thanh search category 
         this.categoriesSearch = category.tenLoaiSanPham;
 
-        //emit sản phẩm đã lọc theo category
-        let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maLoaiSanPhamNavigation.maLoaiSanPham === category.maLoaiSanPham);
-        this.filterService.filterByCategory.emit(filterProducts);
+        //emit categoryid 
+        this.filterService.categoryId.emit(category.tenLoaiSanPham);
     }
 
     SelectBrand(brand : Brand)
     {
         this.brandsSearch = brand.tenBrand;
-        console.log(brand.maBrand);
-        //emit sản phẩm đã lọc theo brand
-        let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maBrandNavigation.maBrand === brand.maBrand);
-        this.filterService.filterByCategory.emit(filterProducts);
+
+        //emit brandi
+        this.filterService.brandId.emit(brand.maBrand);
 
     }
 

@@ -2,8 +2,9 @@
     <div class="row justify-content-between ">
 
         <div class="col-md-2 p-0">
-            <button class="fa-2x fa-solid fa-table-cells" style="width: 50px;height: 50px;" (click)="ShowProductByGrid()"></button>
-            <button  style="width: 50px;height: 50px;" (click)="ShowProductByRow()">
+            <button class="fa-2x fa-solid fa-table-cells" style="width: 50px;height: 50px;"
+                (click)="ShowProductByGrid()"></button>
+            <button style="width: 50px;height: 50px;" (click)="ShowProductByRow()">
                 <img src="../../../../assets/images/4196762.png" alt="" width="30px" height="30px">
             </button>
 
@@ -13,7 +14,7 @@
         <div class="col-md-3 p-0 ">
             <div>
                 Sắp xếp:
-                <select id = 'mySelect' style="border: none; font-weight: bold" (change)="SortProducts($event)">
+                <select id='mySelect' style="border: none; font-weight: bold" (change)="SortProducts($event)">
                     <option disabled selected></option>
                     <option value="increasing">Giá tăng</option>
                     <option value="decreasing">Giá giảm</option>
@@ -28,11 +29,24 @@
     <div class="row border border-black">
         <ng-container *ngFor="let product of products | filterProducts :productSearching">
             <ng-container *ngIf="gridShow; else elseBlock">
-                <app-product-item class="col-xxl-3 col-xl-4 col-md-6 col-sm-6 col-12 mb-5 " [product]="product"></app-product-item>
+                <app-product-item class="col-xxl-3 col-xl-4 col-md-6 col-sm-6 col-12 mb-5 "
+                    [product]="product"></app-product-item>
             </ng-container>
             <ng-template #elseBlock>
                 <app-product-item-row class="row" [product]="product"></app-product-item-row>
             </ng-template>
         </ng-container>
+    </div>
+
+    <div class="d-flex justify-content-center" *ngIf="pagination">
+        <pagination [boundaryLinks]="true" 
+                    [totalItems]="pagination.totalItems" 
+                    [itemsPerPage]="pagination.itemsPerPage"
+                    [maxSize]="10"
+                    [(ngModel)]="pagination.currentPage"
+                    (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;" lastText="&raquo;">
+        </pagination>
     </div>
 </div>

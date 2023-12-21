@@ -13,10 +13,6 @@ export class QlsanphamComponent implements OnInit{
     constructor(private productService : ProductService){}
 
     ngOnInit(): void {
-        this.productService.GetProducts().subscribe({
-            next :(products : Product[]) =>{
-                this.products = products
-            }
-        })
+        
     }
 }

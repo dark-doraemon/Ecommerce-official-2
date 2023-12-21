@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
-
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -10,10 +10,15 @@ import { ToastrModule } from 'ngx-toastr';
         CommonModule,
         ToastrModule.forRoot({
             positionClass :'toast-bottom-right'
-        })
+        }),
+        PaginationModule.forRoot()
+
+        
     ],
     exports :[
-        ToastrModule
+        ToastrModule,
+        PaginationModule
+        
     ]
 })
 export class SharedModule { }
