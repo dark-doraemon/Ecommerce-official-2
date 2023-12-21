@@ -34,7 +34,9 @@ namespace back_end.Controllers
                 new PaginationHeader(products.CurrentPage,
                                             products.PageSize,
                                             products.TotalCount,
-                                            products.TotalPages));
+                                            products.TotalPages,
+                                            userParams.Brand,
+                                            userParams.Category));
 
 
             return Ok(products);
@@ -93,7 +95,7 @@ namespace back_end.Controllers
                 MaLoaiSanPham = productDTO.maloaisanpham,
             };
 
-            var check = await repo.PostProductAsync(newProduct);
+            var check = await repo.AddProductAsync(newProduct);
             if (!check)
             {
                 return BadRequest("Ops something went wrong (maybe productID)");

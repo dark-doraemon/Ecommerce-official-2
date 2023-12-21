@@ -29,8 +29,7 @@ namespace back_end.DataAccess
 
         Task<bool> DeleteProductAsync(string productId); //xóa sản phẩm
 
-        Task<bool> PostProductAsync(SanPham newProduct);
-
+        Task<bool> AddProductAsync(SanPham newProduct); // them san pham mới
 
 
         //Cart

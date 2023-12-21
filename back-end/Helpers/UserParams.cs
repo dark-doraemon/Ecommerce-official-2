@@ -19,5 +19,9 @@
             get => _pageSize; 
             set => _pageSize = value > MaxPageSize ? MaxPageSize : value;
         }
+
+        public string? Brand { get; set; } = null;
+
+        public string? Category { get; set; } = null;
     }
 }

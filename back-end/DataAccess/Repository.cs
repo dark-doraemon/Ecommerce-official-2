@@ -80,15 +80,21 @@ namespace back_end.DataAccess
 
         public async Task<PagedList<ProductDTO>> GetProductsAsync(UserParams userParams)
         {
+
             var query = context.SanPhams
-                //.Include(sp => sp.Comments)
-                //.Include(sp => sp.MaBrandNavigation)
-                //.Include(sp => sp.MaTinhTrangNavigation)
-                //.Include(sp => sp.MaTinhTrangNavigation)
-                //.Include(sp => sp.MaLoaiSanPhamNavigation)
                 .ProjectTo<ProductDTO>(this.mapper.ConfigurationProvider)
                 .AsNoTracking();
             //do đã ProjectTo nên không cần include vì nó đã tự làm cho mình
+
+            if(!String.IsNullOrEmpty(userParams.Category) && userParams.Category != "undefined")
+            {
+                query = query.Where(p => p.maloaisanpham == userParams.Category);
+            }
+
+            if (!String.IsNullOrEmpty(userParams.Brand) && userParams.Brand != "undefined")
+            {
+                query = query.Where(p => p.mabrand == userParams.Brand);
+            }
 
             //kết quả trả về là 1 pagedList cho biết các sản phẩm trên trang hiện tại
             return await PagedList<ProductDTO>
@@ -140,7 +146,7 @@ namespace back_end.DataAccess
             return true;
         }
 
-        public async Task<bool> PostProductAsync(SanPham newProduct) //thêm sản phẩm
+        public async Task<bool> AddProductAsync(SanPham newProduct) //thêm sản phẩm
         {
             var check = context.SanPhams.FirstOrDefault(p => p.MaSanPham == newProduct.MaSanPham);
             if (check != null)
@@ -152,6 +158,8 @@ namespace back_end.DataAccess
             await context.SaveChangesAsync();
             return true;
         }
+
+        
 
         //Cart
         public async Task<Cart> GetCartByPersonIdAsync(string personId)

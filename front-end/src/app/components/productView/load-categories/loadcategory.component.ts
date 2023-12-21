@@ -68,7 +68,7 @@ export class LoadcategoryComponent implements OnInit{
         this.categoriesSearch = category.tenLoaiSanPham;
 
         //emit categoryid 
-        this.filterService.categoryId.emit(category.tenLoaiSanPham);
+        this.filterService.categoryId.emit(category.maLoaiSanPham);
     }
 
     SelectBrand(brand : Brand)

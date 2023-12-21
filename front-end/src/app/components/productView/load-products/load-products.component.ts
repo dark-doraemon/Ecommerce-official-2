@@ -81,17 +81,14 @@ export class LoadProductsComponent implements OnInit {
 
     SelectCategory(categoryId : string)
     {
-        //emit sản phẩm đã lọc theo category
-        let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maLoaiSanPhamNavigation.maLoaiSanPham === categoryId);
-        this.products = filterProducts
+
+        this.GetProducts(categoryId);
+        
     }
 
     SelectBrand(brandId : string)
     {
-        let filterProducts : Product[] = [];
-        filterProducts = this.products.filter(product => product.maBrandNavigation.maBrand === brandId);
-        this.products = filterProducts
+        this.GetProducts('',brandId);
     }
 
 
@@ -100,8 +97,8 @@ export class LoadProductsComponent implements OnInit {
         this.GetProducts();
     }
 
-    GetProducts() {
-        this.productService.GetProducts(this.pageNumber,this.pageSize).subscribe({
+    GetProducts(category? : string,brand? : string) {
+        this.productService.GetProducts(this.pageNumber,this.pageSize,category,brand).subscribe({
             next: (response) => {
 
                 if(response.results && response.pagination)
