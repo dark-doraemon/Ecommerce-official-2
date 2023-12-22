@@ -49,8 +49,14 @@ export class UserProfileComponent implements OnInit {
 
 
     donHangs: DonHang[] = [];
-    select() {
-        this.hoso = !this.hoso
+
+    SelectTaiKhoan()
+    {
+        this.hoso= true;
+    }
+
+    SelectCacDonDatHang() {
+        this.hoso = false;
 
         if (this.hoso === false) {
             this.LoadDatHangs();

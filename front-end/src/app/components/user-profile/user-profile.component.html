@@ -3,8 +3,8 @@
         <div class="col-sm-3">
             <ul class="list-group">
                 <li class="list-group-item active" aria-current="true">An active item</li>
-                <li class="list-group-item" (click)="select()">Tải khoản của tôi</li>
-                <li class="list-group-item" (click)="select()">Đơn mua</li>
+                <li class="hover list-group-item" (click)="SelectTaiKhoan()">Tải khoản của tôi</li>
+                <li class="hover list-group-item" (click)="SelectCacDonDatHang()">Đơn mua</li>
 
             </ul>
         </div>
@@ -45,7 +45,7 @@
                     <button class="btn btn-info" type="button" data-bs-toggle="collapse"
                         [attr.data-bs-target]="'#' + donhang.maDatHang" aria-expanded="false" 
                         [attr.aria-controls]="donhang.maDatHang">
-                        Đơn hàng ngày {{donhang.ngayDatHang | date :'dd-MM-yyyy'}}
+                        Đơn hàng ngày {{donhang.ngayDatHang | date :'dd-MM-yyyy  HH:mm:ss'}}
                     </button>
                     <div class="panel-group">
                         <div class="panel panel-default">
@@ -69,9 +69,9 @@
                                                 </div>
 
                                                 <div class="col-sm-4">
-                                                    <div>
+                                                    <a class="text-decoration-none" routerLink="../productView/product-details/{{sanpham.maSanPham}}">
                                                         {{sanpham.maSanPhamNavigation.tensanpham}}
-                                                    </div>
+                                                    </a>
                                                 </div>
 
                                                 <div class="col-sm-1">
