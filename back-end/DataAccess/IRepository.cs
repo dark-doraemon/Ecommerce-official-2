@@ -49,6 +49,7 @@ namespace back_end.DataAccess
         //DatHang
         string CreateMaDatHang();
         Task<DatHangDTO> AddDatHangAsync(string personId);
+        Task<IEnumerable<DatHangDTO>> GetDatHangsAsync(string personId);
 
         //DatHangSanPham
 

@@ -2,8 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
+import { DatHangSanPham } from 'src/app/models/DatHangSanPham.model';
 import { Person } from 'src/app/models/Person.model';
+import { DonHang } from 'src/app/models/donhang.model';
 import { AccountService } from 'src/app/services/account.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,20 +15,21 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-    hoso: boolean = false;
+    hoso: boolean = true;
 
     user: any = {};
 
-    maPerson : string = ''
-    constructor(private route: ActivatedRoute, private userService: UserService,private toastr : ToastrService,
-                private accountService : AccountService) {
+    maPerson: string = ''
+    constructor(private route: ActivatedRoute, private userService: UserService, private toastr: ToastrService,
+        private accountService: AccountService,
+        private checkoutServcie: CheckoutService) {
 
     }
     ngOnInit(): void {
 
         //đầu tiên lấy mã person đã lưu khi đăng nhập
         this.accountService.currenUser$.pipe(take(1)).subscribe({
-            next : (user) =>{
+            next: (user) => {
                 this.maPerson = user.maPerson;
             }
         });
@@ -34,29 +38,56 @@ export class UserProfileComponent implements OnInit {
         this.userService.GetUserById(this.maPerson).subscribe({
             next: (user) => {
                 this.user.hoten = user.hoTen,
-                this.user.tuoi = user.tuoi,
-                this.user.gioitinh = user.gioiTinh,
-                this.user.sdt = user.sdt,
-                this.user.diachi = user.diaChi,
-                this.user.email = user.email
+                    this.user.tuoi = user.tuoi,
+                    this.user.gioitinh = user.gioiTinh,
+                    this.user.sdt = user.sdt,
+                    this.user.diachi = user.diaChi,
+                    this.user.email = user.email
             }
         })
     }
 
+
+    donHangs: DonHang[] = [];
     select() {
         this.hoso = !this.hoso
+
+        if (this.hoso === false) {
+            this.LoadDatHangs();
+        }
     }
 
     SuaThongTin() {
         console.log(this.user);
-        
-        this.userService.UpdateUser(this.user,this.maPerson).subscribe({
-            next : (response) =>{
+
+        this.userService.UpdateUser(this.user, this.maPerson).subscribe({
+            next: (response) => {
                 // console.log(response);
                 this.toastr.success("Update thành công");
             },
-            error : error => console.log(error)
-            
+            error: error => console.log(error)
+
         })
+    }
+
+
+    LoadDatHangs() {
+        this.checkoutServcie.GetDatHangs(this.maPerson).subscribe({
+            next: (response) => {
+                this.donHangs = response;
+                console.log(response);
+
+            }
+        })
+    }
+
+    CaculateTongDonhang(sanphams : DatHangSanPham[] )
+    {
+        let total = 0;
+        sanphams.forEach(sanpham =>{
+            total += (sanpham.soLuong * sanpham.giaTien);
+        })
+
+        return total;
     }
 }

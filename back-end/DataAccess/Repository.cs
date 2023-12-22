@@ -296,7 +296,7 @@ namespace back_end.DataAccess
             return lastID;
         }
 
-        public async Task<CommentDTO> AddCommentAsync(CommentDTO comment,string productId,string personId)
+        public async Task<CommentDTO> AddCommentAsync(CommentDTO comment, string productId, string personId)
         {
 
             var ngayBinhLuan = DateTime.Now;
@@ -352,7 +352,7 @@ namespace back_end.DataAccess
                         .Where(csp => csp.MaCart == cart.MaCart)
                         .Include(csp => csp.MaSanPhamNavigation).ToListAsync();
 
-                    if(cartProducts.Count <= 0)
+                    if (cartProducts.Count <= 0)
                     {
                         return null;
                     }
@@ -378,7 +378,7 @@ namespace back_end.DataAccess
 
                     //sao khi đặt hàng xong thì xóa các sản phẩm có trong giỏ hàng
                     context.CartSanPhams.RemoveRange(cartProducts);
-                    
+
                     await context.SaveChangesAsync();
 
                     transaction.Commit();
@@ -392,12 +392,28 @@ namespace back_end.DataAccess
                     return null;
                 }
 
-                
+
             }
 
 
-            
-            
+
+
+        }
+
+
+        public async Task<IEnumerable<DatHangDTO>> GetDatHangsAsync(string personId)
+        {
+
+            var dathangsDTO = await context.DatHangs.Where(dh => dh.PersonId == personId)
+                .ProjectTo<DatHangDTO>(this.mapper.ConfigurationProvider).ToListAsync();
+
+            if (dathangsDTO.Count <= 0)
+            {
+                return null;
+            }
+
+            return dathangsDTO;
+
         }
 
 

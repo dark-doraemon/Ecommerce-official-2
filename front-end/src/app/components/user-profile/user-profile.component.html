@@ -6,7 +6,7 @@
                 <li class="list-group-item" (click)="select()">Tải khoản của tôi</li>
                 <li class="list-group-item" (click)="select()">Đơn mua</li>
 
-              </ul>
+            </ul>
         </div>
         <div class="col-sm-5 offset-sm-2" *ngIf="hoso">
             <h1>Hồ sơ của tôi</h1>
@@ -18,9 +18,9 @@
                 <input class="form-control " type="number" name="tuoi" value="{{user.tuoi}}" [(ngModel)]="user.tuoi">
 
                 <label class="form-label">Giới tính</label>
-                <select class="form-select" name="gioitinh" [(ngModel)]="user.gioitinh" >
-                    <option value="0" >Nam</option>
-                    <option value="1" >Nữ</option>
+                <select class="form-select" name="gioitinh" [(ngModel)]="user.gioitinh">
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
                 </select>
 
                 <label class="form-label">SĐT</label>
@@ -40,7 +40,78 @@
 
         <div class="col-sm-9" *ngIf="!hoso">
             <h3 class="text-center">Các đơn hàng của tôi</h3>
+            <div class="row" *ngFor="let donhang of donHangs">
+                <div class="col-sm-12">
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + donhang.maDatHang" aria-expanded="false" 
+                        [attr.aria-controls]="donhang.maDatHang">
+                        Đơn hàng ngày {{donhang.ngayDatHang | date :'dd-MM-yyyy'}}
+                    </button>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                </h4>
+                            </div>
+                                <div id={{donhang.maDatHang}} class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let sanpham of donhang.datHangSanPhams;let i = index">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-sm-1">
+                                                    <div>{{i + 1}}</div>
+                                                    
+                                                </div>
 
+                                                <div class="col-sm-2">
+                                                    <div>
+                                                        <img src="{{sanpham.maSanPhamNavigation.hinhanhsanpham}}" width="50" height="50">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div>
+                                                        {{sanpham.maSanPhamNavigation.tensanpham}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <div>
+                                                        {{sanpham.soLuong}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <div>
+                                                        {{sanpham.giaTien | currency:'VND'}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <div>
+                                                        {{sanpham.giaTien * sanpham.soLuong| currency:'VND'}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                    <div class="panel-footer bg-light mb-3">
+                                        <div class="row">
+                                            <div class="col-sm-9 text-end">
+                                                <div>Tổng tiền: </div>
+                                            </div>
+                                            <div class="col-sm-3 text-center">
+                                                <div>
+                                                    {{ CaculateTongDonhang(donhang.datHangSanPhams ) | currency:'VND' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

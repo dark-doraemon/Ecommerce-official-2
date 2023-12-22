@@ -15,17 +15,32 @@ namespace back_end.Controllers
 
 
 
-        [HttpGet("{personId}")]  //api/dathang/
+        [HttpGet("[action]/{personId}")]  //api/dathang/AddDatHang/{}
         public async Task<ActionResult<DatHangDTO>> AddDatHang(string personId)
         {
-            var datHangDTO = await  repo.AddDatHangAsync(personId);
+            var datHangDTO = await repo.AddDatHangAsync(personId);
 
-            if(datHangDTO == null)
+            if (datHangDTO == null)
             {
                 return NotFound("Bạn đưa đặt sản phẩm trong giỏ hàng");
             }
 
             return Ok(datHangDTO);
+        }
+
+
+        [HttpGet("[action]/{personId}")]  //api/dathang/GetDatHangs/{}
+        public async Task<ActionResult<IEnumerable<DatHangDTO>>> GetDatHangs(string personId)
+        {
+            var dathangsDto = await repo.GetDatHangsAsync(personId);
+            if(dathangsDto == null)
+            {
+                return NoContent();
+            }
+
+
+            return Ok(dathangsDto); 
+
         }
     }
 }
