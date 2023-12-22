@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row" *ngFor="let thacmac of thacMacKhieuNais,let i =index">
+                <div class="col-sm-12">
+                    <button class="btn btn-info w-100" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + thacmac.maKhieuNai" aria-expanded="false"
+                        [attr.aria-controls]="thacmac.maKhieuNai">
+                        <div class="text-start">
+                            #{{thacmac.maKhieuNai}}
+                            Tiêu đề : {{thacmac.tieuDe}} 
+                            
+                        </div>
+                    </button>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                </h4>
+                            </div>
+                            <div id={{thacmac.maKhieuNai}} class="panel-collapse collapse">
+                                <div class="card card-body">
+                                    <div>Nội dung</div>
+                                    <p>
+                                        {{thacmac.noiDung}}
+                                    </p>
+                                    <div>
+                                        <div>Người gửi :</div>
+                                        <div>Họ tên: {{thacmac.hoTen}} </div>
+                                        <div>email : {{thacmac.email}} </div>
+                                        <div>SĐT : {{thacmac.sdt}} </div>
+                                        <div>Ngày khiếu nại {{thacmac.ngayKieuNai| date :'dd-MM-yyyy HH:mm:ss'}}</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="btn btn-danger" (click)="XoaThacMacKhieuNai(thacmac.maKhieuNai,i)">Xóa</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -39,6 +39,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SuccessComponent } from './components/success/success.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/thacmackhieunai.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -70,7 +71,8 @@ import { RatingModule } from 'ngx-bootstrap/rating';
         ErrorsComponent,
         ServerErrorComponent,
         CheckoutComponent,
-        SuccessComponent
+        SuccessComponent,
+        ThacmackhieunaiComponent
 
     ],
     imports: [

@@ -15,7 +15,7 @@ namespace back_end.Controllers
             this.repo = repo;
         }
 
-        [HttpGet]
+        [HttpGet] //api
         public async Task<ActionResult<ThacMacKhieuNai>> GetKhieuNais()
         {
             var khieunais = await repo.GetKhieuNaiAsync();
@@ -78,14 +78,14 @@ namespace back_end.Controllers
 
 
         [HttpDelete("deletekhieunai/{id}")] //api/khieunai/deletekhieunai
-        public async Task<ActionResult> DeleteKhieuNai(string id)
+        public async Task<ActionResult<string>> DeleteKhieuNai(string id)
         {
             var check = await repo.DeleteThacMacKhieuNaiAsync(id);
             if(check )
             {
-                return Ok("Đã xóa thành công");
+                return Ok();
             }
-            return BadRequest("Đã có lỗi (có thể xóa id không hợp lệ");
+            return BadRequest();
         }
     }
 }

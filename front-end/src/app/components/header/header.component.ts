@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { User } from 'src/app/models/User';
 
 import { AccountService } from 'src/app/services/account.service';
+import { RoleService } from 'src/app/services/role.service';
 import { SearchProductsService } from 'src/app/services/search-products.service';
 
 @Component({
@@ -19,9 +20,10 @@ export class HeaderComponent implements OnInit {
      
     
     searchProductText: string;
-
+    isAdmin : boolean = false;
     constructor(private searchService: SearchProductsService,
-                private accountService : AccountService,private toastr : ToastrService) {
+                private accountService : AccountService,private toastr : ToastrService,
+                private roleService: RoleService) {
 
         this.accountService.accountModel.subscribe({
             next :(username : string) =>{
@@ -33,7 +35,7 @@ export class HeaderComponent implements OnInit {
     //khi header được khỏi động thì sẽ kiểm tra có user đã lấy từ app.component chưa
     ngOnInit(): void {
         this.currentUser$ = this.accountService.currenUser$
-        
+        this.isAdmin = this.roleService.checkRole();
         // this.getCurrentUser();
     }
 

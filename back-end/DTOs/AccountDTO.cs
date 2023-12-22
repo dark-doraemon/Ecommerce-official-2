@@ -1,6 +1,8 @@
-﻿namespace back_end.DTOs
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace back_end.DTOs
 {
-    public class AccountDTO
+    public class AccountDTO 
     {
         public string username {  get; set; }
         public string password { get; set; }

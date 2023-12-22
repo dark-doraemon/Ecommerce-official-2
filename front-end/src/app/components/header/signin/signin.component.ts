@@ -18,6 +18,7 @@ export class SigninComponent {
         this.accountService.login(this.model).subscribe({
             //nếu đăng nhập thành công
             next: (respone) => {
+                console.log(respone);
                 this.toastr.success("Đăng nhập thành công");
                 this.accountService.accountModel.emit(this.model.username);
                 const closeButton = document.querySelector('.btn-close') as HTMLElement;

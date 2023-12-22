@@ -109,6 +109,10 @@ namespace back_end.Controllers
             }
 
             Cart cart = await repo.GetCartByPersonIdAsync(taikhoan.Person.PersonId);
+            if (cart == null)
+            {
+                cart = await repo.CreateCartAsync(new Cart { MaCart = repo.CreateMaCart(),PersonId = taikhoan.PersonId });
+            }
             //khi đăng nhập thành công trả về username và 1 JWT token
             //JWT token này dùng để trả về thông tin người dùng
             return new UserDTO { username = loginDTO.username , 

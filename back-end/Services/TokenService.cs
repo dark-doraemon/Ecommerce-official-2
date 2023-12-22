@@ -20,7 +20,8 @@ namespace back_end.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId,taikhoan.Username)
+                new Claim(JwtRegisteredClaimNames.NameId,taikhoan.Username),
+                new Claim(JwtRegisteredClaimNames.Sub,taikhoan.Username)
             };
 
             var creds = new SigningCredentials(_key,SecurityAlgorithms.HmacSha512Signature);

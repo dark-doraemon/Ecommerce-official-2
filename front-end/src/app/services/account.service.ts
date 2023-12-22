@@ -28,6 +28,8 @@ export class AccountService {
                     this.currentUserSource.next(user);
                     localStorage.setItem("user",JSON.stringify(user));
                 }
+                
+                return user
             } )
         )
     }

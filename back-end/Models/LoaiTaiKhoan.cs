@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace back_end.Models
 {
-    public partial class LoaiTaiKhoan
+    public partial class LoaiTaiKhoan 
     {
         public LoaiTaiKhoan()
         {

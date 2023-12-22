@@ -20,13 +20,13 @@
                     <a class="nav-link " aria-current="page" routerLink="contact" routerLinkActive="active">Liên hệ</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="isAdmin">
                     <a class="nav-link " aria-current="page" routerLink="admin" routerLinkActive="active">Admin</a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link " aria-current="page" routerLink="errors" routerLinkActive="active">Error</a>
-                </li>
+                </li> -->
 
             </ul>
             <div class="d-flex">
