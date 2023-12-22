@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {  NgxSpinnerModule } from 'ngx-spinner';
-
-
+import { RatingModule } from 'ngx-bootstrap/rating';
 @NgModule({
     declarations: [],
     imports: [
@@ -15,13 +14,15 @@ import {  NgxSpinnerModule } from 'ngx-spinner';
         PaginationModule.forRoot(),
         NgxSpinnerModule.forRoot({
             type : 'pacman'
-        })
+        }),
+        RatingModule.forRoot()
         
     ],
     exports :[
         ToastrModule,
         PaginationModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        RatingModule
         
     ]
 })

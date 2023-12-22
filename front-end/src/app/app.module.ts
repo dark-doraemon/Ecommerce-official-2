@@ -38,6 +38,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SuccessComponent } from './components/success/success.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
 @NgModule({
     declarations: [
         AppComponent,
@@ -78,7 +79,8 @@ import { SuccessComponent } from './components/success/success.component';
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
-        SharedModule, //tạo 1 share module cho gọn
+        SharedModule,
+        RatingModule.forRoot(), //tạo 1 share module cho gọn
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

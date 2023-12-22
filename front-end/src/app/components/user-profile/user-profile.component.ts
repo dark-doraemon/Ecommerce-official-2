@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-    hoso: boolean = true;
+    hoso: boolean = false;
 
     user: any = {};
 

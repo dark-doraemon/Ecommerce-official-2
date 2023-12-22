@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/Product.model';
 import { CartSanPham } from 'src/app/models/cartSanPham.model';
 import { AccountService } from 'src/app/services/account.service';
 import { CartService } from 'src/app/services/cart.service';
+import { CommentService } from 'src/app/services/comment.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class ItemDetailsComponent {
         private productService : ProductService,
         private cartService : CartService,
         private accountService : AccountService,
-        private toastr : ToastrService) {
+        private toastr : ToastrService,
+        private commentService : CommentService) {
     }
 
     ngOnInit()
@@ -57,6 +59,32 @@ export class ItemDetailsComponent {
                 this.toastr.error("Bạn chưa đăng nhập");
             }
         })
-        console.log(cartProduct);
+    }
+
+
+    max = 5;
+    rate = 5;
+
+    hoveringOver(value : number)
+    {   
+        this.rate = value;
+    }
+
+    comment : string
+    SendComment()
+    {
+        let noiDungComment = {
+            "NoiDungComment" : this.comment,
+            "Star" : this.rate
+        }
+
+        const personId = JSON.parse(localStorage.getItem('user')).maPerson;
+        this.commentService.AddComment(noiDungComment,this.productId,personId)
+        .pipe(take(1)).subscribe({
+            next:(response) =>{
+                this.comments.push(response);
+                console.log(response);
+            }
+        })
     }
 }

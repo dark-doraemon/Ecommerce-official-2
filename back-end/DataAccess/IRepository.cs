@@ -40,8 +40,11 @@ namespace back_end.DataAccess
         Task<Cart> DeleteProductInCartAsync(string cartId, string maSanPham);
         Task<Cart> ChangeQuantityOfProductInCartAsync(string cartId, string maSanPham,int quatity);
         Task<Cart> AddProductIntoCartAsync(CartSanPhamDTO cartSanPhamDTO);
-        //Comment
 
+
+        //Comment
+        Task<string> CreateMaCommentAsync();
+        Task<CommentDTO> AddCommentAsync(CommentDTO comment,string productId,string personId);
 
         //DatHang
         string CreateMaDatHang();

@@ -289,6 +289,34 @@ namespace back_end.DataAccess
 
 
         //Comment
+        public async Task<string> CreateMaCommentAsync()
+        {
+            List<string> comments = await context.Comments.Select(c => c.MaComment).ToListAsync();
+            string lastID = "CM" + base.funcGetLastIndex(comments, 2);
+            return lastID;
+        }
+
+        public async Task<CommentDTO> AddCommentAsync(CommentDTO comment,string productId,string personId)
+        {
+
+            var ngayBinhLuan = DateTime.Now;
+            Comment newComment = new Comment
+            {
+                MaComment = await CreateMaCommentAsync(),
+                NoiDungComment = comment.NoiDungComment,
+                Star = comment.Star,
+                NgayComment = ngayBinhLuan,
+                PersonId = personId,
+                MaSanPham = productId
+            };
+
+            context.Comments.Add(newComment);
+            await context.SaveChangesAsync();
+            comment.NgayComment = ngayBinhLuan;
+            return comment;
+        }
+
+
 
 
         //DatHang
