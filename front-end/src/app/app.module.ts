@@ -40,6 +40,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SuccessComponent } from './components/success/success.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/thacmackhieunai.component';
+import { MadonhangPipe } from './pipes/madonhang.pipe';
 @NgModule({
     declarations: [
         AppComponent,
@@ -72,7 +73,8 @@ import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/tha
         ServerErrorComponent,
         CheckoutComponent,
         SuccessComponent,
-        ThacmackhieunaiComponent
+        ThacmackhieunaiComponent,
+        MadonhangPipe
 
     ],
     imports: [

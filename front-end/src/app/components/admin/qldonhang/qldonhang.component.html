@@ -3,7 +3,96 @@
         <app-search class="col-sm-5"></app-search>
     </div>
 
-    <div class="row mt-3">
-        qldh
+    <div class="row" *ngFor="let donhang of donHangs | madonhang : maDonHangSearchText">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#' + donhang.maDatHang" aria-expanded="false"
+            [attr.aria-controls]="donhang.maDatHang">
+            <div class="row">
+                <div class="col-sm-6">
+                    Mã đơn hàng: {{donhang.maDatHang}}
+                </div>
+                <div class="col-sm-6">
+                    Đơn hàng ngày {{donhang.ngayDatHang | date :'dd-MM-yyyy HH:mm:ss'}}
+                </div>
+            </div>
+        </button>
+        <div class="col-sm-12">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        </h4>
+                    </div>
+                    <div id={{donhang.maDatHang}} class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let sanpham of donhang.datHangSanPhams;let i = index">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-sm-1">
+                                        <div>{{i + 1}}</div>
+
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div>
+                                            <img src="{{sanpham.maSanPhamNavigation.hinhanhsanpham}}" width="50"
+                                                height="50">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <a class="text-decoration-none"
+                                            routerLink="../productView/product-details/{{sanpham.maSanPham}}">
+                                            {{sanpham.maSanPhamNavigation.tensanpham}}
+                                        </a>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <div>
+                                            {{sanpham.soLuong}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div>
+                                            {{sanpham.giaTien | currency:'VND'}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div>
+                                            {{sanpham.giaTien * sanpham.soLuong| currency:'VND'}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <div class="panel-footer bg-light mb-3">
+                            <div class="row">
+                                <div class="col-sm-9 text-end">
+                                    <div>Tổng tiền: </div>
+                                </div>
+                                <div class="col-sm-3 text-center">
+                                    <div>
+                                        {{ CaculateTongDonhang(donhang.datHangSanPhams ) | currency:'VND' }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Thông tin người đặt hàng</h4>
+                                    <div>Họ tên : {{donhang.person.hoten}} </div>
+                                    <div>Tuổi : {{donhang.person.tuoi}} </div>
+                                    <div>Giới tính: {{ donhang.person.gioitinh === 0 ? "Nam" : "Nữ" }} </div>
+                                    <div>Địa chỉ : {{donhang.person.diachi}} </div>
+                                    <div>email : {{donhang.person.email}} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

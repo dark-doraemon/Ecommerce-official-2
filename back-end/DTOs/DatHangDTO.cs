@@ -9,5 +9,6 @@ namespace back_end.DTOs
         public string PersonId { get; set; }
 
         public ICollection<DatHangSanPhamDTO> DatHangSanPhams { get; set; }
+        public PersonDTO Person { get; set; }
     }
 }

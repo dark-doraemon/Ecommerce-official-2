@@ -78,7 +78,7 @@ export class UserProfileComponent implements OnInit {
 
 
     LoadDatHangs() {
-        this.checkoutServcie.GetDatHangs(this.maPerson).subscribe({
+        this.checkoutServcie.GetDatHangsByPeronId(this.maPerson).subscribe({
             next: (response) => {
                 this.donHangs = response;
                 console.log(response);

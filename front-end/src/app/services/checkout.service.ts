@@ -8,16 +8,18 @@ import { DonHang } from '../models/donhang.model';
 })
 export class CheckoutService {
 
-    constructor(private http : HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-    AddDatHang(peronId : string)
-    {
+    AddDatHang(peronId: string) {
         return this.http.get(environment.baseApiUrl + 'dathang/AddDatHang/' + peronId);
     }
 
 
-    GetDatHangs(personId : string)
-    {
+    GetDatHangsByPeronId(personId: string) {
         return this.http.get<DonHang[]>(environment.baseApiUrl + 'dathang/GetDatHangs/' + personId);
+    }
+
+    GetDatHangsAll() {
+        return this.http.get<DonHang[]>(environment.baseApiUrl + 'dathang');
     }
 }

@@ -64,4 +64,15 @@ export class ProductService {
     {
         return this.http.put<Product>(environment.baseApiUrl + 'products/updateproduct/' + product.masanpham,product);
     }
+
+
+    DeleteProuduct(productId : string)
+    {
+        return this.http.delete(environment.baseApiUrl + 'products/deleteproduct/' + productId);
+    }
+
+    AddProduct(product)
+    {
+        return this.http.post<Product>(environment.baseApiUrl + 'products/postproduct',product);
+    }
 }

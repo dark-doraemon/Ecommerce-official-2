@@ -18,6 +18,9 @@ namespace back_end.Helpers
             CreateMap<DatHang,DatHangDTO>();
             CreateMap<DatHangSanPham, DatHangSanPhamDTO>();
             CreateMap<SanPham, ProductDTORutGon>();
+            CreateMap<TinhTrangSanPham, TinhTrangSanPhamDTO>();
+            CreateMap<Person, PersonDTO>(); 
+
         }
     }
 }

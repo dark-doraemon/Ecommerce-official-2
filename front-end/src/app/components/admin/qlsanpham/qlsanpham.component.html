@@ -1,6 +1,85 @@
 <div class="container border">
-    <div class="row d-flex justify-content-center">
-        <app-search class="col-sm-5"></app-search>
+    <div class="row">
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                Thêm
+            </button>
+            <!-- The Modal -->
+            <div class="modal modal-xl" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+    
+                                        <label class="form-label">Tên sản phẩm</label>
+                                        <input class="form-control" [(ngModel)]="productToAdd.tensanpham" name="tensanpham">
+    
+    
+                                        <label class="form-label">Giá sản phẩm</label>
+                                        <input class="form-control" type="number" [(ngModel)]="productToAdd.giasanpham" name="giasanpham">
+    
+    
+                                        <label class="form-label">Số lượng sản phẩm</label>
+                                        <input class="form-control" type="number" [(ngModel)]="productToAdd.soluong" name="soluong">
+    
+                                        <label class="form-label">Mô tả sản phẩm</label>
+                                        <textarea class="form-control" [(ngModel)]="productToAdd.motasanpham" name="motasanpham"></textarea>
+                                    </div>
+        
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Hỉnh ảnh sản phẩm</label>
+                                        <input class="form-control" type="text" [(ngModel)]="productToAdd.hinhanhsanpham" name="hinhanhsanpham">
+
+                                        <label class="form-label">Chọn loại sản phẩm</label>
+                                        <select class="form-select" [(ngModel)]="productToAdd.maloaisanpham"  name="maLoaiSanPham">
+                                            <option selected disabled>Chọn loại sản phẩm</option>
+                                            <option *ngFor="let category of categories" [value]="category.maLoaiSanPham">
+                                                {{category.tenLoaiSanPham}}
+                                            </option>
+                                        </select>
+
+                                        <label class="form-label">Chọn thương hiệu </label>
+                                        <select class="form-select" [(ngModel)]="productToAdd.maBrand" name="maBrand">
+                                            <option selected disabled>Chọn thương hiệu</option>
+                                            <option *ngFor="let brand of brands" [value]="brand.maBrand" >
+                                                {{brand.tenBrand}}
+                                            </option>
+                                        </select>
+
+                                        <label class="form-label">Chọn tình trạng </label>
+                                        <select class="form-select" [(ngModel)]="productToAdd.maTinhTrang" name="maTinhTrang">
+                                            <option selected disabled>Chọn tình trạng</option>
+                                            <option *ngFor="let tinhtrang of tinhtrangs" [value]="tinhtrang.maTinhTrang" >
+                                                {{tinhtrang.tenTinhTrang}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" (click)="AddProduct()" >Close</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-11  d-flex justify-content-center">
+            <app-search class="col-sm-5"></app-search>
+        </div>
     </div>
 
     <div class="row">
@@ -30,7 +109,7 @@
                 <div class="col-sm-1">
                 </div>
             </div>
-            <div class="row" *ngFor="let product of formGroupArray;let i = index" >
+            <div class="row" *ngFor="let product of formGroupArray;let i = index">
                 <div class="col-sm-1">
                     {{i+ 1}}
                 </div>
@@ -58,91 +137,118 @@
 
                     <div class="modal modal-xl" id="{{'s' + i}}">
                         <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                      
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                              <h4 class="modal-title">Sửa sản phẩm</h4>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                      
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                               
-                                <form [formGroup]="product">
+                            <div class="modal-content">
 
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label class="form-label" >Mã sản phẩm</label>
-                                            <input class="form-control"  formControlName="masanpham" >
-                                            
-                                            <label class="form-label">Tên sản phẩm</label>
-                                            <input class="form-control"  formControlName="tensanpham" >
-        
-                                            <label class="form-label">Số lượng</label>
-                                            <input class="form-control" formControlName="soluong">
-        
-                                            <label class="form-label">Giá sản phẩm</label>
-                                            <input class="form-control"formControlName="giasanpham" >
-        
-                                            <label class="form-label">Hình ảnh sản phẩm</label>
-                                            <input class="form-control" formControlName="hinhanhsanpham" >
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Sửa sản phẩm</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
 
-                                            <label class="form-label">Mô tả sản phẩm<main></main></label>
-                                            <textarea class="form-control" formControlName="motasanpham" ></textarea>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form [formGroup]="product">
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="form-label">Mã sản phẩm</label>
+                                                <input class="form-control" formControlName="masanpham">
+
+                                                <label class="form-label">Tên sản phẩm</label>
+                                                <input class="form-control" formControlName="tensanpham">
+
+                                                <label class="form-label">Số lượng</label>
+                                                <input class="form-control" formControlName="soluong">
+
+                                                <label class="form-label">Giá sản phẩm</label>
+                                                <input class="form-control" formControlName="giasanpham">
+
+                                                <label class="form-label">Hình ảnh sản phẩm</label>
+                                                <input class="form-control" formControlName="hinhanhsanpham">
+
+                                                <label class="form-label">Mô tả sản phẩm<main></main></label>
+                                                <textarea class="form-control" formControlName="motasanpham"></textarea>
+                                            </div>
+
+                                            <div class="col-sm-6">
+
+                                                <label class="form-label">Mã loại sản phẩm</label>
+                                                <input class="form-control" formControlName="maloaisanpham"
+                                                    [attr.disabled]="true">
+
+                                                <label class="form-label">Tên loại sản phẩm</label>
+                                                <input class="form-control" formControlName="loaisanpham"
+                                                    [attr.disabled]="true">
+
+                                                <label class="form-label">Mã thương hiệu</label>
+                                                <input class="form-control" formControlName="mabrand"
+                                                    [attr.disabled]="true">
+
+                                                <label class="form-label">Thương hiệu</label>
+                                                <input class="form-control" formControlName="brand"
+                                                    [attr.disabled]="true">
+
+                                                <label class="form-label">Mã tình trạng</label>
+                                                <input class="form-control" formControlName="maTinhTrang"
+                                                    [attr.disabled]="true">
+                                            </div>
                                         </div>
-    
-                                        <div class="col-sm-6">
-        
-                                            <label class="form-label">Mã loại sản phẩm</label>
-                                            <input class="form-control" formControlName="maloaisanpham" [attr.disabled]="true" >
-        
-                                            <label class="form-label">Tên loại sản phẩm</label>
-                                            <input class="form-control" formControlName="loaisanpham" [attr.disabled]="true" >
-        
-                                            <label class="form-label">Mã thương hiệu</label>
-                                            <input class="form-control" formControlName="mabrand" [attr.disabled]="true" >
-        
-                                            <label class="form-label">Thương hiệu</label>
-                                            <input class="form-control" formControlName="brand" [attr.disabled]="true" >
 
-                                            <label class="form-label">Mã tình trạng</label>
-                                            <input class="form-control" formControlName="maTinhTrang" [attr.disabled]="true" >
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger"
+                                                (click)="SuaSanPham(product)">Sửa</button>
                                         </div>
-                                    </div>
+                                    </form>
+                                </div>
 
-                                    <div class="modal-footer">
-                                      <button type="submit" class="btn btn-danger" (click)="SuaSanPham(product)" >Sửa</button>
-                                    </div>
-                                </form>
+
                             </div>
-                      
-                      
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
 
                 <div class="col-sm-1">
-                    <div class="btn btn-danger">
+                    <div class="btn btn-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#' + 'x' + i">
                         Xóa
+                        <!-- The Modal -->
+                        <div class="modal" id="{{'x' + i}}">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-dark">Xóa sản phẩm</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body text-dark">
+                                        Bạn có muốn xóa sản phẩm
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            (click)="DeleteProduct(product,i)">Xác nhận</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row mt-3">
-        <div class="col-12 d-flex justify-content-center">
-            <pagination [boundaryLinks]="true" 
-                    [totalItems]="pagination.totalItems" 
-                    [itemsPerPage]="pagination.itemsPerPage"
-                    [maxSize]="10"
-                    [(ngModel)]="pagination.currentPage"
-                    (pageChanged)="pageChanged($event)"
-                    previousText="&lsaquo;" nextText="&rsaquo;"
-                    firstText="&laquo;" lastText="&raquo;">
-        </pagination>
+            <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-center">
+                    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+                        [itemsPerPage]="pagination.itemsPerPage" [maxSize]="10" [(ngModel)]="pagination.currentPage"
+                        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                        firstText="&laquo;" lastText="&raquo;">
+                    </pagination>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -137,7 +137,7 @@ namespace back_end.DataAccess
 
         public async Task<bool> DeleteProductAsync(string productId) //xóa sản phẩm
         {
-            var product = context.SanPhams.FirstOrDefault(p => p.MaSanPham == productId);
+            var product = context.SanPhams.FirstOrDefault(p => p.MaSanPham.ToLower() == productId.ToLower());
             if (product == null)
             {
                 return false;
@@ -423,7 +423,7 @@ namespace back_end.DataAccess
         }
 
 
-        public async Task<IEnumerable<DatHangDTO>> GetDatHangsAsync(string personId)
+        public async Task<IEnumerable<DatHangDTO>> GetDatHangByPersonIdsAsync(string personId)
         {
 
             var dathangsDTO = await context.DatHangs.Where(dh => dh.PersonId == personId)
@@ -438,6 +438,17 @@ namespace back_end.DataAccess
 
         }
 
+        public async Task<IEnumerable<DatHangDTO>> GetDatHangsAsync()
+        {
+            var dathangsDTO = await context.DatHangs.ProjectTo<DatHangDTO>(this.mapper.ConfigurationProvider).ToListAsync();
+
+            if (dathangsDTO.Count <= 0)
+            {
+                return null;
+            }
+
+            return dathangsDTO;
+        }
 
 
         //DatHangSanPham
@@ -657,6 +668,10 @@ namespace back_end.DataAccess
 
 
         //TinhTrangSanPham
+        public async Task<IEnumerable<TinhTrangSanPhamDTO>> GetTinhTrangSanPhamAsync()
+        {
+            return context.TinhTrangSanPhams.ProjectTo<TinhTrangSanPhamDTO>(this.mapper.ConfigurationProvider);
+        }
 
 
         //VaiTroNhanVien

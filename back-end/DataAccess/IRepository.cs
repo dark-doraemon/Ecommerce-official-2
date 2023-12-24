@@ -49,7 +49,8 @@ namespace back_end.DataAccess
         //DatHang
         string CreateMaDatHang();
         Task<DatHangDTO> AddDatHangAsync(string personId);
-        Task<IEnumerable<DatHangDTO>> GetDatHangsAsync(string personId);
+        Task<IEnumerable<DatHangDTO>> GetDatHangByPersonIdsAsync(string personId);
+        Task<IEnumerable<DatHangDTO>> GetDatHangsAsync();
 
         //DatHangSanPham
 
@@ -99,7 +100,7 @@ namespace back_end.DataAccess
 
 
         //TinhTrangSanPham
-
+        Task<IEnumerable<TinhTrangSanPhamDTO>> GetTinhTrangSanPhamAsync();
 
         //VaiTroNhanVien
 

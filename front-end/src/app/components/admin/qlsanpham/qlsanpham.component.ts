@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Brand } from 'src/app/models/Brand.model';
+import { Category } from 'src/app/models/Category.model';
 import { Product } from 'src/app/models/Product.model';
+import { TinhTrangSanPham } from 'src/app/models/TinhTrangSanPham.model';
 import { Pagination } from 'src/app/models/pagination.model';
 import { AdminsearchService } from 'src/app/services/adminsearch.service';
+import { BrandService } from 'src/app/services/brand.service';
+import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { TinhtrangsanphamService } from 'src/app/services/tinhtrangsanpham.service';
 
 
 @Component({
@@ -15,6 +21,10 @@ import { ProductService } from 'src/app/services/product.service';
 export class QlsanphamComponent implements OnInit {
 
     products: Product[]
+    brands : Brand[]
+    categories : Category[]
+    tinhtrangs : TinhTrangSanPham[];
+    productToAdd : any = {};
 
     productsFiltered: string = '';
     formGroupArray: FormGroup[] = [];
@@ -23,7 +33,10 @@ export class QlsanphamComponent implements OnInit {
     constructor(private productService: ProductService,
         private toastrService: ToastrService,
         private adminSearchService: AdminsearchService,
-        private fb: FormBuilder) {
+        private fb: FormBuilder,
+        private categoryService : CategoryService,
+        private brandService : BrandService,
+        private tinhtrangService : TinhtrangsanphamService) {
         this.adminSearchService.adminSearch.subscribe({
             next: (search) => {
                 this.productsFiltered = search;
@@ -34,6 +47,41 @@ export class QlsanphamComponent implements OnInit {
 
     ngOnInit(): void {
         this.GetProducts();
+        this.GetBrands();
+        this.GetCategories();
+        this.GetTinhTrangs();
+    }
+
+    
+    GetBrands()
+    {
+        this.brandService.getBrands().subscribe({
+            next : (brands) =>{
+                this.brands = brands
+            },
+            error : error => console.log(error)
+
+        })
+    }
+
+    GetCategories()
+    {
+        this.categoryService.getCategories().subscribe({
+            next :(categories) =>{
+                this.categories= categories;
+            }
+        })
+    }
+
+
+    GetTinhTrangs()
+    {
+        this.tinhtrangService.GetTinhTrangs().subscribe({
+            next :(tinhtrangs) =>{
+                this.tinhtrangs = tinhtrangs
+            },
+            error : error => console.log(error)
+        })
     }
 
     pagination: Pagination | undefined;//chứ các thong tin của phân trang
@@ -54,8 +102,6 @@ export class QlsanphamComponent implements OnInit {
                     });
 
                     this.formGroupArray.forEach(formGroup => this.productFormArray.push(formGroup))
-                    console.log(this.productFormArray)
-                    console.log()
                 }
             },
         })
@@ -121,8 +167,35 @@ export class QlsanphamComponent implements OnInit {
                 console.log(error);
             }
         })
-
     }
 
+
+    DeleteProduct(product,index : number)
+    {
+        this.productService.DeleteProuduct(product.getRawValue().masanpham).subscribe({
+            next : () =>{
+                this.toastrService.success("Xóa thành công");
+                this.formGroupArray.splice(index,1);
+            },
+            error : (error) =>{
+                console.log(error)
+            }
+        })
+    }
+
+
+    AddProduct()
+    {
+        this.productService.AddProduct(this.productToAdd).subscribe({
+            next : () =>{
+                this.toastrService.success("Thêm sản phẩm thành công");
+            },
+
+            error : error => console.log(error)
+        })
+    }
+
+
+    
 
 }

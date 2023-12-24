@@ -32,7 +32,7 @@ namespace back_end.Controllers
         [HttpGet("[action]/{personId}")]  //api/dathang/GetDatHangs/{}
         public async Task<ActionResult<IEnumerable<DatHangDTO>>> GetDatHangs(string personId)
         {
-            var dathangsDto = await repo.GetDatHangsAsync(personId);
+            var dathangsDto = await repo.GetDatHangByPersonIdsAsync(personId);
             if(dathangsDto == null)
             {
                 return NoContent();
@@ -40,6 +40,20 @@ namespace back_end.Controllers
 
 
             return Ok(dathangsDto); 
+
+        }
+
+
+        [HttpGet]  //api/dathang/GetDatHangs
+        public async Task<ActionResult<IEnumerable<DatHangDTO>>> GetDatHangsAll()
+        {
+            var dathangsDto = await repo.GetDatHangsAsync();
+            if (dathangsDto == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(dathangsDto);
 
         }
     }

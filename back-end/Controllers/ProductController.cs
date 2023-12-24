@@ -109,9 +109,9 @@ namespace back_end.Controllers
             var check = await repo.DeleteProductAsync(productId);
             if (check)
             {
-                return Ok("Đã xóa thành công");
+                return Ok();
             }
-            return BadRequest("Đã có lỗi (có thể xóa id không hợp lệ");
+            return BadRequest();
         }
     }
 }
