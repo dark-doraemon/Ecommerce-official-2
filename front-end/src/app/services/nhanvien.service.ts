@@ -22,4 +22,9 @@ export class NhanvienService {
     {
         return this.http.post<any>(environment.baseApiUrl + 'nhanvien',registerForm)
     }
+
+    Update(nhanVienUpdate)
+    {
+        return this.http.put(environment.baseApiUrl + 'nhanvien/UpdateNhanVien/' + nhanVienUpdate.manhanvien ,nhanVienUpdate);  
+    }
 }

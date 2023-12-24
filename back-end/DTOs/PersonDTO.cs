@@ -7,6 +7,7 @@
         public int gioitinh { get; set; }
         public string sdt { get; set; }
         public string diachi { get; set; }
-        public string email { get; set; }
+        public string email { get; set; }   
+        public IEnumerable<AccountDTORutGon> TaiKhoans { get; set; }
     }
 }

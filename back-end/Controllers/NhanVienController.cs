@@ -50,6 +50,18 @@ namespace back_end.Controllers
 
             return Ok(newnhanvienDTO);
         }
+
+        [HttpPut("[action]/{maNhanVien}")]
+        public async Task<ActionResult<CreateNhanVienDTO>> UpdateNhanVien(CreateNhanVienDTO newnhanvienDTO,string maNhanVien)
+        {
+            var check = await repo.UpdateNhanVienAsync(newnhanvienDTO, maNhanVien);
+            if(check == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(newnhanvienDTO);  
+        }
         
     }
 }

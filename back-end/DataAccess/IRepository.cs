@@ -72,6 +72,7 @@ namespace back_end.DataAccess
         string CreateMaNhanVien();
         Task<IEnumerable<NhanVienDTO>> GetNhanVienAsync();
         Task<CreateNhanVienDTO> AddNhanVienAsync(CreateNhanVienDTO thongTinNewNhanVien);
+        Task<CreateNhanVienDTO> UpdateNhanVienAsync(CreateNhanVienDTO updateNhanVien,string newnhanvienDTO);
         
         //Person    
         IEnumerable<Person> GetUsers { get; }

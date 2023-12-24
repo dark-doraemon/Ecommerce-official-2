@@ -22,6 +22,7 @@ namespace back_end.Helpers
             CreateMap<Person, PersonDTO>(); 
             CreateMap<NhanVien,NhanVienDTO>();
             CreateMap<VaiTroNhanVien, VaiTroNhanVienDTO>();
+            CreateMap<TaiKhoan, AccountDTORutGon>();
 
         }
     }

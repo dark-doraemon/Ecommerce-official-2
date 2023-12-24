@@ -8,7 +8,7 @@ export class RoleService {
 
     constructor() { }
 
-    checkRole()
+    checkAdminRole()
     {
         const token : string = JSON.parse(localStorage.getItem('user')).token;
         const decode = jwtDecode(token);

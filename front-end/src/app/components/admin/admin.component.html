@@ -6,7 +6,7 @@
                 <a routerLink="qlsanpham" class="text-decoration-none list-group-item list-group-item-action">Quản lý
                     sản phẩm</a>
 
-                <a routerLink="qlnhanvien" class="text-decoration-none list-group-item list-group-item-action">Quản lý
+                <a *ngIf="isAdmin" routerLink="qlnhanvien" class="text-decoration-none list-group-item list-group-item-action">Quản lý
                     nhân viên</a>
 
                 <a routerLink="qlkhachhang" class="text-decoration-none list-group-item list-group-item-action">Quản lý

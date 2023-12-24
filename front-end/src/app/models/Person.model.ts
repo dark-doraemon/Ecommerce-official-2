@@ -1,3 +1,4 @@
+import { AccountRutGon } from "./accountRutGon.model";
 
 export interface Person {
     personId: string;
@@ -8,5 +9,5 @@ export interface Person {
     sdt: string | null;
     diachi: string | null;
     email: string | null;
-    
+    taiKhoans : AccountRutGon[];
 }

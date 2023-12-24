@@ -17,7 +17,7 @@ export const adminAuthGuard: CanActivateFn = (route, state) => {
         map(user => {
 
 
-            if(user && roleService.checkRole())
+            if(user && roleService.checkAdminRole())
             {
                 return true;
             }

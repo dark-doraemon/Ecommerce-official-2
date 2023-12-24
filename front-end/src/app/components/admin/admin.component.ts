@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KhieuNai } from 'src/app/models/thacmac.model';
+import { RoleService } from 'src/app/services/role.service';
 import { ThacmackhieunaiService } from 'src/app/services/thacmackhieunai.service';
 
 @Component({
@@ -9,10 +10,13 @@ import { ThacmackhieunaiService } from 'src/app/services/thacmackhieunai.service
 })
 export class AdminComponent implements OnInit {
 
-    constructor(private  thacMacKhieuNaiService : ThacmackhieunaiService) {}
+    constructor(private  thacMacKhieuNaiService : ThacmackhieunaiService,private roleService : RoleService) {}
 
+    isAdmin : boolean = false;
     ngOnInit(): void {
         this.getKhieuNais()
+        this.isAdmin = this.roleService.checkAdminRole()
+
     }
 
     thacMacKhieuNaisCount : number = 0;

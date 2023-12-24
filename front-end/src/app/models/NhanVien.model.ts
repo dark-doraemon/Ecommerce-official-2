@@ -1,4 +1,5 @@
 import { Person } from "./Person.model"
+import { AccountRutGon } from "./accountRutGon.model"
 import { VaiTroNhanVien } from "./vaitronhanvien.model"
 
 export interface NhanVien 
@@ -7,5 +8,7 @@ export interface NhanVien
     ngayDuocTuyen : string
     maVaiTro : string,
     maNhanVienNavigation : Person
-    maVaiTroNavigation : VaiTroNhanVien
+    maVaiTroNavigation : VaiTroNhanVien,
+    taiKhoans : AccountRutGon[];
+
 }

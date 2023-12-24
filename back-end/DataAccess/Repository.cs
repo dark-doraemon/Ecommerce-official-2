@@ -549,6 +549,49 @@ namespace back_end.DataAccess
         }
 
 
+        public async Task<CreateNhanVienDTO> UpdateNhanVienAsync(CreateNhanVienDTO updateNhanVien,string maNhanVien)
+        {
+            NhanVien nhanVien = await context.NhanViens.FirstOrDefaultAsync(nv => nv.MaNhanVien.ToLower() == maNhanVien.ToLower());
+
+            if(nhanVien == null)
+            {
+                return null;
+            }
+
+            nhanVien.MaVaiTro = updateNhanVien.maVaiTro;
+            Person thongTinNhanVien = await context.People.FirstOrDefaultAsync(p => p.PersonId.ToLower() == maNhanVien.ToLower());
+            thongTinNhanVien.HoTen = updateNhanVien.hoTen;
+            thongTinNhanVien.Tuoi = updateNhanVien.tuoi;
+            thongTinNhanVien.GioiTinh = updateNhanVien.gioiTinh;
+            thongTinNhanVien.Sdt = updateNhanVien.sdt;
+            thongTinNhanVien.DiaChi = updateNhanVien.diaChi;
+            thongTinNhanVien.Email = updateNhanVien.email;
+
+            TaiKhoan taiKhoan = await context.TaiKhoans.FirstOrDefaultAsync(tk => tk.PersonId.ToLower() == maNhanVien.ToLower());
+            taiKhoan.Username = updateNhanVien.username;
+            taiKhoan.Password = updateNhanVien.password;
+
+            if(updateNhanVien.maVaiTro == "quanly")
+            {
+                taiKhoan.MaLoaiTaiKhoan = "ltkadmin";
+            }
+
+            else if (updateNhanVien.maVaiTro == "nhanvien")
+            {
+                taiKhoan.MaLoaiTaiKhoan = "ltknhanvien";
+            }
+
+
+
+            context.Update(nhanVien);
+            context.Update(thongTinNhanVien);
+            context.Update(taiKhoan);
+            await context.SaveChangesAsync();
+            return updateNhanVien;
+        }
+
+
+
 
 
         //Person

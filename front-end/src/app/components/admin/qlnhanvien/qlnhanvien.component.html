@@ -25,7 +25,7 @@
                                             <label class="form-label">Tên nhân viên</label>
                                             <input class="form-control" name="hoten" [(ngModel)]="nhanVienToAdd.hoten">
 
-                                            <label class="form-label">Tuỏi</label>
+                                            <label class="form-label">Tuổi</label>
                                             <input class="form-control" type="number" name="tuoi"
                                                 [(ngModel)]="nhanVienToAdd.tuoi">
 
@@ -60,7 +60,7 @@
 
                                             <label class="form-label">Tài khoản</label>
                                             <input class="form-control" name="username"
-                                                [(ngModel)]="nhanVienToAdd.username" name="username" >
+                                                [(ngModel)]="nhanVienToAdd.username" name="username">
 
                                             <label class="form-label">Mật khẩu</label>
                                             <input class="form-control" name="password"
@@ -105,24 +105,109 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let nhanvien of nhanViens;let i =index">
+                <tr *ngFor="let nhanvien of nhanVienFormGroupArray;let i =index">
                     <th scope="row">
                         {{i + 1}}
                     </th>
                     <td>
-                        {{nhanvien.maNhanVien}}
+                        {{nhanvien.value.manhanvien}}
                     </td>
 
                     <td>
-                        {{nhanvien.maNhanVienNavigation.hoten}}
+                        {{nhanvien.value.tennhanvien}}
                     </td>
 
                     <td>
-                        {{nhanvien.maVaiTroNavigation.tenVaiTro}}
+                        {{nhanvien.value.vaitro === 'quanly' ? 'Admin' : 'Nhân viên'}}
                     </td>
 
                     <td>
-                        <div class="btn btn-primary">Sửa</div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            [attr.data-bs-target]="'#' + 'nv' + i">
+                            Sửa
+                        </button>
+
+
+                        <!-- The Modal -->
+                        <div class="modal modal-xl" id="{{'nv' + i}}">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Sửa nhân viên</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <form [formGroup]="nhanvien">
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+
+                                                    <label class="form-label">Mã nhân viên</label>
+                                                    <input class="form-control" formControlName="manhanvien">
+
+                                                    <label class="form-label">Tên nhân viên</label> 
+                                                    <input class="form-control" formControlName="tennhanvien">
+
+                                                    <label class="form-label">Tuổi</label>
+                                                    <input class="form-control" type="number" formControlName="tuoi">
+
+                                                    <label class="form-label">Giới tính</label>
+                                                    <select class="form-select"  formControlName="gioitinh">
+                                                        <option></option>
+                                                        <option value="0">Nam</option>
+                                                        <option value="1">Nữ</option>
+                                                    </select>
+
+                                                    <label class="form-label">SĐT</label>
+                                                    <input class="form-control" formControlName="sdt">
+
+                                                </div>
+
+                                                <div class="col-sm-6">
+
+                                                    <label class="form-label">Địa chỉ </label>
+                                                    <input class="form-control" formControlName="diachi">
+
+                                                    <label class="form-label">Email</label>
+                                                    <input class="form-control" formControlName="email">
+
+                                                    <label class="form-label">Vai trò</label>
+                                                    <select class="form-select" formControlName="vaitro" >
+                                                        <option [ngValue]="null" selected disabled>Chọn vai trò</option>
+                                                        <option *ngFor="let vaitro of vaitros" [ngValue]="vaitro.maVaiTro" >
+                                                            {{ vaitro.tenVaiTro }}
+                                                        </option>
+                                                    </select>
+
+                                                    <label class="form-label">Tài khoản</label>
+                                                    <input class="form-control" formControlName="username">
+
+                                                    <label class="form-label">Mật khẩu</label>
+                                                    <input class="form-control" formControlName="password">
+
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                (click)="UpdateNhanVien(nhanvien)">Sửa</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
 
                     <td>
