@@ -1,12 +1,12 @@
 
 export interface Person {
     personId: string;
-    hoTen: string | null;
+    hoten: string | null;
     tuoi: number;
-    gioiTinh: number;
+    gioitinh: number;
     cccd: string | null;
     sdt: string | null;
-    diaChi: string | null;
+    diachi: string | null;
     email: string | null;
     
 }

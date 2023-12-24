@@ -26,7 +26,7 @@ namespace back_end.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Person>> GetUserById(string id)
+        public async Task<ActionResult<PersonDTO>> GetUserById(string id)
         {
             return await repo.getUserByIdAsync(id);
         }

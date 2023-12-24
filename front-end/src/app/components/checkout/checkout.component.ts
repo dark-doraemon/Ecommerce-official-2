@@ -41,11 +41,11 @@ export class CheckoutComponent implements OnInit {
         //kiếm kiểm thông tin user theo mã person
         this.userService.GetUserById(this.maPerson).subscribe({
             next: (user) => {
-                this.user.hoten = user.hoTen,
+                this.user.hoten = user.hoten,
                     this.user.tuoi = user.tuoi,
-                    this.user.gioitinh = user.gioiTinh,
+                    this.user.gioitinh = user.gioitinh,
                     this.user.sdt = user.sdt,
-                    this.user.diachi = user.diaChi,
+                    this.user.diachi = user.diachi,
                     this.user.email = user.email
             }
         })

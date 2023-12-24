@@ -20,6 +20,8 @@ namespace back_end.Helpers
             CreateMap<SanPham, ProductDTORutGon>();
             CreateMap<TinhTrangSanPham, TinhTrangSanPhamDTO>();
             CreateMap<Person, PersonDTO>(); 
+            CreateMap<NhanVien,NhanVienDTO>();
+            CreateMap<VaiTroNhanVien, VaiTroNhanVienDTO>();
 
         }
     }

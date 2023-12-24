@@ -70,11 +70,12 @@ namespace back_end.DataAccess
 
         //NhanVien
         string CreateMaNhanVien();
-        bool AddNhanVien(string manhanvien, string mavaitro);
-
+        Task<IEnumerable<NhanVienDTO>> GetNhanVienAsync();
+        Task<CreateNhanVienDTO> AddNhanVienAsync(CreateNhanVienDTO thongTinNewNhanVien);
+        
         //Person    
         IEnumerable<Person> GetUsers { get; }
-        Task<Person> getUserByIdAsync(string id);
+        Task<PersonDTO> getUserByIdAsync(string id);
         Task<Person> UpdatePersonAsync(PersonDTO personDTO,string id);
 
         //TaiKhoan
@@ -103,7 +104,7 @@ namespace back_end.DataAccess
         Task<IEnumerable<TinhTrangSanPhamDTO>> GetTinhTrangSanPhamAsync();
 
         //VaiTroNhanVien
-
+        Task<IEnumerable<VaiTroNhanVienDTO>> GetVaiTrosAsync();
 
         //Voucher
 

@@ -1,9 +1,135 @@
 <div class="container border">
     <div class="row d-flex justify-content-center">
-        <app-search class="col-sm-5"></app-search>
+        <div class="row">
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Thêm nhân viên
+                </button>
+                <!-- The Modal -->
+                <div class="modal modal-xl " id="myModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Tạo tài khoản</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body modal-xl">
+                                <form class="form-group">
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Tên nhân viên</label>
+                                            <input class="form-control" name="hoten" [(ngModel)]="nhanVienToAdd.hoten">
+
+                                            <label class="form-label">Tuỏi</label>
+                                            <input class="form-control" type="number" name="tuoi"
+                                                [(ngModel)]="nhanVienToAdd.tuoi">
+
+                                            <label class="form-label">Giói tính</label>
+                                            <select class="form-select" name="gioitinh"
+                                                [(ngModel)]="nhanVienToAdd.gioitinh">
+                                                <option value="0">Nam</option>
+                                                <option value="1">Nữ</option>
+                                            </select>
+
+                                            <label class="form-label">SĐT</label>
+                                            <input class="form-control" name="sdt" [(ngModel)]="nhanVienToAdd.sdt">
+
+                                            <label class="form-label">Địa chỉ </label>
+                                            <input class="form-control" name="diachi"
+                                                [(ngModel)]="nhanVienToAdd.diachi">
+                                        </div>
+
+                                        <div class="col-sm-6">
+
+
+                                            <label class="form-label">Email</label>
+                                            <input class="form-control" name="email" [(ngModel)]="nhanVienToAdd.email">
+
+                                            <label class="form-label">Vai trò</label>
+                                            <select class="form-select" name="vaitro"
+                                                [(ngModel)]="nhanVienToAdd.maVaiTro">
+                                                <option *ngFor="let vaitro of vaitros" [value]="vaitro.maVaiTro">
+                                                    {{vaitro.tenVaiTro}}
+                                                </option>
+                                            </select>
+
+                                            <label class="form-label">Tài khoản</label>
+                                            <input class="form-control" name="username"
+                                                [(ngModel)]="nhanVienToAdd.username" name="username" >
+
+                                            <label class="form-label">Mật khẩu</label>
+                                            <input class="form-control" name="password"
+                                                [(ngModel)]="nhanVienToAdd.password" name="password">
+
+                                            <label class="form-label">Nhập lại mật khẩu</label>
+                                            <input class="form-control" name="confirm"
+                                                [(ngModel)]="nhanVienToAdd.confirm" name="confirm">
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger"
+                                            (click)="AddNhanVien()">Thêm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9  d-flex justify-content-center">
+                <app-search class="col-sm-5"></app-search>
+            </div>
+        </div>
+
     </div>
 
     <div class="row mt-3">
-        qlnv
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mã nhân viên</th>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Vai trò</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let nhanvien of nhanViens;let i =index">
+                    <th scope="row">
+                        {{i + 1}}
+                    </th>
+                    <td>
+                        {{nhanvien.maNhanVien}}
+                    </td>
+
+                    <td>
+                        {{nhanvien.maNhanVienNavigation.hoten}}
+                    </td>
+
+                    <td>
+                        {{nhanvien.maVaiTroNavigation.tenVaiTro}}
+                    </td>
+
+                    <td>
+                        <div class="btn btn-primary">Sửa</div>
+                    </td>
+
+                    <td>
+                        <div class="btn btn-danger">Xóa</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

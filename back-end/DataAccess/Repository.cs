@@ -498,19 +498,66 @@ namespace back_end.DataAccess
             return lastID;
         }
 
-        public bool AddNhanVien(string manhanvien, string mavaitro)
+        
+
+        public async Task<IEnumerable<NhanVienDTO>> GetNhanVienAsync()
         {
-            return true;
+            var nhanviens = await context.NhanViens.ProjectTo<NhanVienDTO>(this.mapper.ConfigurationProvider).ToListAsync();
+
+            if (nhanviens.Count() <= 0) return null;
+
+            return nhanviens;
+
         }
+        public async Task<CreateNhanVienDTO> AddNhanVienAsync(CreateNhanVienDTO thongTinNewNhanVien)
+        {
+            string manhanvien = CreateMaNhanVien();
+
+
+            NhanVien newNhanVien = new NhanVien
+            {
+                MaNhanVien = manhanvien,
+                NgayDuocTuyen = DateTime.Now,
+                MaVaiTro = thongTinNewNhanVien.maVaiTro,
+            };
+
+            TaiKhoan newTaiKhoan = new TaiKhoan
+            {
+                MaTaiKhoan = CreateMaTaiKhoan(),
+                Username = thongTinNewNhanVien.username,
+                Password = thongTinNewNhanVien.password,
+                MaLoaiTaiKhoan = "ltknhanvien",
+                PersonId = manhanvien,
+                Person = new Person
+                {
+                    PersonId = manhanvien,
+                    HoTen = thongTinNewNhanVien.hoTen,
+                    Tuoi = thongTinNewNhanVien.tuoi,
+                    GioiTinh = thongTinNewNhanVien.gioiTinh,
+                    Sdt = thongTinNewNhanVien.sdt,
+                    DiaChi = thongTinNewNhanVien.diaChi,
+                    Email = thongTinNewNhanVien.email
+                }
+            };
+
+            context.NhanViens.Add(newNhanVien);
+            context.TaiKhoans.Add(newTaiKhoan);
+            await context.SaveChangesAsync();
+
+
+            return thongTinNewNhanVien;
+        }
+
+
 
 
         //Person
 
         public IEnumerable<Person> GetUsers => context.People;
 
-        public async Task<Person> getUserByIdAsync(string id)
+        public async Task<PersonDTO> getUserByIdAsync(string id)
         {
-            return await context.People.FindAsync(id);
+            return await context.People.ProjectTo<PersonDTO>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
         public async Task<Person> UpdatePersonAsync(PersonDTO personDTO, string id)
         {
@@ -675,6 +722,10 @@ namespace back_end.DataAccess
 
 
         //VaiTroNhanVien
+        public async Task<IEnumerable<VaiTroNhanVienDTO>> GetVaiTrosAsync()
+        {
+            return await context.VaiTroNhanViens.ProjectTo<VaiTroNhanVienDTO>(this.mapper.ConfigurationProvider).ToListAsync();
+        }
 
 
         //Voucher
