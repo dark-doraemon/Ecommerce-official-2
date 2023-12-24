@@ -348,7 +348,7 @@ namespace back_end.DataAccess
 
 
                     // từ cart lấy các sản phẩm
-                    var cartProducts = await context.CartSanPhams
+                    List<CartSanPham> cartProducts = await context.CartSanPhams
                         .Where(csp => csp.MaCart == cart.MaCart)
                         .Include(csp => csp.MaSanPhamNavigation).ToListAsync();
 
@@ -356,6 +356,28 @@ namespace back_end.DataAccess
                     {
                         return null;
                     }
+
+                    //lấy ra các sản phẩm rồi trừ số lượng sản phẩm hiện có
+                    var products = context.SanPhams;
+                    List<SanPham> productsToUpdate = new List<SanPham>();
+                    foreach (var product in products)
+                    {
+                        foreach(var cartProduct in cartProducts)
+                        {
+                            if(product.MaSanPham == cartProduct.MaSanPham)
+                            {
+                                product.SoLuong = product.SoLuong - (cartProduct.SoLuongSp ?? 0);
+                                if(product.SoLuong < 0)
+                                {
+                                    return null;
+                                }
+                                productsToUpdate.Add(product);
+                                break;
+                            }
+                        }
+                    }
+
+                    context.SanPhams.UpdateRange(productsToUpdate);
 
                     var cartProductsToDatHangSanPham = cartProducts.Select(csp => new DatHangSanPham
                     {

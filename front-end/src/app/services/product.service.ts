@@ -58,4 +58,10 @@ export class ProductService {
     {
         return this.http.get<Product>(environment.baseApiUrl + 'products/' + id);
     }
+
+
+    UpdateProduct(product : Product)
+    {
+        return this.http.put<Product>(environment.baseApiUrl + 'products/updateproduct/' + product.masanpham,product);
+    }
 }

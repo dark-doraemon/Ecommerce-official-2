@@ -19,7 +19,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductItemRowComponent } from './components/productView/load-products/product-item-row/product-item-row.component'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './pipes/filter-categories.pipe';
 import { FilterBrandsPipe } from './pipes/filter-brands.pipe';
 import { FilterProductsPipe } from './pipes/filter-products.pipe';
@@ -81,6 +81,7 @@ import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/tha
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         SharedModule,
         RatingModule.forRoot(), //tạo 1 share module cho gọn
     ],

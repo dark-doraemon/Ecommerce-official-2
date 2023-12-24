@@ -13,7 +13,7 @@ export class RoleService {
         const token : string = JSON.parse(localStorage.getItem('user')).token;
         const decode = jwtDecode(token);
 
-        if(decode && decode.sub === 'admin')
+        if(decode && decode.aud === 'ltkadmin')
         {
             return true;
         }

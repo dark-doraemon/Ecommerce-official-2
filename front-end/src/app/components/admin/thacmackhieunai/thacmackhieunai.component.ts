@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { KhieuNai } from 'src/app/models/thacmac.model';
 import { ThacmackhieunaiService } from 'src/app/services/thacmackhieunai.service';
@@ -10,10 +10,9 @@ import { ThacmackhieunaiService } from 'src/app/services/thacmackhieunai.service
 })
 export class ThacmackhieunaiComponent implements OnInit {
 
+    @Input()  thacMacKhieuNais : KhieuNai[];
 
     constructor(private thacMacKhieuNaiService : ThacmackhieunaiService,private toastr : ToastrService) {}
-
-    thacMacKhieuNais : KhieuNai[];
     
     ngOnInit(): void {
         this.getKhieuNais();

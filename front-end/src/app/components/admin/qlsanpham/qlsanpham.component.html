@@ -3,9 +3,146 @@
         <app-search class="col-sm-5"></app-search>
     </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="row bg-info">
+                <div class="col-sm-1">
+                    STT
+                </div>
+
+                <div class="col-sm-1">
+                    Hình ảnh
+                </div>
+
+
+                <div class="col-sm-4">
+                    Tên sản phẩm
+                </div>
+
+                <div class="col-sm-2">
+                    Giá sản phẩm
+                </div>
+
+                <div class="col-sm-2">
+                    Số lượng
+                </div>
+                <div class="col-sm-1">
+                </div>
+            </div>
+            <div class="row" *ngFor="let product of formGroupArray;let i = index" >
+                <div class="col-sm-1">
+                    {{i+ 1}}
+                </div>
+
+                <div class="col-sm-1">
+                    <img src="{{product.value.hinhanhsanpham}}" width="50" height="50">
+                </div>
+
+
+                <div class="col-sm-4">
+                    {{product.value.tensanpham}}
+                </div>
+
+                <div class="col-sm-2">
+                    {{product.value.giasanpham | currency : 'VND'}}
+                </div>
+
+                <div class="col-sm-2">
+                    {{product.value.soluong}}
+                </div>
+                <div class="col-sm-1">
+                    <div class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + 's' + i">
+                        Sửa
+                    </div>
+
+                    <div class="modal modal-xl" id="{{'s' + i}}">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                      
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title">Sửa sản phẩm</h4>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                      
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                               
+                                <form [formGroup]="product">
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label class="form-label" >Mã sản phẩm</label>
+                                            <input class="form-control"  formControlName="masanpham" >
+                                            
+                                            <label class="form-label">Tên sản phẩm</label>
+                                            <input class="form-control"  formControlName="tensanpham" >
+        
+                                            <label class="form-label">Số lượng</label>
+                                            <input class="form-control" formControlName="soluong">
+        
+                                            <label class="form-label">Giá sản phẩm</label>
+                                            <input class="form-control"formControlName="giasanpham" >
+        
+                                            <label class="form-label">Hình ảnh sản phẩm</label>
+                                            <input class="form-control" formControlName="hinhanhsanpham" >
+
+                                            <label class="form-label">Mô tả sản phẩm<main></main></label>
+                                            <textarea class="form-control" formControlName="motasanpham" ></textarea>
+                                        </div>
+    
+                                        <div class="col-sm-6">
+        
+                                            <label class="form-label">Mã loại sản phẩm</label>
+                                            <input class="form-control" formControlName="maloaisanpham" [attr.disabled]="true" >
+        
+                                            <label class="form-label">Tên loại sản phẩm</label>
+                                            <input class="form-control" formControlName="loaisanpham" [attr.disabled]="true" >
+        
+                                            <label class="form-label">Mã thương hiệu</label>
+                                            <input class="form-control" formControlName="mabrand" [attr.disabled]="true" >
+        
+                                            <label class="form-label">Thương hiệu</label>
+                                            <input class="form-control" formControlName="brand" [attr.disabled]="true" >
+
+                                            <label class="form-label">Mã tình trạng</label>
+                                            <input class="form-control" formControlName="maTinhTrang" [attr.disabled]="true" >
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-danger" (click)="SuaSanPham(product)" >Sửa</button>
+                                    </div>
+                                </form>
+                            </div>
+                      
+                      
+                          </div>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="btn btn-danger">
+                        Xóa
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-3">
-        <div class="col-12">
-            
+        <div class="col-12 d-flex justify-content-center">
+            <pagination [boundaryLinks]="true" 
+                    [totalItems]="pagination.totalItems" 
+                    [itemsPerPage]="pagination.itemsPerPage"
+                    [maxSize]="10"
+                    [(ngModel)]="pagination.currentPage"
+                    (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;" lastText="&raquo;">
+        </pagination>
         </div>
     </div>
 </div>
