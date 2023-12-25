@@ -23,8 +23,9 @@ export class UserProfileComponent implements OnInit {
     constructor(private route: ActivatedRoute, private userService: UserService, private toastr: ToastrService,
         private accountService: AccountService,
         private checkoutServcie: CheckoutService) {
+        }
 
-    }
+    state : string = 'Đang xác nhận'
     ngOnInit(): void {
 
         //đầu tiên lấy mã person đã lưu khi đăng nhập
@@ -32,7 +33,7 @@ export class UserProfileComponent implements OnInit {
             next: (user) => {
                 this.maPerson = user.maPerson;
             }
-        });
+        }); 
 
         //kiếm kiểm thông tin user theo mã person
         this.userService.GetUserById(this.maPerson).subscribe({

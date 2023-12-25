@@ -41,6 +41,7 @@ import { SuccessComponent } from './components/success/success.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/thacmackhieunai.component';
 import { MadonhangPipe } from './pipes/madonhang.pipe';
+import { AboutComponent } from './components/header/about/about.component';
 
 @NgModule({
     declarations: [
@@ -75,7 +76,8 @@ import { MadonhangPipe } from './pipes/madonhang.pipe';
         CheckoutComponent,
         SuccessComponent,
         ThacmackhieunaiComponent,
-        MadonhangPipe
+        MadonhangPipe,
+        AboutComponent
 
     ],
     imports: [

@@ -61,6 +61,7 @@ namespace back_end.DataAccess
         //KhachHang
         string CreateMaKhachHang();
         bool AddKhachHang(string makhachhang);
+        Task<IEnumerable<KhachHangDTO>> GetKhachHangsAsync();
 
         //LoaiTaiKhoan
 

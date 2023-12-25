@@ -20,6 +20,7 @@ import { SuccessComponent } from './components/success/success.component';
 import { adminAndNhanVien } from './guards/adminAndNhanVienAuth.guard';
 import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/thacmackhieunai.component';
 import { adminAuth } from './guards/admin-auth.guard';
+import { AboutComponent } from './components/header/about/about.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -29,6 +30,8 @@ const routes: Routes = [
     {
         path: 'productView', component: ProductViewComponent
     },
+
+    {path :'about',component : AboutComponent},
 
     { path: 'cart', component: CartComponent, canActivate: [authGuard] },
     { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },

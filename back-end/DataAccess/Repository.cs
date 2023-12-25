@@ -183,8 +183,8 @@ namespace back_end.DataAccess
         }
         public async Task<Cart> CreateCartAsync(Cart newCart)
         {
-            Cart check = context.Carts.FirstOrDefault();
-            if (check == null)
+            Cart check = context.Carts.FirstOrDefault(c => c.MaCart.ToLower() == newCart.MaCart.ToLower());
+            if (check != null)
             {
                 return null;
             }
@@ -481,6 +481,11 @@ namespace back_end.DataAccess
             context.SaveChanges();
             return true;
         }
+        public async Task<IEnumerable<KhachHangDTO>> GetKhachHangsAsync()
+        {
+            var khachhangs = await context.KhachHangs.ProjectTo<KhachHangDTO>(this.mapper.ConfigurationProvider).ToListAsync();
+            return khachhangs;
+        }
 
 
 
@@ -600,7 +605,8 @@ namespace back_end.DataAccess
 
         public async Task<PersonDTO> getUserByIdAsync(string id)
         {
-            return await context.People.ProjectTo<PersonDTO>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            var s = await context.People.Where(p =>p.PersonId == id).ProjectTo<PersonDTO>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync() ;
+            return s;
         }
         public async Task<Person> UpdatePersonAsync(PersonDTO personDTO, string id)
         {

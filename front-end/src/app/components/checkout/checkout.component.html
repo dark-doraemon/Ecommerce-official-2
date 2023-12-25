@@ -29,7 +29,24 @@
                     Sửa thông tin
                 </button>
             </form>
+
+
+            <div>
+                <h3>Chọn hình thức thanh toán</h3>
+                <div>
+                    <form class="form-group">
+                        <input type="radio" id="cod" name="fav_language" value="HTML">
+                        <label for="html"> COD</label><br>
+                        <input type="radio" id="bank" name="fav_language" value="CSS">
+                        <label for="css"> Chuyển khoản ngân hàng</label><br>
+                        <input type="radio" id="momo" name="fav_language" value="JavaScript">
+                        <label for="javascript">Ví điện tử</label>
+
+                    </form>
+                </div>
+            </div>
         </div>
+
 
 
         <div class="col-sm-8">
@@ -52,10 +69,10 @@
                         <td> {{i + 1}}</td>
 
                         <td>
-                            <img width="100" height="100">
-                            <a  class="text-decoration-none"
-                            routerLink="../productView/product-details/{{product.maSanPhamNavigation.masanpham}}">
-                            {{product.maSanPhamNavigation.tensanpham}}</a>
+                            <img width="100" height="100" src="{{product.maSanPhamNavigation.hinhanhsanpham}}">
+                            <a class="text-decoration-none"
+                                routerLink="../productView/product-details/{{product.maSanPhamNavigation.masanpham}}">
+                                {{product.maSanPhamNavigation.tensanpham}}</a>
                         </td>
 
                         <td>
@@ -64,7 +81,8 @@
                         </td>
 
                         <td>
-                            <input class="w-25" type="number" disabled id="number" value="0" [value]="product.soLuongSp" />
+                            <input class="w-25" type="number" disabled id="number" value="0"
+                                [value]="product.soLuongSp" />
                         </td>
 
                         <td>
@@ -76,11 +94,12 @@
                     </tr>
 
                     <tr class="bg-light">
-
+                        <td></td>
                         <td>Tổng tiền:</td>
-                        <td colspan="3" class="text-center"> {{ CaculateTotal() | currency : 'VND' }} </td>
+                        <td colspan="2" class="text-center"> {{ CaculateTotal() | currency : 'VND' }} </td>
                         <td>
-                            <button (click)="XacNhan()"  routerLink="../checkout" class="btn btn-primary">Xác nhận</button>
+                            <button (click)="XacNhan()" routerLink="../checkout" class="btn btn-primary">Xác
+                                nhận</button>
                         </td>
                     </tr>
                 </tbody>

@@ -16,7 +16,7 @@ export class SignupComponent {
     Register(){
         this.accountService.Register(this.formRegister).subscribe({
             next : response => {
-                // console.log(response);
+                console.log(response);
                 this.toastr.success("Đăng kí thành công");
 
                 const closeButton = document.getElementById('close') as HTMLElement;

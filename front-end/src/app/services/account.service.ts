@@ -24,7 +24,7 @@ export class AccountService {
                 const user = respone;
                 if(user)
                 {
-                    // console.log(user);
+                    console.log(user);
                     this.currentUserSource.next(user);
                     localStorage.setItem("user",JSON.stringify(user));
                 }

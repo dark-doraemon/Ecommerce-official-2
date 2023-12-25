@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
     currentUser$ : Observable<User | null> = of(null);
     // loggedIn : boolean;
     username : string;
-     
     
     searchProductText: string;
     isAdmin : boolean = false;

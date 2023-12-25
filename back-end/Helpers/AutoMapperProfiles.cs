@@ -23,6 +23,7 @@ namespace back_end.Helpers
             CreateMap<NhanVien,NhanVienDTO>();
             CreateMap<VaiTroNhanVien, VaiTroNhanVienDTO>();
             CreateMap<TaiKhoan, AccountDTORutGon>();
+            CreateMap<KhachHang,KhachHangDTO>();
 
         }
     }

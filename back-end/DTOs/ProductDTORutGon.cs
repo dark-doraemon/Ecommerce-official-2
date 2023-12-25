@@ -5,5 +5,6 @@
         public string masanpham { get; set; }
         public string tensanpham { get; set; }
         public decimal giasanpham { get; set; }
+        public string hinhanhsanpham { get; set; }
     }
 }

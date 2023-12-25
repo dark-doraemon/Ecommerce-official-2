@@ -4,6 +4,34 @@
     </div>
 
     <div class="row mt-3">
-        qlkh
+        <ul class="list-group">
+            <li class="list-group-item " *ngFor="let khachhang of khachhangs;let i = index">
+                <div class="row">
+                    <div class="col-sm-1">
+                        {{i+1}}
+                    </div>
+
+                    <div class="col-sm-1">
+                        {{khachhang.maKhachHang}}
+                    </div>
+
+                    <div class="col-sm-3">
+                        {{khachhang.maKhachHangNavigation.hoten}}
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="btn btn-primary">Sửa</div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="btn btn-danger">Xóa</div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="btn btn-info">Các đơn đã mua</div>
+                    </div>
+                </div>
+            </li>
+          </ul>
     </div>
 </div>
