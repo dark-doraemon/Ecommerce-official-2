@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     //khi header được khỏi động thì sẽ kiểm tra có user đã lấy từ app.component chưa
     ngOnInit(): void {
         this.currentUser$ = this.accountService.currenUser$
-        this.isAdmin = this.roleService.checkAdminRole();
+        this.isAdmin = this.roleService.checkAdminAndNhanVienRole();
         // this.getCurrentUser();
     }
 

@@ -17,8 +17,9 @@ import { ServerErrorComponent } from './components/server-error/server-error.com
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SuccessComponent } from './components/success/success.component';
-import { adminAuthGuard } from './guards/adminAuth.guard';
+import { adminAndNhanVien } from './guards/adminAndNhanVienAuth.guard';
 import { ThacmackhieunaiComponent } from './components/admin/thacmackhieunai/thacmackhieunai.component';
+import { adminAuth } from './guards/admin-auth.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -36,11 +37,11 @@ const routes: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
             { path: 'qlsanpham', component: QlsanphamComponent },
-            { path: 'qlnhanvien', component: QlnhanvienComponent },
+            { path: 'qlnhanvien', component: QlnhanvienComponent ,canActivate:[adminAuth]},
             { path: 'qlkhachhang', component: QlkhachhangComponent },
             { path: 'qldonhang', component: QldonhangComponent },
             { path : 'tinnhan' ,component: ThacmackhieunaiComponent}
-        ], canActivate: [authGuard,adminAuthGuard]
+        ], canActivate: [authGuard,adminAndNhanVien]
     },
 
     { path: 'errors', component: ErrorsComponent },
