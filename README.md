@@ -68,7 +68,7 @@
 ![image](https://github.com/user-attachments/assets/06bf5eef-74c8-4006-b748-c58373a101ed)
 ![image](https://github.com/user-attachments/assets/3da58e41-fbcf-441c-9507-536be36ee154)
 
-## xử lý khi người dụng không có quyền truy cập vào chức năng
+## xử lý khi người dùng không có quyền truy cập vào chức năng
 ![image](https://github.com/user-attachments/assets/cf684eca-88cb-42ba-a523-9e08fae495c1)
 
 
