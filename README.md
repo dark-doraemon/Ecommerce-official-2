@@ -33,6 +33,29 @@
 
 ![image](https://github.com/user-attachments/assets/f1062820-9cee-4e9e-ab3f-dd209b8d7c25)
 
+## thêm sản phẩm vào giỏ hàng
+
+![image](https://github.com/user-attachments/assets/feec5c6d-64c5-4f43-8533-709b9ee864c9)
+
+## giỏ hàng
+
+![image](https://github.com/user-attachments/assets/21e18f66-beb0-4023-b125-5b4fcf6e5144)
+
+## thanh toán
+
+![image](https://github.com/user-attachments/assets/6889f6ec-8b27-470c-9688-7cf74022ec5c)
+
+![image](https://github.com/user-attachments/assets/c3e55012-8b5e-4090-b44e-54ae46e9e8eb)
+
+### quản lý đơn hàng
+
+![image](https://github.com/user-attachments/assets/c6471938-8adc-4fe6-aac3-5385b6a262da)
+
+
+
+
+
+
 
 
 
